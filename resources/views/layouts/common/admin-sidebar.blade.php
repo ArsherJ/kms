@@ -123,6 +123,14 @@
                         <span class="hide-menu">FAQs</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/categories" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-layout-grid"></i>
+                        </span>
+                        <span class="hide-menu">Categories / Legends</span>
+                    </a>
+                </li>
 
             </ul>
         </nav>

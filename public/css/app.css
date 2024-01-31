@@ -1,0 +1,7 @@
+#gallery-modal .modal-img {
+    width: 100%;
+}
+
+.image-item {
+    cursor: pointer;
+}
