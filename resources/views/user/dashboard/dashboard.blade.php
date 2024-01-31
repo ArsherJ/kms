@@ -17,17 +17,7 @@
         <div class="col-sm-6 col-xl-3">
             <div class="card overflow-hidden rounded-2">
                 <div class="card-body pt-3 p-4">
-                    <h6 class="fw-semibold fs-4">Total User Accounts</h6>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h6><span id="userAccountCount" class="badge bg-dark rounded-3 fw-semibold"></span></h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-            <div class="card overflow-hidden rounded-2">
-                <div class="card-body pt-3 p-4">
-                    <h6 class="fw-semibold fs-4">Total Indidual Records</h6>
+                    <h6 class="fw-semibold fs-4">Total Individual Records</h6>
                     <div class="d-flex align-items-center justify-content-between">
                         <h6><span id="individualRecordCount" class="badge bg-primary rounded-3 fw-semibold"></span></h6>
                     </div>
@@ -37,19 +27,9 @@
         <div class="col-sm-6 col-xl-3">
             <div class="card overflow-hidden rounded-2">
                 <div class="card-body pt-3 p-4">
-                    <h6 class="fw-semibold fs-4">Total Feeding Programs</h6>
+                    <h6 class="fw-semibold fs-4">Total Activities</h6>
                     <div class="d-flex align-items-center justify-content-between">
                         <h6><span id="feedingProgramCount" class="badge bg-warning rounded-3 fw-semibold"></span></h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-            <div class="card overflow-hidden rounded-2">
-                <div class="card-body pt-3 p-4">
-                    <h6 class="fw-semibold fs-4">Total Announcements</h6>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h6><span id="announcementCount" class="badge bg-success rounded-3 fw-semibold"></span></h6>
                     </div>
                 </div>
             </div>
@@ -61,7 +41,7 @@
 
         <div class="col-lg-8 d-flex align-items-stretch">
             <div class="card w-100">
-                <div class="card-body">
+                <!-- <div class="card-body">
                     <h5 class="card-title fw-semibold">Recent Individual Records Record</h5>
                     <div class="table-responsive">
                         <table id="dataTable" class="table text-nowrap mb-0 align-middle">
@@ -89,7 +69,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-lg-4">
