@@ -44,12 +44,12 @@ Route::group(['middleware' => ['web']], function () {
             })->name('admin_dashboard');
 
             // ------------FEEDING PROGRAMS--------------- //
-            Route::get('/feeding_programs', function () {
-                return view('admin/feeding-program/feeding-program', ['page_title' => 'Feeding Programs']);
-            })->name('admin_feeding_program');
+            Route::get('/activities', function () {
+                return view('admin/feeding-program/feeding-program', ['page_title' => 'Activities']);
+            })->name('admin_activities');
 
-            Route::get('/feeding_programs/feeding_program/{id}', function ($id) {
-                return view('admin/feeding-program/view-feeding-program', ['page_title' => 'Feeding Programs', 'feeding_program_id' => $id]);
+            Route::get('/activities/activity/{id}', function ($id) {
+                return view('admin/feeding-program/view-feeding-program', ['page_title' => 'Activities', 'feeding_program_id' => $id]);
             })->name('admin_feeding_program_details');
 
 

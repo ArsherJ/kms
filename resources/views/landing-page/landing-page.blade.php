@@ -178,14 +178,13 @@
     </section>
 
 
-    {{-- FEEDING PROGRAM --}}
+    {{-- Activities --}}
     <section id="feeding_program_section" class="contact-area pt-120 pb-120">
         <div class="event-container">
             <div class="col-lg-12">
                 <div class="feeding-program-container">
-                    <h2 style="" class="text-center section-title">Feeding Programs</h2>
+                    <h2 style="" class="text-center section-title">Activities</h2>
                     <div id="feedingProgramContainer" class="m-4">
-
                     </div>
                 </div>
             </div>
@@ -481,14 +480,14 @@
                         console.log(data)
 
                         data.forEach((el) => {
-                            html_content += `<div class="event-card">
-                                                    <div class="left">
+                            html_content += `<div class="event-card" >
+                                                    <div class="left-30">
                                                         <div class="date-time dt1">
                                                             <p id="date_of_program" class="date">${moment(el.date_of_program).format('ll')}</p>
                                                             <p id="time_of_program" class="time">${moment(el.date_of_program + " " + el.time_of_program).format('LT')}</p>
                                                         </div>
 
-                                                        <div class="event-info">
+                                                        <div class="event-info-70">
                                                             <h3 id="title" class="event-name">
                                                                 ${el.title}
                                                             </h3>

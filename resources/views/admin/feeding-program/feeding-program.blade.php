@@ -17,11 +17,11 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5 class="card-title fw-semibold mb-4 text-black">Edit {{ Str::singular($page_title) }}</h5>
+                    <h5 class="card-title fw-semibold mb-4 text-black">Edit Activity</h5>
                     <form id="editForm">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="required-input">Program Name</label>
+                                <label class="required-input">Activity Name</label>
                                 <input type="text" class="form-control" id="title_edit" name="title_edit" tabindex="1"
                                     required>
                             </div>
@@ -74,14 +74,14 @@
         <div class="col-md-12 collapse" id="create_card">
             <div class="card">
                 <div class="card-header bg-info">
-                    <h4 class="text-light"> <span id="create_card_title">New</span> {{ Str::singular($page_title) }}</h4>
+                    <h4 class="text-light"> <span id="create_card_title">New</span> Activity</h4>
                 </div>
 
                 <form id="createForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="required-input">Program Name</label>
+                                <label class="required-input">Activity Name</label>
                                 <input type="text" class="form-control" id="title" name="title" tabindex="1"
                                     required>
                             </div>
@@ -126,10 +126,10 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="card-title fw-semibold">List of Feeding Program/s</h5>
+                <h5 class="card-title fw-semibold">List of Activities</h5>
                 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#create_card"
                     aria-expanded="false" aria-controls="create_card">Add
-                    {{ Str::singular($page_title) }} <span><i class="ti ti-plus"></i></span></button>
+                    Activity <span><i class="ti ti-plus"></i></span></button>
             </div>
             <table class="table table-hover table-borderless" id="dataTable" style="width:100%">
                 <thead>
@@ -159,6 +159,32 @@
             </table>
         </div>
     </div>
+
+    <!-- UPLOAD MODAL -->
+    <div id="uploadModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload Image</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadForm">
+                        <div class="form-group">
+                            <label for="imageUpload" class="required-input">Upload Images</label>
+                            <input type="file" class="form-control-file" id="imageUpload" name="images[]" multiple accept="image/*">
+                        </div>
+                    </form>
+                    <!-- Display selected images -->
+                    <div id="selectedImagesContainer" class="d-flex flex-wrap"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnUploadFile">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -232,6 +258,8 @@
                                         <button id="${row.id}" type="button" class="btn btn-sm btn-info btnView">View</button>
                                         <button id="${row.id}" type="button" class="btn btn-sm btn-warning btnEdit">Edit</button>
                                         <button id="${row.id}" type="button" class="btn btn-sm btn-danger btnDelete">Delete</button>
+                                        <button id="${row.id}" type="button" class="btn btn-sm btn-info btnUpload" data-id="${row.id}">Upload</button>
+
                                         </div>`;
                                 } else {
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -362,7 +390,7 @@
             // VIEW FUNCTION
             $(document).on('click', '.btnView', function() {
                 var id = this.id;
-                var redirect_to = APP_URL + '/admin/feeding_programs/feeding_program/' + id;
+                var redirect_to = APP_URL + '/admin/activities/activity/' + id;
 
                 window.location = redirect_to;
             })
@@ -531,9 +559,79 @@
             });
             // END OF DEACTIVATE FUNCTION
 
+
+
+// Update the click event for the "Upload" button
+$(document).on("click", ".btnUpload", function(){
+    var uploadButtonId = $(this).data('id');
+    $('#uploadModal').data('uploadButtonId', uploadButtonId).modal('show')
+    // $('#uploadModal').modal('show');
+});
+$(document).on("change", "#imageUpload", function() {
+    // Get the selected image files
+    var files = $('#imageUpload')[0].files;
+
+    // Display the selected images in the modal
+    var selectedImagesContainer = $('#selectedImagesContainer');
+    selectedImagesContainer.empty(); // Clear previous content
+
+    for (var i = 0; i < files.length; i++) {
+        // Create an img element and set its attributes
+        var imgElement = $('<img>').attr({
+            'src': URL.createObjectURL(files[i]),
+            'alt': files[i].name,
+            'class': 'img-fluid m-1', // Added margin for spacing
+            'width': '100',
+            'height': '100'
+        });
+
+        // Append the img element to the container
+        selectedImagesContainer.append(imgElement);
+    }
+});
+
+$(document).on("click", "#btnUploadFile", function() {
+    // Get the selected image files
+    var files = $('#imageUpload')[0].files;
+    var uploadButtonId = $('#uploadModal').data('uploadButtonId');
+    console.log('Clicked Upload button ID:', uploadButtonId);
+    // Convert each image to Blob and send it to the server
+    for (var i = 0; i < files.length; i++) {
+        convertImageToBlobAndInsert(files[i]);
+        console.log(files[i].name);  // Corrected the statement
+    }
+    // Clear the selected image files
+    $('#imageUpload').val('');
+    // Clear the displayed images
+    $('#selectedImagesContainer').empty();
+    // Hide modal after processing the images
+    $('#uploadModal').modal('hide');
+});
+
+function convertImageToBlobAndInsert(file, uploadButtonId) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        var blob = new Blob([e.target.result], { type: file.type });
+        console.log(blob)
+
+        // Send the Blob data to the server
+        insertImageBlob(blob, file.name, uploadButtonId);
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+function insertImageBlob(blob, filename, activity_id) {
+    var formData = new FormData();
+    formData.append(blob, activity_id);
+ 
+}
             // FUNCTION CALLING
             dataTable();
         })
         // END OF SCRIPT TAG
+
+        
     </script>
 @endsection
