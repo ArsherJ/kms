@@ -275,7 +275,7 @@
             
             <div class="table-responsive">
                 <table class="table table-hover table-sm table-borderless" id="dataTable"
-                    style="width:200%; table-layout:fixed; text-align:center">
+                    style="width:220%; table-layout:fixed; text-align:center">
                 
                     <thead>
                         <tr class="text-dark">
@@ -283,7 +283,7 @@
                             <th class="not-export-column">Created At</th>
                             <th style="text-align:center">Sequence Number</th>
                             <th style="text-align:center">Child's Residence</th>
-                            <th style="text-align:center">Mother's Full Name</th>
+                            <th style="text-align:center">Parent's/Guardian's Full Name</th>
                             <th style="text-align:center">Child's Full Name</th>
                             <th style="text-align:center">Belongs to IP Group?</th>
                             <th style="text-align:center">Sex</th>
@@ -291,7 +291,7 @@
                             <th style="text-align:center">Date Measured</th>
                             <th style="text-align:center">Weight (kg)</th>
                             <th style="text-align:center">Height (cm)</th>
-                            <th style="text-align:center">Length (cm)</th>
+                            <th style="text-align:center">Length/Height (cm)</th>
                             <th style="text-align:center">Age in Months</th>
                             <th style="text-align:center">Weight for Age Status</th>
                             <th style="text-align:center">Height for Age Status</th>
@@ -588,8 +588,8 @@
                 function setLtHtStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
                 {
                     if (length <= severelyStuntedLimit) { result = "Severely Stunted"; statusClass = "bg-danger"; }
-                    else if (length >= stuntedLimit && height <= normalLimit) { result = "Stunted"; statusClass = "bg-warning"; }
-                    else if (length >= normalLimit && height <= tallLimit) { result = "Normal"; statusClass = "bg-success"; }
+                    else if (length >= stuntedLimit && length <= normalLimit) { result = "Stunted"; statusClass = "bg-warning"; }
+                    else if (length >= normalLimit && length <= tallLimit) { result = "Normal"; statusClass = "bg-success"; }
                     else if (length > tallLimit) { result = "Tall"; statusClass = "bg-primary"; }
                 }
 
@@ -629,7 +629,7 @@
                     },
 
                     // "searching": false,
-                    "ordering": false, // - Dev RJ (removes asc/desc button)
+                    "ordering": true, // - Dev RJ (removes asc/desc button)
                     "paging": false, // - Dev RJ (removes pagination info: number of entries; prev/next page button)
                     "info": false, // - Dev RJ (removes entries info)
 
