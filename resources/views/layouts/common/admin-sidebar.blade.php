@@ -89,18 +89,27 @@
 
 
                 {{-- REPORTS --}}
-                {{-- <li class="nav-small-cap">
+                <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">REPORTS</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/generate_reports" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/graph_reports" aria-expanded="false">
                         <span>
-                            <i class="ti ti-file-analytics"></i>
+                            <i class="fa-solid fa-chart-pie"></i>
                         </span>
-                        <span class="hide-menu">Generate Report</span>
+                        <span class="hide-menu">Graph Reports</span>
                     </a>
-                </li> --}}
+                </li> 
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/reports_overview" aria-expanded="false">
+                        <span>
+                            <i class="fa-solid fa-signal"></i>
+                        </span>
+                        <span class="hide-menu">Reports Overview</span>
+                    </a>
+                </li> 
+
 
                 {{-- EXTRAS --}}
                 <li class="nav-small-cap">
@@ -121,6 +130,14 @@
                             <i class="ti ti-archive"></i>
                         </span>
                         <span class="hide-menu">FAQs</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/categories" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-layout-grid"></i>
+                        </span>
+                        <span class="hide-menu">Categories / Legends</span>
                     </a>
                 </li>
 

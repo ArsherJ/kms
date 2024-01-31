@@ -92,10 +92,19 @@ Route::group(['middleware' => ['web']], function () {
                 return view('admin/faq/faq', ['page_title' => 'FAQs']);
             })->name('admin_faq');
 
+            // ------------CATEGORIES--------------- //
+            Route::get('/categories', function () {
+                return view('admin/categories/categories', ['page_title' => 'Categories / Legends']);
+            })->name('admin_categories');
+
             // ------------GENERATE REPORTS--------------- //
-            Route::get('/generate_reports', function () {
-                return view('admin/generate-report/generate-report', ['page_title' => 'Generate Reports']);
-            })->name('admin_generate_report');
+            Route::get('/graph_reports', function () {
+                return view('admin/generate-report/graph-reports', ['page_title' => 'Graph Reports']);
+            })->name('admin_graph_reports');
+
+            Route::get('/reports_overview', function () {
+                return view('admin/generate-report/reports-overview', ['page_title' => 'Reports Overview']);
+            })->name('admin_reports_overview');
         }
     );
 
