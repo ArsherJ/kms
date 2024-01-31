@@ -75,7 +75,8 @@ class IndividualRecordController extends Controller
             'sex' => 'required',
             'birthdate' => 'required',
             'height' => 'required',
-            'weight' => 'required'
+            'weight' => 'required',
+            'length' => 'required',
         ]);
 
         return IndividualRecord::create($request->all());
@@ -88,7 +89,6 @@ class IndividualRecordController extends Controller
 
     public function edit(IndividualRecord $individual_record)
     {
-        
     }
 
     public function update(UpdateIndividualRecordRequest $request, IndividualRecord $individual_record, $id)

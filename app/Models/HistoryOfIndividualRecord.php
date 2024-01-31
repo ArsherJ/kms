@@ -14,13 +14,33 @@ class HistoryOfIndividualRecord extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'individual_record_id',
-        'height',
-        'weight',
-        'bmi',
-        'bmi_category',
-        'date_recorded',
+    protected $fillable =
+    [
+        // Original User Input Properties:
+            // 'individual_record_id',
+            // 'height',
+            // 'weight',
+            // 'bmi',
+            // 'bmi_category',
+            // 'date_recorded',
+        
+            'child_number',
+            'address',
+            'mother_last_name',
+            'mother_first_name',
+            'child_last_name',
+            'child_first_name',
+            'ip_group',
+            'sex',
+            'birthdate',
+            'date_measured',
+            'height',
+            'weight',
+            'length',
+            'age_in_months',
+            'weight_for_age_status',
+            'height_for_age_status',
+            'lt_ht_status'
     ];
 
     public function individual_records()
@@ -41,16 +61,10 @@ class HistoryOfIndividualRecord extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::creating(function ($model) {
-            $model->created_by = Auth::id();
-        });
-
-        static::updating(function ($model) {
-            $model->updated_by = Auth::id();
-        });
+        static::creating(function ($model) { $model->created_by = Auth::id(); });
+        static::updating(function ($model) { $model->updated_by = Auth::id(); });
     }
 
-    // AUTO LOADING RELATIONSHIP
+    // Auto-Load of Relationship
     protected $with = ["individual_records", "createdByUser"];
 }
