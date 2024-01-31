@@ -39,17 +39,10 @@
                         <span>
                             <i class="ti ti-bowl"></i>
                         </span>
-                        <span class="hide-menu">Feeding Programs</span>
+                        <span class="hide-menu">Activities</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/announcements" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-speakerphone"></i>
-                        </span>
-                        <span class="hide-menu">Announcements</span>
-                    </a>
-                </li>
+                
 
                 {{-- RECORDS --}}
                 <li class="nav-small-cap">
@@ -78,14 +71,14 @@
                         <span class="hide-menu">User Accounts</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/roles" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-check"></i>
                         </span>
                         <span class="hide-menu">Roles</span>
                     </a>
-                </li>
+                </li> -->
 
 
                 {{-- REPORTS --}}

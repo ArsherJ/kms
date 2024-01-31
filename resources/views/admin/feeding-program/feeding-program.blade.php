@@ -126,10 +126,10 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="card-title fw-semibold">List of Feeding Program/s</h5>
+                <h5 class="card-title fw-semibold">List of Activities/s</h5>
                 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#create_card"
                     aria-expanded="false" aria-controls="create_card">Add
-                    {{ Str::singular($page_title) }} <span><i class="ti ti-plus"></i></span></button>
+                    Activities <span><i class="ti ti-plus"></i></span></button>
             </div>
             <table class="table table-hover table-borderless" id="dataTable" style="width:100%">
                 <thead>
@@ -362,7 +362,7 @@
             // VIEW FUNCTION
             $(document).on('click', '.btnView', function() {
                 var id = this.id;
-                var redirect_to = APP_URL + '/admin/feeding_programs/feeding_program/' + id;
+                var redirect_to = APP_URL + '/admin/activities/activity/' + id;
 
                 window.location = redirect_to;
             })
