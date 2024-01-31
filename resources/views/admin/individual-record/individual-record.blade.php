@@ -264,7 +264,7 @@
                 <div>
                     <button type="button" class="btn btn-warning mx-2 btnReweigh">Reweighing 
                         <span><i class="ti ti-plus"></i></span></button>
-                    <button type="button" class="btn btn-success mx-2 btnUpload">Add Multiple Record 
+                    <button type="button" class="btn btn-success mx-2 btnUpload">Add Multiple Record
                         <span><i class="ti ti-plus"></i></span></button>
                     <button type="button" class="btn btn-primary mx-2" data-toggle="collapse"
                         data-target="#create_card" aria-expanded="false" aria-controls="create_card">Add
@@ -302,7 +302,7 @@
 
                     <tbody></tbody>
 
-                    <!-- <tfoot>
+                    <tfoot>
                         <tr class="text-dark">
                             <th class="not-export-column">ID</th>
                             <th class="not-export-column">Created At</th>
@@ -321,7 +321,7 @@
                             <th>Height for Age Status</th>
                             <th>Weight for Lt/Ht Status</th>
                         </tr>
-                    </tfoot> -->
+                    </tfoot>
                     
                 </table>
             </div>
@@ -661,7 +661,7 @@
                             data: "address",
                         },
                         {
-                            data: "null", visible: true,
+                            data: "null", visible: true, 
                             render: function(data, type, row)
                             {
                                 var motherFullName = row.mother_last_name.toUpperCase() + ', ' + row.mother_first_name;
