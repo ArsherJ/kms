@@ -17,7 +17,7 @@ Before you can run the KMS application locally, you need to have the following s
     ```
 3. Clone the KMS repository using Git:
     ```
-    git clone https://github.com/ArsherJ/kms.git
+    git clone https://github.com/ArsherJ/kms
     ```
 
 ### Option 2 (via Manual Download):
