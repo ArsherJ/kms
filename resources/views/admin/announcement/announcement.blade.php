@@ -1,4 +1,4 @@
-@extends('layouts.app')
+<!-- @extends('layouts.app')
 
 {{-- SIDEBAR --}}
 @section('sidebar')
@@ -135,7 +135,7 @@
             const APP_URL = "{{ env('APP_URL') }}"
             const API_URL = "{{ env('API_URL') }}"
             const API_TOKEN = localStorage.getItem("API_TOKEN")
-            const BASE_API = API_URL + '/announcements'
+            const BASE_API = API_URL + '/announcementsssss'
 
             // DATATABLE FUNCTION
             function dataTable() {
@@ -475,4 +475,4 @@
         })
         // END OF SCRIPT TAG
     </script>
-@endsection
+@endsection -->

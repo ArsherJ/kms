@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <!--====== Title ======-->
-    <title>KMS | Home</title>
+    <title>CMS | Home</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,6 @@
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="/">
-                                <h2>KMS</h2>
                                 {{-- <img src="{{ asset('landing_page_assets/images/logo.png') }}" alt="Logo"> --}}
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -107,12 +106,10 @@
                     <div class="col-lg-7">
                         <div class="header-hero-content">
                             <h1 class="hero-title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                                <b>KA-In</b> <span>Monitoring</span> System <b></b>
+                                <b>LittleLife: Children Nutrition Management System</b> <b></b>
                             </h1>
-                            <p class="text wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">A system that
-                                employs a monitoring system to store all data in a database for the purpose of
-                                overseeing individuals' information, monitoring their records, and evaluating their
-                                health.
+                            <p class="text wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">Nutrition workers in the community can use this system to record, 
+                                evaluate, and summarize results from the OPT Plus, an annual assessment of children's nutritional status conducted in barangays nationwide from 0 to 59 months of age.
                         </div> <!-- header hero content -->
                     </div>
                 </div> <!-- row -->
@@ -136,8 +133,8 @@
                 <div class="col-lg-9">
                     <div class="about-title text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                         <h6 class="welcome">WELCOME</h6>
-                        <h3 class="title"><span>Discover the convenience of real-time BMI monitoring</span>, empowering
-                            you to take control of your health and fitness journey effortlessly.</h3>
+                        <h3 class="title"><span>Nutrition workers</span> equipped with a powerful tool 
+                        that makes monitoring children's health faster, easier, and more insightful.</h3>
                     </div>
                 </div>
             </div> <!-- row -->
@@ -160,30 +157,12 @@
 
     <!--====== ABOUT PART ENDS ======-->
 
-    {{-- ANNOUNCEMENTS --}}
-    <section id="announcement_section" class="contact-area pt-120 pb-120">
-        <div class="announcement-container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <div class="container">
-                        <h2 class="text-center section-title">Announcements</h2>
-                        <div id="announcementContainer">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- row -->
-        </div> <!-- container -->
-    </section>
-
-
-    {{-- FEEDING PROGRAM --}}
+    {{-- ACTIVITIES --}}
     <section id="feeding_program_section" class="contact-area pt-120 pb-120">
         <div class="event-container">
             <div class="col-lg-12">
                 <div class="feeding-program-container">
-                    <h2 style="" class="text-center section-title">Feeding Programs</h2>
+                    <h2 style="" class="text-center section-title">Acvtivities</h2>
                     <div id="feedingProgramContainer" class="m-4">
 
                     </div>
@@ -253,7 +232,7 @@
     <!--====== CONTACT PART ENDS ======-->
 
     <!--====== FOOTER PART START ======-->
-
+    
     <footer id="footer" class="footer-area bg_cover"
         style="background-image: url(landing_page_assets/images/footer-bg.jpg)">
         <div class="container">
@@ -262,11 +241,11 @@
                     <div class="col-lg-4 col-sm-6 order-sm-1 order-lg-1">
                         <div class="footer-about pt-40">
                             <div class="footer-title">
-                                <h5 class="title">KA-In Monitoring System</h5>
+                                <h5 class="title">Little Life</h5>
                             </div>
-                            <p class="text text-dark">A system that employs a monitoring system to store all data in a database
-                                for the purpose of overseeing individuals' information, monitoring their records, and
-                                evaluating their health.</p>
+                            <p class="text" style="color: gray;">Nutrition workers in the community can use this system to record, evaluate, 
+                                and summarize results from the OPT Plus, an annual assessment of children's nutritional status conducted in 
+                                barangays nationwide from 0 to 59 months of age.</p>
                         </div> <!-- footer about -->
                     </div>
                     <div class="col-lg-4 col-sm-6 order-sm-3 order-lg-2">
@@ -275,24 +254,22 @@
                                 <h5 class="title">Services</h5>
                             </div>
                             <ul>
-                                <li><a href="#">Individual Records Monitoring</a></li>
-                                <li><a href="#">BMI Categorized</a></li>
-                                <li><a href="#">Schedule a Program</a></li>
-                                <li><a href="#"></a></li>
+                                <li><a href="#">Automatic Calculation of Child Growth Standard focusing on height for age, weight for age, and weight for length/height.</a></li>
+                                <li><a href="#">Instant Growth Charts</a></li>
+                                <li><a href="#">Identify Trends and Patterns</a></li>
+                                <li><a href="#"></a>Monthly Monitoring</li>
                             </ul>
                         </div> <!-- footer link -->
                     </div>
                     <div class="col-lg-4 col-sm-6 order-sm-4 order-lg-3">
-                        <div class="footer-link pt-40">
+                        <div class="footer-about pt-40">
                             <div class="footer-title">
                                 <h5 class="title">About Us</h5>
                             </div>
-                            <ul>
-                                <li><a href="#">Students</a></li>
-                                <li><a href="#">Development Team</a></li>
-                                <li><a href="#">Technological University of the Philippines, Manila</a></li>
-                            </ul>
-                        </div> <!-- footer link -->
+                            <p class="text" style="color: gray;">We are a group of students from the Technological University of 
+                            the Philippines - Manila, driven by a common goal: to improve the lives of children in our barangay 
+                            Through our capstone project, we've poured our hearts and minds into creating the LittleLife. </p>
+                        </div> <!-- footer about -->
                     </div>
 
                 </div> <!-- row -->
