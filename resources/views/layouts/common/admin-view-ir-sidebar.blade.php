@@ -35,11 +35,11 @@
                     <span class="hide-menu">POSTING</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/feeding_programs" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/activities" aria-expanded="false">
                         <span>
                             <i class="ti ti-bowl"></i>
                         </span>
-                        <span class="hide-menu">Feeding Programs</span>
+                        <span class="hide-menu">Activity</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

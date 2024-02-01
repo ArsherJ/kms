@@ -35,11 +35,11 @@
 
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="required-input" style="font-weight:bold">Mother's Last Name:</label>
+                                <label class="required-input" style="font-weight:bold">Parent's/Guardian's Last Name:</label>
                                 <input type="text" class="form-control" id="mother_last_name_edit" name="mother_last_name_edit" tabindex="1" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="required-input" style="font-weight:bold">Mother's First Name:</label>
+                                <label class="required-input" style="font-weight:bold">Parent's/Guardian's First Name:</label>
                                 <input type="text" class="form-control" id="mother_first_name_edit" name="mother_first_name_edit" tabindex="1" required>
                             </div>
                         </div>
@@ -61,12 +61,8 @@
 
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Belongs to IP Group:</label>
-                                <select class="form-control" id="ip_group_edit" name="ip_group_edit" tabindex="1">
-                                    <option value="" disabled selected>Select Class</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
+                                <label class="required-input" style="font-weight:bold">Date of Birth:</label>
+                                <input type="date" class="form-control" id="birthdate_edit" name="birthdate_edit" tabindex="1" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Sex:</label>
@@ -77,8 +73,12 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Date of Birth:</label>
-                                <input type="date" class="form-control" id="birthdate_edit" name="birthdate_edit" tabindex="1" required>
+                                <label class="required-input" style="font-weight:bold">Belongs to IP Group:</label>
+                                <select class="form-control" id="ip_group_edit" name="ip_group_edit" tabindex="1">
+                                    <option value="" disabled selected>Select Class</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
                             </div>
                         </div>
 
@@ -203,12 +203,8 @@
 
                         <div class="row" style="margin-top:-15px">
                             <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Belongs to IP Group:</label>
-                                <select class="form-control" id="ip_group" name="ip_group" tabindex="1" required>
-                                    <option value="" disabled selected>Select Class</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
+                                <label class="required-input" style="font-weight:bold">Date of Birth:</label>
+                                <input type="date" class="form-control" id="birthdate" name="birthdate" tabindex="1" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Sex:</label>
@@ -219,8 +215,12 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Date of Birth:</label>
-                                <input type="date" class="form-control" id="birthdate" name="birthdate" tabindex="1" required>
+                                <label class="required-input" style="font-weight:bold">Belongs to IP Group:</label>
+                                <select class="form-control" id="ip_group" name="ip_group" tabindex="1" required>
+                                    <option value="" disabled selected>Select Class</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
                             </div>
                         </div>
 
@@ -244,8 +244,8 @@
                     </div>
 
                     <div class="card-footer d-flex justify-content-between" style="margin-top:-15px">
-                        <button type="button" class="btn btn-light" data-toggle="collapse" data-target="#create_card"
-                            id="create_cancel_btn" style="border:solid 1px gray"> Cancel </button>
+                        <button type="button" class="btn btn-light" data-toggle="collapse" 
+                            data-target="#create_card" style="border:solid 1px gray"> Cancel </button>
                         <button type="submit" class="btn btn-success ml-1" id="create_btn"> Create New Record </button>
                     </div>
                 </form>
@@ -262,11 +262,11 @@
                 <h5 class="card-title fw-semibold">► List of Individual Record/s</h5>
 
                 <div>
-                    <button type="button" class="btn btn-warning mx-2 btnReweigh">Reweighing 
+                    <button type="button" class="btn btn-info mx-2 btnReweigh">Reweighing 
                         <span><i class="ti ti-plus"></i></span></button>
-                    <button type="button" class="btn btn-success mx-2 btnUpload">Add Multiple Record
+                    <button type="button" class="btn btn-dark mx-2 btnUpload">Add Multiple Record 
                         <span><i class="ti ti-plus"></i></span></button>
-                    <button type="button" class="btn btn-primary mx-2" data-toggle="collapse"
+                    <button type="button" class="btn btn-dark mx-2" data-toggle="collapse"
                         data-target="#create_card" aria-expanded="false" aria-controls="create_card">Add
                         {{ Str::singular($page_title) }} <span><i class="ti ti-plus"></i></span></button>
                 </div>
@@ -275,28 +275,30 @@
             
             <div class="table-responsive">
                 <table class="table table-hover table-sm table-borderless" id="dataTable"
-                    style="width:250%; table-layout:fixed; text-align:center">
+                    style="width: 265%; table-layout:fixed; text-align:center; border:1px solid black;">
                 
                     <thead>
                         <tr class="text-dark">
-                            <th class="not-export-column">ID</th>
-                            <th class="not-export-column">Created At</th>
-                            <th style="text-align:center">Sequence Number</th>
-                            <th style="text-align:center">Child's Residence</th>
-                            <th style="text-align:center">Parent's/Guardian's Full Name</th>
-                            <th style="text-align:center">Child's Full Name</th>
-                            <th style="text-align:center">Belongs to IP Group?</th>
-                            <th style="text-align:center">Sex</th>
-                            <th style="text-align:center">Date of Birth</th>
-                            <th style="text-align:center">Date Measured</th>
-                            <th style="text-align:center">Weight (kg)</th>
-                            <th style="text-align:center">Height (cm)</th>
-                            <th style="text-align:center">Length/Height (cm)</th>
-                            <th style="text-align:center">Age in Months</th>
-                            <th style="text-align:center">Weight for Age Status</th>
-                            <th style="text-align:center">Height for Age Status</th>
-                            <th style="text-align:center">LT/HT Status</th>
-                            <th class="not-export-column" style="text-align:center">Action Buttons</th>
+                                <!-- <th class="not-export-column">ID</th> -->
+                                <!-- <th class="not-export-column">Created At</th> -->
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">ID Number</th>
+                            <th class="bg-dark" style="width:20%; text-align:center; color: white; border-bottom:1px solid black">Address or Location of Child's Residence</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Last Name of Parent/Guardian</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">First Name of Parent/Guardian</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Last Name of Child</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">First Name of Child</th>
+                            <th class="bg-dark" style="width:5%; text-align:center; color: white; border-bottom:1px solid black">Sex</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Age in Months</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Belongs to IP Group?</th>
+                                <!-- <th style="text-align:center">Date of Birth</th> -->
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Date Measured</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Weight (kg)</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Height (cm)</th>
+                                <!-- <th style="text-align:center">Length</th> -->
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Weight for Age Status</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Height for Age Status</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Length/Height Status</th>
+                            <th class="bg-dark not-export-column" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Action Buttons</th>
                         </tr>
                     </thead>
 
@@ -631,6 +633,30 @@
                         if (sex === "Male") { setHeightForAgeStatus(61.1, 61.2, 63.3, 72.0); }
                         else if (sex === "Female") { setHeightForAgeStatus(58.8, 58.9, 61.2, 70.4); }
                         break;
+                    case 7:
+                        if (sex === "Male") { setHeightForAgeStatus(62.6, 62.7, 64.8, 73.6); }
+                        else if (sex === "Female") { setHeightForAgeStatus(60.2, 60.3, 62.7, 72.0); }
+                        break;
+                    case 8:
+                        if (sex === "Male") { setHeightForAgeStatus(63.9, 64.0, 66.2, 75.1); }
+                        else if (sex === "Female") { setHeightForAgeStatus(61.6, 61.7, 64.0, 73.6); }
+                        break;
+                    case 9:
+                        if (sex === "Male") { setHeightForAgeStatus(65.1, 65.2, 67.5, 76.6); }
+                        else if (sex === "Female") { setHeightForAgeStatus(62.8, 62.9, 65.3, 75.1); }
+                        break;
+                    case 10:
+                        if (sex === "Male") { setHeightForAgeStatus(66.3, 66.4, 68.7, 78.0); }
+                        else if (sex === "Female") { setHeightForAgeStatus(64.0, 64.1, 66.5, 76.5); }
+                        break;
+                    case 11:
+                        if (sex === "Male") { setHeightForAgeStatus(67.5, 67.6, 69.9, 79.3); }
+                        else if (sex === "Female") { setHeightForAgeStatus(65.1, 65.2, 67.7, 77.9); }
+                        break;
+                    case 12:
+                        if (sex === "Male") { setHeightForAgeStatus(68.5, 68.6, 71.0, 80.6); }
+                        else if (sex === "Female") { setHeightForAgeStatus(66.2, 66.3, 68.9, 79.3); }
+                        break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
@@ -679,6 +705,30 @@
                         if (sex === "Male") { setLtHtStatus(61.1, 61.2, 63.3, 72.0); }
                         else if (sex === "Female") { setLtHtStatus(58.8, 58.9, 61.2, 70.4); }
                         break;
+                    case 7:
+                        if (sex === "Male") { setHeightForAgeStatus(62.6, 62.7, 64.8, 73.6); }
+                        else if (sex === "Female") { setHeightForAgeStatus(60.2, 60.3, 62.7, 72.0); }
+                        break;
+                    case 8:
+                        if (sex === "Male") { setHeightForAgeStatus(63.9, 64.0, 66.2, 75.1); }
+                        else if (sex === "Female") { setHeightForAgeStatus(61.6, 61.7, 64.0, 73.6); }
+                        break;
+                    case 9:
+                        if (sex === "Male") { setHeightForAgeStatus(65.1, 65.2, 67.5, 76.6); }
+                        else if (sex === "Female") { setHeightForAgeStatus(62.8, 62.9, 65.3, 75.1); }
+                        break;
+                    case 10:
+                        if (sex === "Male") { setHeightForAgeStatus(66.3, 66.4, 68.7, 78.0); }
+                        else if (sex === "Female") { setHeightForAgeStatus(64.0, 64.1, 66.5, 76.5); }
+                        break;
+                    case 11:
+                        if (sex === "Male") { setHeightForAgeStatus(67.5, 67.6, 69.9, 79.3); }
+                        else if (sex === "Female") { setHeightForAgeStatus(65.1, 65.2, 67.7, 77.9); }
+                        break;
+                    case 12:
+                        if (sex === "Male") { setHeightForAgeStatus(68.5, 68.6, 71.0, 80.6); }
+                        else if (sex === "Female") { setHeightForAgeStatus(66.2, 66.3, 68.9, 79.3); }
+                        break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
@@ -720,73 +770,60 @@
                     },
                     "columns":
                     [   
+                            // {
+                            //     data: "id"
+                            // },
+                            // {
+                            //     data: "created_at"
+                            // },
                         {
-                            data: "id"
+                            data: "child_number", visible: true,
+                            // render: function(data, type, row)
+                            // {
+                            //     var childNumber = row.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 3);
+                            //     return childNumber;
+                            // }
                         },
                         {
-                            data: "created_at"
+                            data: "address", visible: true,
                         },
                         {
-                            data: "id",
-                        },
-                        {
-                            data: "address",
+                            data: "null", visible: true,
+                            render: function(data, type, row)
+                            {
+                                var motherLastName = row.mother_last_name;
+                                return motherLastName;
+                            }
                         },
                         {
                             data: "null", visible: true, 
                             render: function(data, type, row)
                             {
-                                var motherFullName = row.mother_last_name.toUpperCase() + ', ' + row.mother_first_name;
-                                return motherFullName;
+                                var motherFirstName = row.mother_first_name;
+                                return motherFirstName;
                             }
                         },
                         {
                             data: "null", visible: true,
                             render: function(data, type, row)
                             {
-                                var childFullName = row.child_last_name.toUpperCase() + ', ' + row.child_first_name;
-                                return childFullName;
+                                var childLastName = row.child_last_name;
+                                return childLastName;
                             }
                         },
                         {
-                            data: "ip_group", visible: true
+                            data: "null", visible: true,
+                            render: function(data, type, row)
+                            {
+                                var childFirstName = row.child_first_name;
+                                return childFirstName;
+                            }
                         },
                         {
-                            data: "sex",
+                            data: "sex", visible: true,
                         },
                         {
                             data: "birthdate", visible: true,
-                            render: function(data, type, row)
-                            {
-                                return moment(data).format('MMMM D, YYYY')
-                            }
-                        },
-                        {
-                            data: "date_measured", visible: true
-                        },
-                        {
-                            data: "weight",
-                            render: function(data, type, row)
-                            {
-                                return data + "kg"
-                            }
-                        },
-                        {
-                            data: "height",
-                            render: function(data, type, row)
-                            {
-                                return data + "cm"
-                            }
-                        },
-                        {
-                            data: "length",
-                            render: function(data, type, row)
-                            {
-                                return data + "cm"
-                            }
-                        },
-                        {
-                            data: "birthdate",
                             render: function(data, type, row)
                             {
                                 var birthdate = moment(data, 'YYYY-MM-DD');
@@ -797,7 +834,41 @@
                             }
                         },
                         {
-                            data: "weight_for_age_status",
+                            data: "ip_group", visible: true
+                        },
+                            // {
+                            //     data: "birthdate", visible: true,
+                            //     render: function(data, type, row)
+                            //     {
+                            //         return moment(data).format('MMMM D, YYYY')
+                            //     }
+                            // },
+                        {
+                            data: "date_measured", visible: true
+                        },
+                        {
+                            data: "weight", visible: true,
+                            render: function(data, type, row)
+                            {
+                                return data + "kg"
+                            }
+                        },
+                        {
+                            data: "height", visible: true,
+                            render: function(data, type, row)
+                            {
+                                return data + "cm"
+                            }
+                        },
+                            // {
+                            //     data: "length",
+                            //     render: function(data, type, row)
+                            //     {
+                            //         return data + "cm"
+                            //     }
+                            // },
+                        {
+                            data: "weight_for_age_status", visible: true,
                             render: function(data, type, row)
                             {
                                 const ageInMonths = row.age_in_months;
@@ -808,7 +879,7 @@
                             }
                         },
                         {
-                            data: "height_for_age_status",
+                            data: "height_for_age_status", visible: true,
                             render: function(data, type, row)
                             {
                                 const ageInMonths = row.age_in_months;
@@ -819,7 +890,7 @@
                             }
                         },
                         {
-                            data: "lt_ht_status",
+                            data: "lt_ht_status", visible: true,
                             render: function(data, type, row)
                             {
                                 const ageInMonths = row.age_in_months;
@@ -830,7 +901,7 @@
                             }
                         },
                         {
-                            data: "deleted_at",
+                            data: "deleted_at", visible: true,
                             render: function(data, type, row)
                             {
                                 if (data == null)
@@ -961,8 +1032,6 @@
             //         // form_data.bmi_category = check_bmi_category(bmi);
 
             //     form_data.status = 'Active';
-
-            //     form_data.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 9);
 
             //     $.ajax
             //     ({
