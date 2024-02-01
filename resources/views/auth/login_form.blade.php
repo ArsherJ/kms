@@ -8,9 +8,9 @@
                     <div class="card mb-0">
                         <div class="card-body">
                             <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                <img src={{ asset('import/assets/images/logos/kms-logo.png') }} width="180" alt="">
+                                <img src={{ asset('import/assets/images/logos/cms-logo.png') }} width="180" alt="">
                             </a>
-                            <p class="text-center">Ka-IN Monitoring System</p>
+                            <p class="text-center">LittleLife: Children Nutrition Monitoring System</p>
                             <form id="loginForm">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>

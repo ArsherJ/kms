@@ -10,9 +10,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class HistoryOfIndividualRecordController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return HistoryOfIndividualRecord::all();
@@ -27,51 +24,41 @@ class HistoryOfIndividualRecordController extends Controller
             ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreHistoryOfIndividualRecordRequest $request)
     {
 
-        $request->validate([
-            'individual_record_id' => 'required',
+        $request->validate
+        ([
+            'child_number' => 'required',
+            'address' => 'required',
+            'mother_last_name' => 'required',
+            'mother_first_name' => 'required',
+            'child_last_name' => 'required',
+            'child_first_name' => 'required',
+            'ip_group' => 'required',
+            'sex' => 'required',
+            'birthdate' => 'required',
             'height' => 'required',
             'weight' => 'required',
-            'bmi' => 'required',
-            'bmi_category' => 'required',
-            'date_recorded' => 'required',
+            'length' => 'required',
         ]);
 
         return HistoryOfIndividualRecord::create($request->all());
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(HistoryOfIndividualRecord $history_of_individual_records, $id)
     {
         return HistoryOfIndividualRecord::find($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(HistoryOfIndividualRecord $history_of_individual_records)
     {
-        //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateHistoryOfIndividualRecordRequest $request, HistoryOfIndividualRecord $history_of_individual_records, $id)
     {
         $history_of_individual_records = HistoryOfIndividualRecord::find($id);
@@ -80,9 +67,6 @@ class HistoryOfIndividualRecordController extends Controller
         return $history_of_individual_records;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(HistoryOfIndividualRecord $history_of_individual_records, $id)
     {
         $history_of_individual_records = HistoryOfIndividualRecord::find($id);

@@ -92,6 +92,11 @@ Route::group(['middleware' => ['web']], function () {
                 return view('admin/faq/faq', ['page_title' => 'FAQs']);
             })->name('admin_faq');
 
+            // ------------CATEGORIES--------------- //
+            Route::get('/categories', function () {
+                return view('admin/categories/categories', ['page_title' => 'Categories / Legends']);
+            })->name('admin_categories');
+
             // ------------GENERATE REPORTS--------------- //
             Route::get('/generate_reports', function () {
                 return view('admin/generate-report/generate-report', ['page_title' => 'Generate Reports']);

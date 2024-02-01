@@ -4,8 +4,8 @@
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-center">
             <a href="{{ env('APP_URL') }}/admin/dashboard" class="text-nowrap logo-img">
-                <h5>Ka-IN Monitoring System</h5>
-                {{-- <img src="{{ asset('import/assets/images/logos/kms-logo.png') }}" width="200" alt="" /> --}}
+                <h4>LittleLife</h4>
+                {{-- <img src="{{ asset('import/assets/images/logos/cms-logo.png') }}" width="200" alt="" /> --}}
             </a>
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                 <i class="ti ti-x fs-8"></i>
@@ -121,6 +121,14 @@
                             <i class="ti ti-archive"></i>
                         </span>
                         <span class="hide-menu">FAQs</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/categories" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-layout-grid"></i>
+                        </span>
+                        <span class="hide-menu">Categories / Legends</span>
                     </a>
                 </li>
 

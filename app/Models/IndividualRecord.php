@@ -7,34 +7,51 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use App\Models\FeedingProgramIRLogs;
 
 class IndividualRecord extends Model
 {
-
     use HasFactory, SoftDeletes;
 
-    // FILLABLES
-    protected $fillable = [
-        'id_number',
-        'first_name',
-        'middle_name',
-        'last_name',
-        'gender',
+    protected $fillable =
+    [
+        // Original User Input Properties:
+            // 'id_number',
+            // 'first_name',
+            // 'middle_name',
+            // 'last_name',
+            // 'gender',
+            // 'birthdate',
+            // 'height',
+            // 'weight',
+            // 'bmi',
+            // 'bmi_category',
+            // 'status',
+            // 'id_number',
+
+        'child_number',
+        'address',
+        'mother_last_name',
+        'mother_first_name',
+        'child_last_name',
+        'child_first_name',
+        'ip_group',
+        'sex',
         'birthdate',
+        'date_measured',
         'height',
         'weight',
-        'bmi',
-        'bmi_category',
-        'status',
-        'id_number',
+        'length',
+        'age_in_months',
+        'weight_for_age_status',
+        'height_for_age_status',
+        'lt_ht_status'
     ];
 
-    // DATES
+    // Dates (?)
     protected $dates = ['deleted_at'];
 
-    // RELATIONSHIP
+    // Table Relationships
     public function feeding_program_ir_logs()
     {
         return $this->hasMany(FeedingProgramIRLogs::class, 'individual_record_id')->without('history_of_indivdual_records, individual_records', 'feeding_programs');
@@ -44,7 +61,6 @@ class IndividualRecord extends Model
     {
         return $this->hasMany(HistoryOfIndividualRecord::class, 'history_of_individual_record_id')->without('history_of_indivdual_records, individual_records', 'feeding_programs');
     }
-
 
     public function createdByUser()
     {
@@ -59,16 +75,10 @@ class IndividualRecord extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::creating(function ($model) {
-            $model->created_by = Auth::id();
-        });
-
-        static::updating(function ($model) {
-            $model->updated_by = Auth::id();
-        });
+        static::creating(function ($model) { $model->created_by = Auth::id(); });
+        static::updating(function ($model) { $model->updated_by = Auth::id(); });
     }
 
-    // AUTO LOADING RELATIONSHIP
+    // Auto-Load of Relationship
     protected $with = ["createdByUser", "updatedByUser"];
 }

@@ -17,7 +17,7 @@ Before you can run the KMS application locally, you need to have the following s
     ```
 3. Clone the KMS repository using Git:
     ```
-    git clone https://github.com/ArsherJ/kms.git
+    git clone https://github.com/ArsherJ/kms
     ```
 
 ### Option 2 (via Manual Download):
@@ -65,7 +65,7 @@ If you have already installed and set up the app, you can start it locally with 
     ```
 4. Open your web browser and navigate to the server address (by default, it's [http://127.0.0.1:8000](http://127.0.0.1:8000)) to access the KMS application.
 
-You have successfully installed, set up, and started the KMS (KA-In Monitoring System) application locally. Enjoy using it!
+You have successfully installed, set up, and started the KMS (LittleLife) application locally. Enjoy using it!
 
 
 ## Login at APP_URL/login to setup system
