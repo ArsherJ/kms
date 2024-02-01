@@ -708,7 +708,7 @@ function fetchAndDisplayImages(activityId) {
     });
 }
 
-fetchAndDisplayImages(3);
+fetchAndDisplayImages(1);
 // ----------------------------------------------------------------
 
             // FUNCTION CALLING
@@ -717,5 +717,3 @@ fetchAndDisplayImages(3);
         // END OF SCRIPT TAG    
     </script>
 @endsection
-
-

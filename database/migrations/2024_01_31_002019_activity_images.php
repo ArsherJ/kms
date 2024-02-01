@@ -1,40 +1,42 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up(): void
     {
-        Schema::create('activity_images', function (Blueprint $table)
-        {
-            $table->id();
-
-            $table->string('blob_image');
-
-            $table->unsignedBigInteger('activity_id');
-            $table->foreign('activity_id')->references('id')->on('feeding_programs')->onDelete('cascade');            
-            
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->softDeletes();
-        });
+        DB::statement('
+            CREATE TABLE activity_images (
+                id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                blob_image LONGBLOB,
+                activity_id BIGINT UNSIGNED,
+                created_at TIMESTAMP NULL DEFAULT NULL,
+                updated_at TIMESTAMP NULL DEFAULT NULL,
+                created_by BIGINT UNSIGNED NULL,
+                updated_by BIGINT UNSIGNED NULL,
+                deleted_at TIMESTAMP NULL DEFAULT NULL,
+                FOREIGN KEY (activity_id) REFERENCES feeding_programs(id) ON DELETE CASCADE,
+                FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE CASCADE
+            )
+        ');
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down(): void
     {
         Schema::dropIfExists('activity_images');
-
     }
 };
