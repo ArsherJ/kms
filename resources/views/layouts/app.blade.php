@@ -8,7 +8,7 @@
 
     {{-- CSS INCLUDES --}}
     @include('layouts.css-includes')
-
+    
 </head>
 
 <body>

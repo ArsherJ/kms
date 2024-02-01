@@ -304,7 +304,7 @@
 
                     <tbody></tbody>
 
-                    <!-- <tfoot>
+                    <tfoot>
                         <tr class="text-dark">
                             <th class="not-export-column">ID</th>
                             <th class="not-export-column">Created At</th>
@@ -323,7 +323,7 @@
                             <th>Height for Age Status</th>
                             <th>Weight for Lt/Ht Status</th>
                         </tr>
-                    </tfoot> -->
+                    </tfoot>
                     
                 </table>
             </div>
@@ -796,7 +796,7 @@
                             }
                         },
                         {
-                            data: "null", visible: true,
+                            data: "null", visible: true, 
                             render: function(data, type, row)
                             {
                                 var motherFirstName = row.mother_first_name;
