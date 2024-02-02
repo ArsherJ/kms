@@ -439,6 +439,49 @@
 
             fetchAnnouncement();
 
+            // Function to fetch and display images for a specific activity
+          // Function to fetch and display images for a specific activity
+            function fetchAndDisplayImages(activityId, containerId) {
+                $.ajax({
+                    url: '/upload/retrieve_blob.php?activity_id=' + activityId,
+                    type: 'GET',
+                    dataType: 'json', // Specify the expected data type
+                    success: function(data) {
+                        console.log("BASE64 IMAGES");
+
+                        // Check if data is null
+                        if (data === null) {
+                            console.error('Image data is null.');
+                            return;
+                        }
+
+                        // Clear the container before appending new images
+                        var imageContainer = $(containerId).find('.image-container').empty();
+
+                        // Iterate through the images and create img elements
+                        for (var i = 0; i < data.length; i++) {
+                            console.log("Image " + (i + 1) + ":", data[i]);
+
+                            var imgElement = $('<img>').attr({
+                                'src': 'data:image/jpeg;base64,' + data[i],
+                                'class': 'img-fluid m-1',
+                            });
+
+                            // Append the img element to the specified container
+                            imageContainer.append(imgElement);
+                        }
+
+                        // Toggle the visibility of the container
+                        $(containerId).slideToggle();
+                    },
+                    error: function(error) {
+                        console.error('Error fetching images:', error);
+                    }
+                });
+            }
+
+
+            // Call the fetchFeedingProgram function
             function fetchFeedingProgram() {
                 let form_url = API_URL + "/feeding_programs/published";
 
@@ -457,29 +500,60 @@
                         console.log(data)
 
                         data.forEach((el) => {
-                            html_content += `<div class="event-card" >
-                                                    <div class="left-30">
-                                                        <div class="date-time dt1">
-                                                            <p id="date_of_program" class="date">${moment(el.date_of_program).format('ll')}</p>
-                                                            <p id="time_of_program" class="time">${moment(el.date_of_program + " " + el.time_of_program).format('LT')}</p>
-                                                        </div>
+                            html_content += `
+                                            <style>
+                                                .activity-images-container .image-container {
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    flex-wrap: wrap; /* Allow images to wrap to the next line if needed */
+                                                }
 
-                                                        <div class="event-info-70">
-                                                            <h3 id="title" class="event-name">
-                                                                ${el.title}
-                                                            </h3>
-                                                            <h4 id="location" class="event-detail">
-                                                                Location: ${el.location}
-                                                            </h4>
-                                                            <p id="description" class="event-detail">
-                                                                ${el.description}
-                                                            </p>
-                                                        </div>
+                                                .activity-images-container .image-container img {
+                                                    max-width: 100%; /* Set max-width to none for actual image size */
+                                                    height: auto; /* Maintain the aspect ratio of the images */
+                                                    margin: 5px; /* Add spacing between images */
+                                                    border: 1px solid #ddd; /* Add a border around images */
+                                                    border-radius: 5px; /* Add a border-radius for rounded corners */
+                                                }
+                                            </style>
+                                            <div class="event-card" data-activity-id="${el.id}">
+                                                <div class="left-30">
+                                                    <div class="date-time dt1">
+                                                        <p id="date_of_program" class="date">${moment(el.date_of_program).format('ll')}</p>
+                                                        <p id="time_of_program" class="time">${moment(el.date_of_program + " " + el.time_of_program).format('LT')}</p>
                                                     </div>
-                                                </div>`
+
+                                                    <div class="event-info-70">
+                                                        <h3 id="title" class="event-name">
+                                                            ${el.title}
+                                                        </h3>
+                                                        <h4 id="location" class="event-detail">
+                                                            Location: ${el.location}
+                                                        </h4>
+                                                        <p id="description" class="event-detail">
+                                                            ${el.description}
+                                                        </p>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <!-- Container for the images (initially hidden) -->
+                                            <div class="activity-images-container" id="eventImagesContainer-${el.id}" style="display: none;">
+                                                <div class="image-container"></div>
+                                            </div>`;
                         })
 
-                        $('#feedingProgramContainer').html(html_content)
+                        $('#feedingProgramContainer').html(html_content);
+
+                        // Add click event listener to each event card
+                        $('.event-card').on('click', function() {
+                            // Get the activity_id from the clicked event card
+                            var activityId = $(this).data('activity-id');
+                            
+                            // Fetch and display images for the clicked event card
+                            fetchAndDisplayImages(activityId, `#eventImagesContainer-${activityId}`);
+                        });
                     },
                     error: function(error) {
                         console.log(error)
@@ -491,11 +565,14 @@
                             });
                         }
                     }
-                    // ajax closing tag
-                })
+                });
             }
 
+            // Call the fetchFeedingProgram function
             fetchFeedingProgram();
+
+
+
 
 
             $(document).on('click', '.btnView', function() {
