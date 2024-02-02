@@ -52,6 +52,10 @@ Route::group(['middleware' => ['web']], function () {
                 return view('admin/feeding-program/view-feeding-program', ['page_title' => 'Feeding Programs', 'feeding_program_id' => $id]);
             })->name('admin_feeding_program_details');
 
+            // ------------CALENDAR--------------- //
+            Route::get('/calendar', function () {
+                return view('admin/calendar/calendar', ['page_title' => 'Calendar']);
+            })->name('admin_calendar');
 
             // ------------ANNOUNCEMENTS--------------- //
             Route::get('/announcements', function () {
