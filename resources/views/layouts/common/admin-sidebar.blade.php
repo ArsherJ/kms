@@ -43,6 +43,14 @@
                     </a>
                 </li>
                 
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/calendar" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-calendar"></i>
+                        </span>
+                        <span class="hide-menu">Calendar</span>
+                    </a>
+                </li>
 
                 {{-- RECORDS --}}
                 <li class="nav-small-cap">
