@@ -8,7 +8,7 @@ $dbname = "kms";
 // Make connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection and throw error if not available
+// Check connection and throw an error if not available
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -37,11 +37,18 @@ if (isset($_GET['activity_id'])) {
         die("Get result failed: " . $conn->error);
     }
 
-    // Fetch and output images
+    // Build an array to store base64-encoded images
+    $imagesArray = array();
+
+    // Fetch and add images to the array
     while ($row = $result->fetch_assoc()) {
         $imageData = $row['blob_image'];
-        echo base64_encode($imageData); // Output the base64-encoded image data
+        $imagesArray[] = base64_encode($imageData);
     }
+
+    // Output the array as a JSON string
+    header('Content-Type: application/json');
+    echo json_encode($imagesArray);
 
     // Close the database connection
     $conn->close();
