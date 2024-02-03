@@ -423,57 +423,48 @@
             // let tempBmiCategory;
             // let tempDateRecorded;
 
-            function storeHistoryOfIndividualRecord()
+            function storeHistoryOfIndividualRecord(data)
             {
 
                 let form_url = API_URL + '/history_of_individual_records'
-                let form_data =
-                {
-                    'individual_record_id': tempIndividualId,
-                    'height': tempHeight,
-                    'weight': tempWeight,
-                    // 'bmi': tempBmi,
-                    // 'bmi_category': tempBmiCategory,
-                    // 'date_recorded': tempDateRecorded,
-                    'created_by': authenticatedUserId,
-                }
-                console.log(form_data)
+                
 
-                $.ajax
-                ({
+                $.ajax({
                     url: form_url,
                     method: "POST",
-                    // data: JSON.stringify(form_data),
-                    data: form_data,
+                    data: JSON.stringify({
+                        individual_record_id: data.id, // Ensure you include this line
+                        child_number: data.child_number,
+                        address: data.address,
+                        mother_last_name: data.mother_last_name,
+                        mother_first_name: data.mother_first_name,
+                        child_last_name: data.child_last_name,
+                        child_first_name: data.child_first_name,
+                        ip_group: data.ip_group,
+                        micronutrient: data.micronutrient,
+                        sex: data.sex,
+                        birthdate: data.birthdate,
+                        height: data.height,
+                        weight: data.weight,
+                        length: data.length,
+                    }),
                     dataType: "JSON",
-                    headers:
-                    {
+                    headers: {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
                         "Authorization": API_TOKEN,
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(data)
-                    {
-                        notification('success', "Added update logs for individual record.")
-                        console.log(data)
+                    success: function(historyData) {
+                        notification('success', "{{ Str::singular($page_title) }}");
+                        $("#createForm").trigger("reset");
+                        $("#create_card").collapse("hide");
+                        refresh();
                     },
-                    error: function(error)
-                    {
-                        console.log(error)
-                        if (error.responseJSON.errors == null)
-                        {
-                            swalAlert('warning', error.responseJSON.message)
-                        }
-                        else
-                        {
-                            $.each(error.responseJSON.errors, function(key, value)
-                            {
-                                swalAlert('warning', value)
-                            });
-                        }
+                    error: function(error) {
+                        console.log(error);
                     }
-                })
+                });
             }
 
             // Script for Upload Excel File:
@@ -1100,6 +1091,44 @@
                         $("#createForm").trigger("reset")
                         $("#create_card").collapse("hide")
                         refresh();
+                        $.ajax({
+                        url: API_URL + '/history_of_individual_records',
+                        method: "POST",
+                        data: JSON.stringify({
+                            individual_record_id: data.id, // Ensure you include this line
+                            child_number: data.child_number,
+                            address: data.address,
+                            mother_last_name: data.mother_last_name,
+                            mother_first_name: data.mother_first_name,
+                            child_last_name: data.child_last_name,
+                            child_first_name: data.child_first_name,
+                            ip_group: data.ip_group,
+                            micronutrient: data.micronutrient,
+                            sex: data.sex,
+                            birthdate: data.birthdate,
+                            height: data.height,
+                            weight: data.weight,
+                            length: data.length,
+                            // ... other fields
+                        }),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": API_TOKEN,
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(historyData) {
+                            notification('success', "{{ Str::singular($page_title) }}");
+                            $("#createForm").trigger("reset");
+                            $("#create_card").collapse("hide");
+                            refresh();
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+
                     },
                     error: function(error)
                     {
@@ -1254,42 +1283,57 @@
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
 
-                $.ajax
-                ({
-                    url: form_url,
-                    method: "PUT",
-                    data: JSON.stringify(form_data),
-                    dataType: "JSON",
-                    headers:
-                    {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data)
-                    {
-                        storeHistoryOfIndividualRecord();
-                        notification('info', "{{ Str::singular($page_title) }}")
-                        refresh();
-                        $('#editModal').modal('hide');
-                        console.log(data)
-                    },
-                    error: function(error)
-                    {
-                        console.log(error)
-                        if (error.responseJSON.errors == null) {
-                            swalAlert('warning', error.responseJSON.message)
+                // BMI Computation:
+                    // let bmi = (form_data.weight / form_data.height / form_data.height) * 10000
+                    // form_data.bmi = bmi;
+                    // form_data.bmi_category = check_bmi_category(bmi)
+
+                    $.ajax({
+                        url: form_url,
+                        method: "PUT",
+                        data: JSON.stringify(form_data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": API_TOKEN,
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            // let filteredData = {};
+                            // // Iterate through the keys in form_data
+                            // Object.keys(form_data).forEach(key => {
+                            //     // Check if the key exists in data and has the same value
+                            //     if (data.hasOwnProperty(key)) {
+                            //         filteredData[key] = data[key];
+                            //     }
+                            // });
+                            // console.log('filteredData:', JSON.stringify(filteredData));
+                            // console.log('form_data:', JSON.stringify(form_data));
+                            // Check if form_data is form_data from data
+                            // if (JSON.stringify(form_data) !== JSON.stringify(filteredData)) {   
+                                storeHistoryOfIndividualRecord(data);
+                                notification('info', "{{ Str::singular($page_title) }}");
+                                refresh();
+                                $('#editModal').modal('hide');
+                                console.log(data);
+                            // } else {
+                            //     // Create a warning that no data was edited
+                            //     swalAlert('warning', 'No data was edited.');
+                            // }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                            if (error.responseJSON.errors == null) {
+                                swalAlert('warning', error.responseJSON.message);
+                            } else {
+                                $.each(error.responseJSON.errors, function(key, value) {
+                                    swalAlert('warning', value);
+                                });
+                            }
                         }
-                        else
-                        {
-                            $.each(error.responseJSON.errors, function(key, value)
-                            {
-                                swalAlert('warning', value)
-                            });
-                        }
-                    }
-                })
+                    });
+
             })
             // End of Script for Update Function
 
