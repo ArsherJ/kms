@@ -162,8 +162,8 @@
         <div class="event-container">
             <div class="col-lg-12">
                 <div class="feeding-program-container">
-                    <h2 style="" class="text-center section-title">Acvtivities</h2>
-                    <div id="feedingProgramContainer" class="m-4">
+                    <h2 style="" class="text-center section-title">Activities</h2>
+                    <div id="feedingProgramContainer" style='display:flex; flex-wrap:wrap'>
                     </div>
                 </div>
             </div>
@@ -540,7 +540,7 @@
                                                 }
 
                                                 .activity-images-container .image-container img {
-                                                    max-width: 100%; /* Set max-width to none for actual image size */
+                                                    max-width: 50%; /* Set max-width to none for actual image size */
                                                     height: auto; /* Maintain the aspect ratio of the images */
                                                     margin: 5px; /* Add spacing between images */
                                                     border: 1px solid #ddd; /* Add a border around images */
