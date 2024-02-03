@@ -348,7 +348,7 @@
                             break;
                     }
 
-                    return `<div class="chip ${chipClass} btnEdit">${data}</div>`;
+                    return `<div class="chip ${chipClass}">${data}</div>`;
                 }
                         },
                         {
