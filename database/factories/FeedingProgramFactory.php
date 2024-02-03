@@ -24,6 +24,8 @@ class FeedingProgramFactory extends Factory
             'date_of_program' => $this->faker->date,
             'date_posted' => $this->faker->dateTimeThisYear,
             'status' => $this->faker->randomElement(['Draft', 'Published']),
+            'type' => $this->faker->randomElement(['Soon', 'Success', 'Postponed', 'Ongoing', "Cancelled"]),
+            'progress' => $this->faker->sentence,
         ];
     }
 }

@@ -6,13 +6,18 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+use Faker\Factory as Faker;
+
 class IndividualRecordSeeder extends Seeder
 {
     public function run(): void
     {
+        $faker = Faker::create();
+
         $records =
         [
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '44 F. Ocampo',
                 'mother_last_name' => 'Von Wensierski',
                 'mother_first_name' => 'Rimelda',
@@ -25,6 +30,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '57.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Villanueva Comp.',
                 'mother_last_name' => 'Celso',
                 'mother_first_name' => 'Cheryll',
@@ -37,6 +43,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '44.1',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '366 Atis St. Man. 4B',
                 'mother_last_name' => 'Artates',
                 'mother_first_name' => 'Hazel',
@@ -49,6 +56,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '62.5',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '12 Uranium',
                 'mother_last_name' => 'Erlano',
                 'mother_first_name' => 'Sharmaine',
@@ -60,7 +68,8 @@ class IndividualRecordSeeder extends Seeder
                 'weight'  => '7.9',
                 'length'  => '80.2',
             ],
-            [
+                [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '24 Atis St. Verdant',
                 'mother_last_name' => 'Villanueva',
                 'mother_first_name' => 'Divina',
@@ -73,6 +82,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '70.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '10 Silver',
                 'mother_last_name' => 'Madcasim',
                 'mother_first_name' => 'Jeham',
@@ -85,6 +95,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '65.5',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '3 Silver Camela 4A',
                 'mother_last_name' => 'Guila',
                 'mother_first_name' => 'Claudet',
@@ -97,6 +108,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '57.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '18 Ubas Verdant',
                 'mother_last_name' => 'Celiz',
                 'mother_first_name' => 'Angela',
@@ -109,6 +121,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '70.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Thelma Villa Cristina',
                 'mother_last_name' => 'Apog',
                 'mother_first_name' => 'Bernadette',
@@ -121,6 +134,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '44.1',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Greenview',
                 'mother_last_name' => 'Pineda',
                 'mother_first_name' => 'Athena',
@@ -133,6 +147,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '62.5',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Hernandez',
                 'mother_last_name' => 'Bacatan',
                 'mother_first_name' => 'Keithlin',
@@ -145,6 +160,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '57.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Monique',
                 'mother_last_name' => 'Jeniebre',
                 'mother_first_name' => 'Chabelita',
@@ -156,7 +172,8 @@ class IndividualRecordSeeder extends Seeder
                 'weight'  => '6.7',
                 'length'  => '44.1',
             ],
-            [
+                [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '50 Molave St. Manuela',
                 'mother_last_name' => 'Doumbo',
                 'mother_first_name' => 'Aira',
@@ -169,6 +186,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '80.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '15 Saging',
                 'mother_last_name' => 'Beron',
                 'mother_first_name' => 'Chabelita',
@@ -181,6 +199,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '44.1',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Hernandez',
                 'mother_last_name' => 'Azusenas',
                 'mother_first_name' => 'Ara Mae',
@@ -193,6 +212,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '70.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '25 Guio',
                 'mother_last_name' => 'Miraflor',
                 'mother_first_name' => 'Marjorie',
@@ -205,6 +225,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '62.5',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Batibot',
                 'mother_last_name' => 'Palwa',
                 'mother_first_name' => 'Lharamel',
@@ -217,6 +238,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '57.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '45 Kasoy St',
                 'mother_last_name' => 'Saberano',
                 'mother_first_name' => 'Krystel Jay',
@@ -229,6 +251,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '80.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => 'Adelfa St. DMS',
                 'mother_last_name' => 'Belardo',
                 'mother_first_name' => 'Princess',
@@ -241,6 +264,7 @@ class IndividualRecordSeeder extends Seeder
                 'length'  => '80.2',
             ],
             [
+                'child_number' => $childNumber = $faker->numberBetween(100, 999),
                 'address' => '254 Atis Manuela',
                 'mother_last_name' => 'Castañaday',
                 'mother_first_name' => 'Marivic',
