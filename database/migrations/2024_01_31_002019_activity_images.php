@@ -18,6 +18,7 @@ return new class extends Migration {
                 id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                 blob_image LONGBLOB,
                 activity_id BIGINT UNSIGNED,
+                image_reference VARCHAR(25),
                 created_at TIMESTAMP NULL DEFAULT NULL,
                 updated_at TIMESTAMP NULL DEFAULT NULL,
                 created_by BIGINT UNSIGNED NULL,

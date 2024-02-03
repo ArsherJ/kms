@@ -23,6 +23,8 @@ class FeedingProgram extends Model
         'date_of_program',
         'date_posted',
         'status',
+        'type',
+        'progress'
     ];
 
     // DATES
