@@ -234,24 +234,12 @@
                     <h5 class="modal-title" style="color: white;">Upload Images</h5>
                 </div >
                 <div class="modal-body">
-                    <!-- <div class="choose-file"> 
-                        <form id="uploadForm" >
-                            <div class="form-group" style="border-style:solid; border-width:thin; border-color:gray; border-radius:0.5rem">
-                                <label for="imageUpload" class="required-input" style="border-style:solid; border-width:thin; border-color:gray; padding:0.5rem;background-color:#5D88FFDC; color:white; border-radius:0.4rem">📂 Browse</label>
-                                <input type="file" class="form-control-file" id="imageUpload" name="images[]" multiple accept="image/*" style="display:none" >
-                            </div>
-                        </form>
-
-                    </div> -->
+                    <input type="file" class="form-control" id="imageUpload" name="images[]" tabindex="1" aaccept="image/*" multiple>
 
                     <div id="selectedImagesContainer" class="d-flex flex-wrap mb-3"></div>
                     <div id="imagePreviewContainer" class="d-flex flex-wrap"></div>
-                    <div class="button-container" style="display:flex; align-items:center; justify-content: center"> 
-                    <label class="btn btn-secondary">
-    Browse Images<input type="file" class="form-control-file" id="imageUpload" name="images[]" multiple accept="image/*" style="display:none" >
-</label>
 
-                    </div>
+                    <!-- </div> -->
                     
                 </div>
                 <div class="modal-footer">

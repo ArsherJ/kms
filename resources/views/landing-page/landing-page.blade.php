@@ -540,7 +540,7 @@
                                                 }
 
                                                 .activity-images-container .image-container img {
-                                                    max-width: 50%; /* Set max-width to none for actual image size */
+                                                    max-width: 40%; /* Set max-width to none for actual image size */
                                                     height: auto; /* Maintain the aspect ratio of the images */
                                                     margin: 5px; /* Add spacing between images */
                                                     border: 1px solid #ddd; /* Add a border around images */
