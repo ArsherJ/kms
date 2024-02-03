@@ -326,7 +326,6 @@
                         {
                     data: 'progress', render: function(data) {
                     let chipClass = '';
-
                     switch (data) {
                         case 'Coming Soon':
                             chipClass = 'chip-start';
@@ -799,15 +798,25 @@ $(document).on("click", "#btnCloseModal", async function() {
         });
     });
 }
+var jq = jQuery.noConflict();
 
+jq(document).ready(function() {
+    // Use jq instead of $
+    // ...
 
-// ----------------------------------------------------------------
+    // Your existing DataTable initialization or other code
+    jq('#dataTable').DataTable({
+        // DataTable configuration options
+    });
 
+    // Example of DataTable reload
+    jq('#reloadButton').on('click', function() {
+        jq('#dataTable').DataTable().ajax.reload();
+    });
+});
 
-// ----------------------------------------------------------------
-
-            // FUNCTION CALLING
-            dataTable();
+// FUNCTION CALLING
+dataTable();
         })
         // END OF SCRIPT TAG    
     </script>

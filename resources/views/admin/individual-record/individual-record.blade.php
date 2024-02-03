@@ -1353,7 +1353,22 @@
                 })
             });
             // END OF DEACTIVATE FUNCTION
+            var jq = jQuery.noConflict();
 
+jq(document).ready(function() {
+    // Use jq instead of $
+    // ...
+
+    // Your existing DataTable initialization or other code
+    jq('#dataTable').DataTable({
+        // DataTable configuration options
+    });
+
+    // Example of DataTable reload
+    jq('#reloadButton').on('click', function() {
+        jq('#dataTable').DataTable().ajax.reload();
+    });
+});
             // Function Calling:
             dataTable();
         })
