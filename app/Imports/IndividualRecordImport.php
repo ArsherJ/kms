@@ -8,64 +8,40 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class IndividualRecordImport implements ToModel, WithStartRow
 {
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
     public function model(array $row)
     {
-        // Compute BMI
-        $heightInCm = $row[5];
-        $weightInKg = $row[6];
+        
+        // return new IndividualRecord
 
-        // Convert height to meters (BMI formula uses meters)
-        $heightInMeters = $heightInCm / 100;
-
-        // Calculate BMI
-        $bmi = $weightInKg / ($heightInMeters * $heightInMeters);
-        $bmiCategory = '';
-        switch (true) {
-            case ($bmi < 18.5):
-                $bmiCategory = "Underweight";
-                break;
-            case ($bmi < 25):
-                $bmiCategory = "Normal Weight";
-                break;
-            case ($bmi < 30):
-                $bmiCategory = "Overweight";
-                break;
-            case ($bmi < 35):
-                $bmiCategory = "Obese Class I";
-                break;
-            case ($bmi < 40):
-                $bmiCategory = "Obese Class II";
-                break;
-            default:
-                $bmiCategory = "Obese Class III";
+        if (count($row) >= 12)
+        {
+            return new IndividualRecord
+            ([
+                'address' => $row[0],
+                'mother_last_name' => $row[1],
+                'mother_first_name' => $row[2],
+                'child_last_name' => $row[3],
+                'child_first_name' => $row[4],
+                'sex' => $row[5],
+                'birthdate' => $row[6],
+                'ip_group' => $row[7],
+                'micronutrient' => $row[8],
+                'sex' => $row[9],
+                'height' => $row[10],
+                'weight' => $row[11],
+            ]);
         }
-
-        $idNumber = substr(rand(), 0, 9);
-
-        // Generate some automated result from inputs
-        return new IndividualRecord([
-            'first_name' => $row[0],
-            'middle_name' => $row[1],
-            'last_name' => $row[2],
-            'birthdate' => $row[3],
-            'gender' => $row[4],
-            'height' => $row[5],
-            'weight' => $row[6],
-            'id_number' => $idNumber,
-            'bmi' => $bmi,
-            'bmi_category' => $bmiCategory,
-            'status' => 'Active',
-        ]);
+        else
+        {
+            // Handle the case where the $row array doesn't have enough elements.
+            // You might want to log an error or handle it based on your requirements.
+            \Log::error("Row does not have enough elements: " . json_encode($row));
+            return null;
+        }
     }
-
 
     public function startRow(): int
     {
-        return 2; // Start importing from the second row.
+        return 0; // Start importing from the _ row.
     }
 }

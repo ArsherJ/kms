@@ -20,13 +20,13 @@ return new class extends Migration
             $table->string('child_first_name');
 
             $table->enum('ip_group', ['Yes', 'No']);
+            $table->enum('micronutrient', ['Yes', 'No']);
             $table->enum('sex', ['Male', 'Female']);
 
             $table->date('birthdate');
             $table->date('date_measured')->nullable();
             $table->float('height');
             $table->float('weight');
-            $table->float('length');
 
             $table->integer('age_in_months')->default(0)->nullable();
             $table->string('weight_for_age_status')->nullable();

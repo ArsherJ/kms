@@ -86,6 +86,14 @@
 
                         <div class="row">
                             <div class="form-group col-md-4">
+                                <label class="required-input" style="font-weight:bold">Taking Micronutrient Supp.:</label>
+                                <select class="form-control" id="micronutrient_edit" name="micronutrient_edit" tabindex="1">
+                                    <option value="" disabled selected>Select Class</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Height (cm):</label>
                                 <input type="number" class="form-control" id="height_edit" name="height_edit" tabindex="1" required>
                             </div>
@@ -93,9 +101,65 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" class="form-control" id="weight_edit" name="weight_edit" tabindex="1" required>
                             </div>
+                                <!-- <div class="form-group col-md-4">
+                                    <label class="required-input" style="font-weight:bold">Length (cm):</label>
+                                    <input type="number" class="form-control" id="length_edit" name="length_edit" tabindex="1" required>
+                                </div> -->
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
+                    <button type="button" class="btn btn-success btnUpdate">Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{-- END OF EDIT MODAL --}}
+
+    {{-- REWEIGH MODAL --}}
+    <div id="reweighModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <h3 class="card-title fw-semibold mb-4 text-black">► Reweigh Individual</h3>
+
+                    <form id="reweighForm">
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="required-input" style="font-weight:bold">Child's Last Name:</label>
+                                <input type="text" class="form-control" id="child_last_name_reweigh" name="child_last_name_reweigh" tabindex="1"
+                                    disabled style="opacity: 1; background-color: #fff;">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required-input" style="font-weight:bold">Child's First Name:</label>
+                                <input type="text" class="form-control" id="child_first_name_reweigh" name="child_first_name_reweigh" tabindex="1"
+                                    disabled style="opacity: 1; background-color: #fff;">
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Length (cm):</label>
-                                <input type="number" class="form-control" id="length_edit" name="length_edit" tabindex="1" required>
+                                <label class="required-input" style="font-weight:bold">Date Measured:</label>
+                                <input type="date" class="form-control" id="date_measured_reweigh" name="date_measured_reweigh" tabindex="1"
+                                    disabled style="opacity: 1; background-color: #fff;">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="required-input" style="font-weight:bold">Height (cm):</label>
+                                <input type="number" class="form-control" id="height_reweigh" name="height_reweigh" tabindex="1" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="required-input" style="font-weight:bold">Weight (kg):</label>
+                                <input type="number" class="form-control" id="weight_reweigh" name="weight_reweigh" tabindex="1" required>
                             </div>
                         </div>
 
@@ -119,7 +183,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-title fw-semibold mb-4 text-black">Upload Multiple Record</h5>
+                        <h5 class="card-title fw-semibold mb-4 text-black">► Upload Multiple Record</h5>
                         <a href="{{ asset('download/MultiIndividualFormat.xlsx') }}"><button
                                 class="btn btn-sm btn-dark float-end">Download Excel Format</button></a>
                     </div>
@@ -129,9 +193,8 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <div class="d-flex justify-content-between">
-                                            <label class="required-input">Import File</label>
-                                            <span class="text-danger"> Note: Minimum
-                                                of 3 individuals on multiple upload</span>
+                                            <label class="required-input" style="font-weight:bold; margin-bottom:10px">Import File:</label>
+                                            <span class="text-info" style="font-weight:bold"> Note: Please upload at least 3 individual records.</span>
                                         </div>
                                         <input type="file" class="form-control" id="excelFile" name="file"
                                             tabindex="1"
@@ -143,7 +206,7 @@
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
                     <button type="submit" class="btn btn-success">Upload</button>
                 </div>
                 </form>
@@ -228,6 +291,14 @@
 
                         <div class="row" style="margin-top:-15px">
                             <div class="form-group col-md-4">
+                                <label class="required-input" style="font-weight:bold">Taking Micronutrient Supplementation:</label>
+                                <select class="form-control" id="micronutrient" name="micronutrient" tabindex="1" required>
+                                    <option value="" disabled selected>Select Class</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Height (cm):</label>
                                 <input type="number" step="0.01" class="form-control" id="height" name="height" tabindex="1" required>
                             </div>
@@ -235,13 +306,12 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" step="0.01" class="form-control" id="weight" name="weight" tabindex="1" required>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Length (cm):</label>
-                                <input type="number" step="0.01" class="form-control" id="length" name="length" tabindex="1" required>
+                                <!-- <div class="form-group col-md-4">
+                                    <label class="required-input" style="font-weight:bold">Length (cm):</label>
+                                    <input type="number" step="0.01" class="form-control" id="length" name="length" tabindex="1" required>
+                                </div> -->
                             </div>
                         </div>
-
-                    </div>
 
                     <div class="card-footer d-flex justify-content-between" style="margin-top:-15px">
                         <button type="button" class="btn btn-light" data-toggle="collapse" 
@@ -262,11 +332,9 @@
                 <h5 class="card-title fw-semibold">► List of Individual Record/s</h5>
 
                 <div>
-                    <button type="button" class="btn btn-info mx-2 btnReweigh">Reweighing 
+                    <button type="button" class="btn btn-info mx-2 btnUpload">Upload Multiple Record 
                         <span><i class="ti ti-plus"></i></span></button>
-                    <button type="button" class="btn btn-dark mx-2 btnUpload">Add Multiple Record 
-                        <span><i class="ti ti-plus"></i></span></button>
-                    <button type="button" class="btn btn-dark mx-2" data-toggle="collapse"
+                    <button type="button" class="btn btn-success mx-2" data-toggle="collapse"
                         data-target="#create_card" aria-expanded="false" aria-controls="create_card">Add
                         {{ Str::singular($page_title) }} <span><i class="ti ti-plus"></i></span></button>
                 </div>
@@ -275,7 +343,7 @@
             
             <div class="table-responsive">
                 <table class="table table-hover table-sm table-borderless" id="dataTable"
-                    style="width: 265%; table-layout:fixed; text-align:center; border:1px solid black;">
+                    style="width: 265%; table-layout:fixed; text-align:center; border:1px solid black; border-radius:5px">
                 
                     <thead>
                         <tr class="text-dark">
@@ -290,6 +358,7 @@
                             <th class="bg-dark" style="width:5%; text-align:center; color: white; border-bottom:1px solid black">Sex</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Age in Months</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Belongs to IP Group?</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Taking Micronutrient Supplementation?</th>
                                 <!-- <th style="text-align:center">Date of Birth</th> -->
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Date Measured</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Weight (kg)</th>
@@ -304,7 +373,7 @@
 
                     <tbody></tbody>
 
-                    <tfoot>
+                    <!-- <tfoot>
                         <tr class="text-dark">
                             <th class="not-export-column">ID</th>
                             <th class="not-export-column">Created At</th>
@@ -323,7 +392,7 @@
                             <th>Height for Age Status</th>
                             <th>Weight for Lt/Ht Status</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> -->
                     
                 </table>
             </div>
@@ -407,6 +476,7 @@
                 })
             }
 
+            // Script for Upload Excel File:
             $('#uploadForm').on('submit', async function(e)
             {
                 e.preventDefault();
@@ -443,6 +513,7 @@
                             },
                             success: function(data)
                             {
+                                console.log(data)
                                 toastr['success'](`Multiple individuals added successfully.`)
                                 $('#uploadModal').modal('hide');
                                 $('#uploadForm').trigger('reset')
@@ -488,37 +559,9 @@
             {
                 $('#uploadModal').modal('show');
             });
+            // End of Script for Upload Excel File
 
-            // BMI Categorization Function:
-                // function check_bmi_category(bmi)
-                // {
-                //     let bmi_category = '';
-
-                //     switch (true)
-                //     {
-                //         case (bmi < 18.5):
-                //             bmi_category = "Underweight";
-                //             break;
-                //         case (bmi < 25):
-                //             bmi_category = "Normal Weight";
-                //             break;
-                //         case (bmi < 30):
-                //             bmi_category = "Overweight";
-                //             break;
-                //         case (bmi < 35):
-                //             bmi_category = "Obese Class I";
-                //             break;
-                //         case (bmi < 40):
-                //             bmi_category = "Obese Class II";
-                //             break;
-                //         default:
-                //             bmi_category = "Obese Class III";
-                //     }
-
-                //     return bmi_category;
-                // }
-
-            // Script for Weight for Age Status
+            // Script for Weight for Age Status:
             function calculateWeightForAgeStatus(ageInMonths, sex, weight)
             {
                 let result = "Unknown";
@@ -589,7 +632,7 @@
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
 
-            // Script for Height for Age Status
+            // Script for Height for Age Status:
             function calculateHeightForAgeStatus(ageInMonths, sex, height)
             {
                 let result = "Unknown";
@@ -661,18 +704,18 @@
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
 
-            // Script for LT/HT Status
-            function calculateLtHtStatus(ageInMonths, sex, length)
+            // Script for LT/HT Status:
+            function calculateLtHtStatus(ageInMonths, sex, height)
             {
                 let result = "Unknown";
                 let statusClass = "";
 
                 function setLtHtStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
                 {
-                    if (length <= severelyStuntedLimit) { result = "Severely Stunted"; statusClass = "bg-danger"; }
-                    else if (length >= stuntedLimit && length <= normalLimit) { result = "Stunted"; statusClass = "bg-warning"; }
-                    else if (length >= normalLimit && length <= tallLimit) { result = "Normal"; statusClass = "bg-success"; }
-                    else if (length > tallLimit) { result = "Tall"; statusClass = "bg-primary"; }
+                    if (height <= severelyStuntedLimit) { result = "Severely Stunted"; statusClass = "bg-danger"; }
+                    else if (height >= stuntedLimit && height <= normalLimit) { result = "Stunted"; statusClass = "bg-warning"; }
+                    else if (height >= normalLimit && height <= tallLimit) { result = "Normal"; statusClass = "bg-success"; }
+                    else if (height > tallLimit) { result = "Tall"; statusClass = "bg-primary"; }
                 }
 
                 switch (ageInMonths) // - Dev RJ (input data ranges here)
@@ -733,7 +776,7 @@
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
 
-            // Script for Data Table Function
+            // Script for Data Table Function:
             function dataTable()
             {
                 // For Table Footer (which generates Search Input):
@@ -778,11 +821,6 @@
                             // },
                         {
                             data: "child_number", visible: true,
-                            // render: function(data, type, row)
-                            // {
-                            //     var childNumber = row.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 3);
-                            //     return childNumber;
-                            // }
                         },
                         {
                             data: "address", visible: true,
@@ -844,6 +882,9 @@
                             //     }
                             // },
                         {
+                            data: "micronutrient", visible: true
+                        },
+                        {
                             data: "date_measured", visible: true
                         },
                         {
@@ -895,9 +936,9 @@
                             {
                                 const ageInMonths = row.age_in_months;
                                 const sex = row.sex;
-                                const length = row.length;
+                                const height = row.height;
                                 
-                                return calculateLtHtStatus(ageInMonths, sex, length);
+                                return calculateLtHtStatus(ageInMonths, sex, height);
                             }
                         },
                         {
@@ -907,6 +948,7 @@
                                 if (data == null)
                                 {
                                     return `<div class="" style="vertical-align:top; text-align:center">
+                                            <button id="${row.id}" type="button" class="btn btn-sm btn-secondary btnReweigh">Reweigh</button>
                                             <button id="${row.id}" type="button" class="btn btn-sm btn-info btnView">View</button>
                                             <button id="${row.id}" type="button" class="btn btn-sm btn-warning btnEdit">Edit</button>
                                             <button id="${row.id}" type="button" class="btn btn-sm btn-danger btnDelete">Delete</button>
@@ -936,41 +978,51 @@
                         [1, "asc"]
                     ],
 
-                    // EXPORTING AS PDF
+                    // Script for Export to PDF:
                     'dom': 'Blrtip',
-                    'buttons': {
-                        dom: {
-                            button: {
+                    'buttons':
+                    {
+                        dom:
+                        {
+                            button:
+                            {
                                 tag: 'button',
-                                className: ''
+                                className: '',
                             }
                         },
-                        buttons: [{
+                        buttons:
+                        [{
                             extend: 'pdfHtml5',
                             text: 'Export as PDF',
                             orientation: 'landscape',
-                            pageSize: 'LEGAL',
-                            exportOptions: {
+                            pageSize: 'A3',
+                            exportOptions:
+                            {
                                 // columns: ':visible',
                                 columns: ":not(.not-export-column)",
-                                modifier: {
+                                modifier:
+                                {
                                     order: 'current'
                                 }
                             },
                             className: 'btn btn-dark mb-4',
-                            titleAttr: 'PDF export.',
+                            titleAttr: 'PDF Export',
                             extension: '.pdf',
-                            download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
-                            title: function() {
+                            download: 'open', // This will open the .pdf file to another tab.
+
+                            title: function()
+                            {
                                 return "List of {{ $page_title }}"
                             },
-                            filename: function() {
+                            filename: function()
+                            {
                                 return "List of {{ $page_title }}"
                             },
-                            customize: function(doc) {
+                            customize: function(doc)
+                            {
                                 doc.styles.tableHeader.alignment = 'left';
                             }
-                        }, ]
+                        }]
                     },
 
 
@@ -989,7 +1041,7 @@
             }
             // End of Script for Data Table Function
 
-            // Script for View Function
+            // Script for View Function:
             $(document).on('click', '.btnView', function()
             {
                 let id = this.id;
@@ -999,101 +1051,14 @@
             })
             // End of Script for View Function
 
-            // Script for Refresh Data Table Function
-            function refresh() 
+            // Script for Refresh Data Table Function:
+            function refresh()
             {
                 $('#dataTable').DataTable().ajax.reload()
             }
             // End of Script for Refresh Data Table Function
 
-            // Script for Create Function
-            
-            // $('#createForm').on('submit', function(e)
-            // {
-            //     e.preventDefault()
-
-            //     // Variables:
-            //     let form_url = BASE_API
-
-            //     // Form Data:
-            //     let form = $("#createForm").serializeArray();
-            //     let form_data = {}
-
-            //     $.each(form, function()
-            //     {
-            //         form_data[[this.name]] = this.value;
-            //     });
-
-            //     form_data['created_by'] = authenticatedUserId;
-
-            //     // BMI Computation:
-            //         // let bmi = (form_data.weight / (form_data.height * form_data.height)) * 10000;
-            //         // form_data.bmi = bmi;
-            //         // form_data.bmi_category = check_bmi_category(bmi);
-
-            //     form_data.status = 'Active';
-
-            //     $.ajax
-            //     ({
-            //         url: form_url,
-            //         method: "POST",
-            //         data: JSON.stringify(form_data),
-            //         dataType: "JSON",
-            //         headers:
-            //         {
-            //             "Accept": "application/json",
-            //             "Content-Type": "application/json",
-            //             "Authorization": API_TOKEN,
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         },
-            //         success: function(data)
-            //         {
-            //             // Insert Data to Table: history_of_individual_records
-            //             $.ajax
-            //             ({
-            //                 url: BASE_API + '/history_of_individual_records',
-            //                 method: "POST",
-            //                 data: JSON.stringify({ individual_record_id: data.id, }),
-
-            //                 dataType: "JSON",
-            //                 headers:
-            //                 {
-            //                     "Accept": "application/json",
-            //                     "Content-Type": "application/json",
-            //                     "Authorization": API_TOKEN,
-            //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //                 },
-            //                 success: function(historyData)
-            //                 {
-            //                     notification('success', "{{ Str::singular($page_title) }}");
-            //                     $("#createForm").trigger("reset");
-            //                     $("#create_card").collapse("hide");
-            //                     refresh();
-            //                 },
-            //                 error: function(error)
-            //                 {
-            //                     console.log(error);
-            //                 }
-            //             });
-            //         },
-            //         error: function(error)
-            //         {
-            //             console.log(error)
-            //             if (error.responseJSON.errors == null)
-            //             {
-            //                 swalAlert('warning', error.responseJSON.message)
-            //             }
-            //             else
-            //             {
-            //                 $.each(error.responseJSON.errors, function(key, value)
-            //                 {
-            //                     swalAlert('warning', value)
-            //                 });
-            //             }
-            //         }
-            //     })
-            // });
-
+            // Script for Create Function:
             $('#createForm').on('submit', function(e)
             {
                 e.preventDefault()
@@ -1112,14 +1077,9 @@
 
                 form_data['created_by'] = authenticatedUserId;
 
-                // BMI Computation:
-                    // let bmi = (form_data.weight / (form_data.height * form_data.height)) * 10000;
-                    // form_data.bmi = bmi;
-                    // form_data.bmi_category = check_bmi_category(bmi);
-
                 form_data.status = 'Active';
 
-                form_data.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 9);
+                form_data.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 3);
 
                 $.ajax
                 ({
@@ -1158,10 +1118,9 @@
                     }
                 })
             });
-
             // End of Script for Create Function
 
-            // Script for Edit Function
+            // Script for Edit Function:
             $(document).on('click', '.btnEdit', function()
             {
                 let id = this.id;
@@ -1187,11 +1146,11 @@
                         $('#child_last_name_edit').val(data.child_last_name)
                         $('#child_first_name_edit').val(data.child_first_name)
                         $('#ip_group_edit').val(data.ip_group)
+                        $('#micronutrient_edit').val(data.micronutrient)
                         $('#sex_edit').val(data.sex)
                         $('#birthdate_edit').val(data.birthdate)
                         $('#height_edit').val(data.height)
                         $('#weight_edit').val(data.weight)
-                        $('#length_edit').val(data.length)
 
                         tempWeight = data.weight;
                         tempHeight = data.height;
@@ -1219,14 +1178,74 @@
             })
             // End of Script for Edit Function
 
-            // Script for Update Function
+            // Script for Reweigh Function:
+            $(document).on('click', '.btnReweigh', function()
+            {
+                let id = this.id;
+                let form_url = BASE_API + '/' + id;
+
+                $.ajax
+                ({
+                    url: form_url,
+                    method: "GET",
+                    headers:
+                    {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": API_TOKEN,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data)
+                    {
+                        $('.btnUpdate').attr('id', data.id)
+                        $('#address_edit').val(data.address)
+                        $('#mother_last_name_edit').val(data.mother_last_name)
+                        $('#mother_first_name_edit').val(data.mother_first_name)
+                        $('#child_last_name_reweigh').val(data.child_last_name)
+                        $('#child_first_name_reweigh').val(data.child_first_name)
+                        $('#ip_group_edit').val(data.ip_group)
+                        $('#micronutrient_edit').val(data.micronutrient)
+                        $('#sex_edit').val(data.sex)
+                        $('#birthdate_edit').val(data.birthdate)
+                        let today = new Date().toISOString().slice(0, 10)
+                        $('#date_measured_reweigh').val(today)
+                        $('#height_reweigh').val(data.height)
+                        $('#weight_reweigh').val(data.weight)
+
+                        tempWeight = data.weight;
+                        tempHeight = data.height;
+                        tempIndividualId = data.id;
+                        tempDateRecorded = data?.updated_at ?? data.created_at;
+                        $('#reweighModal').modal('show');
+                    },
+                    error: function(error)
+                    {
+                        console.log(error)
+                        if (error.responseJSON.errors == null)
+                        {
+                            swalAlert('warning', error.responseJSON.message)
+                        }
+                        else
+                        {
+                            $.each(error.responseJSON.errors, function(key, value)
+                            {
+                                swalAlert('warning', value)
+                            });
+                        }
+                    }
+                })
+
+            })
+            // End of Script for Reweigh Function
+
+            // Script for Update Function:
             $(document).on('click', '.btnUpdate', function()
             {
                 let id = this.id;
                 console.log(id)
                 let form_url = BASE_API + '/' + id;
 
-                // Form Data
+                // Form Data:
                 let form = $("#editForm").serializeArray();
                 let form_data = {}
 
@@ -1234,11 +1253,6 @@
                 {
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
-
-                // BMI Computation:
-                    // let bmi = (form_data.weight / form_data.height / form_data.height) * 10000
-                    // form_data.bmi = bmi;
-                    // form_data.bmi_category = check_bmi_category(bmi)
 
                 $.ajax
                 ({
@@ -1279,80 +1293,85 @@
             })
             // End of Script for Update Function
 
-            // Script for Soft-Delete Function
-            $(document).on("click", ".btnDelete", function() {
+            // Script for Soft-Delete Function:
+            $(document).on("click", ".btnDelete", function()
+            {
                 let id = this.id;
                 let form_url = BASE_API + '/' + id
 
-                $.ajax({
+                $.ajax
+                ({
                     url: form_url,
                     method: "GET",
-                    headers: {
+                    headers:
+                    {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
                         "Authorization": API_TOKEN,
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
 
-                    success: function(data) {
+                    success: function(data)
+                    {
                         console.log(data)
-                        Swal.fire({
+                        Swal.fire
+                        ({
                             title: "Are you sure?",
                             text: "You won't able to revert this.",
                             icon: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "red",
                             confirmButtonText: "Yes, remove it!",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
+                        }).then((result) =>
+                        {
+                            if (result.isConfirmed)
+                            {
+                                $.ajax
+                                ({
                                     url: BASE_API + '/destroy/' + data.id,
                                     method: "DELETE",
-                                    headers: {
+                                    headers:
+                                    {
                                         "Accept": "application/json",
                                         "Authorization": API_TOKEN,
                                         "Content-Type": "application/json",
-                                        'X-CSRF-TOKEN': $(
-                                            'meta[name="csrf-token"]').attr(
-                                            'content')
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
 
-                                    success: function(data) {
-                                        notification('error',
-                                            "{{ Str::singular($page_title) }}"
-                                        )
+                                    success: function(data)
+                                    {
+                                        notification('error', "{{ Str::singular($page_title) }}")
                                         refresh();
                                     },
-                                    error: function(error) {
+                                    error: function(error)
+                                    {
                                         $.each(error.responseJSON.errors,
-                                            function(key, value) {
-                                                swalAlert('warning',
-                                                    value)
+                                            function(key, value)
+                                            {
+                                                swalAlert('warning', value)
                                             });
                                         console.log(error)
-                                        console.log(
-                                            `message: ${error.responseJSON.message}`
-                                        )
-                                        console.log(
-                                            `status: ${error.status}`)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
                                     }
-                                    // ajax closing tag
                                 })
                             }
                         });
                     },
-                    error: function(error) {
-                        $.each(error.responseJSON.errors, function(key, value) {
+
+                    error: function(error)
+                    {
+                        $.each(error.responseJSON.errors, function(key, value)
+                        {
                             swalAlert('warning', value)
                         });
                         console.log(error)
                         console.log(`message: ${error.responseJSON.message}`)
                         console.log(`status: ${error.status}`)
                     }
-                    // ajax closing tag
                 })
             });
-            // END OF DEACTIVATE FUNCTION
+            // End of Script for Soft-Delete Function
 
             // Function Calling:
             dataTable();

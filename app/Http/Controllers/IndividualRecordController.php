@@ -32,7 +32,6 @@ class IndividualRecordController extends Controller
     {
     }
 
-
     public function import(StoreIndividualRecordRequest $request)
     {
         $file = $request->file('file');
@@ -72,11 +71,11 @@ class IndividualRecordController extends Controller
             'child_last_name' => 'required',
             'child_first_name' => 'required',
             'ip_group' => 'required',
+            'micronutrient' => 'required',
             'sex' => 'required',
             'birthdate' => 'required',
             'height' => 'required',
             'weight' => 'required',
-            'length' => 'required',
         ]);
 
         return IndividualRecord::create($request->all());
