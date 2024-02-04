@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreHistoryOfIndividualRecordRequest;
 use App\Http\Requests\UpdateHistoryOfIndividualRecordRequest;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class HistoryOfIndividualRecordController extends Controller
 {
@@ -97,6 +98,16 @@ class HistoryOfIndividualRecordController extends Controller
         return response()->json($latestRecords);
     }
 
-
+    public function data_chart_year($year)
+    {
+        $latestRecords = HistoryOfIndividualRecord::whereIn('created_at', function($query) use ($year) {
+            $query->selectRaw('MAX(created_at)')
+                ->from('history_of_individual_records')
+                ->whereYear('created_at', $year)
+                ->groupBy(DB::raw('MONTH(created_at)'), 'child_number');
+        })->get();
+    
+        return response()->json($latestRecords);
+    }
     
 }

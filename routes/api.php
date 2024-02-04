@@ -94,6 +94,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/history_of_individual_records/restore/{id}', [HistoryOfIndividualRecordController::class, 'restore']);
     Route::get('/history_of_individual_records/search_individual_records/{id}', [HistoryOfIndividualRecordController::class, 'search_individual_records']);
     Route::post('/history_of_individual_records/data_chart/{month}', [HistoryOfIndividualRecordController::class, 'data_chart']);
+    Route::post('/history_of_individual_records/data_chart_year/{year}', [HistoryOfIndividualRecordController::class, 'data_chart_year']);
 
 
     // FEEDING PROGRAM
