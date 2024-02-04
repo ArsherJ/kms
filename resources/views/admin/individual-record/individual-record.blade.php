@@ -468,82 +468,39 @@
             }
 
             // Script for Upload Excel File:
-            $('#uploadForm').on('submit', async function(e)
-            {
+            $('#uploadForm').on('submit', function (e) {
                 e.preventDefault();
 
-                let excelFile = $('#excelFile').val()
-                let Extension = excelFile.substring(excelFile.lastIndexOf('.') + 1).toLowerCase();
+                let excelFile = $('#excelFile')[0].files[0];
+                let formData = new FormData();
+                formData.append('file', excelFile);
 
-                if (Extension == "xlsx")
-                {
-                    Swal.fire
-                    ({
-                        title: "Are you sure?",
-                        text: "All record in the excel will be added to the record after this.",
-                        icon: "info",
-                        showCancelButton: true,
-                        confirmButtonColor: "blue",
-                        confirmButtonText: "Yes, upload it!",
-                    })
-                    .then((result) =>
-                    {
-                        $.ajax
-                        ({
-                            url: BASE_API + '/import',
-                            type: "POST",
-                            data: new FormData(this),
-                            processData: false,
-                            contentType: false,
-                            async: false,
-                            cache: false,
-                            headers:
-                            {
-                                "Authorization": API_TOKEN,
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function(data)
-                            {
-                                console.log(data)
-                                toastr['success'](`Multiple individuals added successfully.`)
-                                $('#uploadModal').modal('hide');
-                                $('#uploadForm').trigger('reset')
-                                refresh();
-                            },
-                            error: function(error)
-                            {
-                                console.log(error)
-                                if (error.responseJSON.message == "Division by zero")
-                                {
-                                    swalAlert('warning', "There is something wrong with the record, ensure file has atleast 3 individuals for and filled with correct formats and required inputs to use this multiple upload.")
-                                }
-                                else if (error.responseJSON.errors == null)
-                                {
-                                    swalAlert('warning', error.responseJSON.message)
-                                }
-                                else
-                                {
-                                    $.each(error.responseJSON.errors, function(key, value)
-                                    {
-                                        swalAlert('warning', value)
-                                    });
-                                }
-                            }
-                        })
-                    });
-                }
-                else
-                {
-                    Swal.fire
-                    ({
-                        title: 'Warning!',
-                        text: 'Should be .xlsx file!',
-                        icon: 'warning',
-                        confirmButtonText: 'Ok'
-                    })
-
-                    $("#btnAddExcel").attr("disabled", false);
-                }
+                $.ajax({
+                    url: BASE_API + '/import',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Authorization': API_TOKEN,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        console.log(data.message);
+                        toastr.success('Multiple individuals added successfully.');
+                        $('#uploadModal').modal('hide');
+                        $('#uploadForm').trigger('reset');
+                        refresh();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        if (error.responseJSON.message) {
+                            swalAlert('warning', error.responseJSON.message);
+                        } else {
+                            swalAlert('error', 'An error occurred while processing the file.');
+                        }
+                    }
+                });
             });
 
             $('.btnUpload').on('click', function()
