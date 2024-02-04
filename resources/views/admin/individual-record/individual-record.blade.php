@@ -135,13 +135,12 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="required-input" style="font-weight:bold">Child's Last Name:</label>
-                                <input type="text" class="form-control" id="child_last_name_reweigh" name="child_last_name_reweigh" tabindex="1"
-                                    disabled style="opacity: 1; background-color: #fff;">
+                                <input type="text" class="form-control" id="child_last_name_reweigh" name="child_last_name_reweigh" disabled tabindex="1" style="opacity: 1; background-color: #fff;">
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="required-input" style="font-weight:bold">Child's First Name:</label>
                                 <input type="text" class="form-control" id="child_first_name_reweigh" name="child_first_name_reweigh" tabindex="1"
-                                    disabled style="opacity: 1; background-color: #fff;">
+                                disabled style="opacity: 1; background-color: #fff;">
                             </div>
                         </div>
 
@@ -150,32 +149,33 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Date Measured:</label>
-                                <input type="date" class="form-control" id="date_measured_reweigh" name="date_measured_reweigh" tabindex="1"
-                                    disabled style="opacity: 1; background-color: #fff;">
+                                <input type="date" class="form-control" id="date_measured_hidden" name="date_measured_hidden" disabled tabindex="1" style="opacity: 1; background-color: #fff;">
+                                <!-- Hidden field to store the date value -->
+                                <input type="hidden" id="date_measured_edit" name="date_measured_edit">
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Height (cm):</label>
-                                <input type="number" class="form-control" id="height_reweigh" name="height_reweigh" tabindex="1" required>
+                                <input type="number" class="form-control" id="height_edit" name="height_edit" tabindex="1" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
-                                <input type="number" class="form-control" id="weight_reweigh" name="weight_reweigh" tabindex="1" required>
+                                <input type="number" class="form-control" id="weight_edit" name="weight_edit" tabindex="1" required>
                             </div>
                         </div>
-
                     </form>
 
                 </div>
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
-                    <button type="button" class="btn btn-success btnUpdate">Save</button>
+                    <button type="button" class="btn btn-success btnUpdateReweigh">Save</button>
                 </div>
 
             </div>
         </div>
     </div>
-    {{-- END OF EDIT MODAL --}}
+    {{-- END OF REWEIGH MODAL --}}
+
 
     {{-- UPLOAD FORM --}}
     <div id="uploadModal" class="modal" tabindex="-1" role="dialog">
@@ -1168,6 +1168,7 @@
                     },
                     success: function(data)
                     {
+                        console.log("Data boy ohh!!: " + JSON.stringify(data));
                         $('.btnUpdate').attr('id', data.id)
                         $('#address_edit').val(data.address)
                         $('#mother_last_name_edit').val(data.mother_last_name)
@@ -1207,67 +1208,7 @@
             })
             // End of Script for Edit Function
 
-            // Script for Reweigh Function:
-            $(document).on('click', '.btnReweigh', function()
-            {
-                let id = this.id;
-                let form_url = BASE_API + '/' + id;
-
-                $.ajax
-                ({
-                    url: form_url,
-                    method: "GET",
-                    headers:
-                    {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data)
-                    {
-                        $('.btnUpdate').attr('id', data.id)
-                        $('#address_edit').val(data.address)
-                        $('#mother_last_name_edit').val(data.mother_last_name)
-                        $('#mother_first_name_edit').val(data.mother_first_name)
-                        $('#child_last_name_reweigh').val(data.child_last_name)
-                        $('#child_first_name_reweigh').val(data.child_first_name)
-                        $('#ip_group_edit').val(data.ip_group)
-                        $('#micronutrient_edit').val(data.micronutrient)
-                        $('#sex_edit').val(data.sex)
-                        $('#birthdate_edit').val(data.birthdate)
-                        let today = new Date().toISOString().slice(0, 10)
-                        $('#date_measured_reweigh').val(today)
-                        $('#height_reweigh').val(data.height)
-                        $('#weight_reweigh').val(data.weight)
-
-                        tempWeight = data.weight;
-                        tempHeight = data.height;
-                        tempIndividualId = data.id;
-                        tempDateRecorded = data?.updated_at ?? data.created_at;
-                        $('#reweighModal').modal('show');
-                    },
-                    error: function(error)
-                    {
-                        console.log(error)
-                        if (error.responseJSON.errors == null)
-                        {
-                            swalAlert('warning', error.responseJSON.message)
-                        }
-                        else
-                        {
-                            $.each(error.responseJSON.errors, function(key, value)
-                            {
-                                swalAlert('warning', value)
-                            });
-                        }
-                    }
-                })
-
-            })
-            // End of Script for Reweigh Function
-
-            // Script for Update Function:
+            // Script for Update Function edit:
             $(document).on('click', '.btnUpdate', function()
             {
                 let id = this.id;
@@ -1282,6 +1223,8 @@
                 {
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
+
+                console.log("form data from edit: " + JSON.stringify(form_data));
 
                 // BMI Computation:
                     // let bmi = (form_data.weight / form_data.height / form_data.height) * 10000
@@ -1300,6 +1243,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function(data) {
+                            console.log("Data boy ohh!!: " + JSON.stringify(data));
                             // let filteredData = {};
                             // // Iterate through the keys in form_data
                             // Object.keys(form_data).forEach(key => {
@@ -1316,6 +1260,161 @@
                                 notification('info', "{{ Str::singular($page_title) }}");
                                 refresh();
                                 $('#editModal').modal('hide');
+                                console.log(data);
+                            // } else {
+                            //     // Create a warning that no data was edited
+                            //     swalAlert('warning', 'No data was edited.');
+                            // }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                            if (error.responseJSON.errors == null) {
+                                swalAlert('warning', error.responseJSON.message);
+                            } else {
+                                $.each(error.responseJSON.errors, function(key, value) {
+                                    swalAlert('warning', value);
+                                });
+                            }
+                        }
+                    });
+
+            })
+            // End of Script for Update Function for edit
+
+            // Script for Reweigh Function:
+            $(document).on('click', '.btnReweigh', function() {
+                let id = this.id;
+                let form_url = BASE_API + '/' + id;
+                console.log("id: " + id);
+                $.ajax({
+                    url: form_url,
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": API_TOKEN,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        console.log("Data boy ohh!!: " + JSON.stringify(data));
+                        $('.btnUpdateReweigh').attr('id', data.id);
+                        $('#child_last_name_reweigh').val(data.child_last_name);
+                        $('#child_first_name_reweigh').val(data.child_first_name);
+                        let today = new Date().toISOString().slice(0, 10);
+                        $('#date_measured_edit').val(today);
+                        $('#date_measured_hidden').val(today); // Set the hidden input value
+                        $('#height_edit').val(data.height);
+                        $('#weight_edit').val(data.weight);
+
+                        tempWeight = data.weight;
+                        tempHeight = data.height;
+                        tempIndividualId = data.id;
+                        tempDateRecorded = data?.updated_at ?? data.created_at;
+                        $('#reweighModal').modal('show');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        if (error.responseJSON.errors == null) {
+                            swalAlert('warning', error.responseJSON.message);
+                        } else {
+                            $.each(error.responseJSON.errors, function(key, value) {
+                                swalAlert('warning', value);
+                            });
+                        }
+                    }
+                });
+            });
+            // End of Script for Reweigh Function
+
+            // Script for Update Function for Reweigh:
+            $(document).on('click', '.btnUpdateReweigh', function()
+            {
+                let id = this.id;
+                console.log(id)
+                let form_url = BASE_API + '/' + id;
+
+                // Form Data:   
+                let form = $("#reweighForm").serializeArray();
+                let form_data = {}
+
+                $.each(form, function()
+                {
+                    form_data[[this.name.slice(0, -5)]] = this.value;
+                });
+
+                console.log("form data: " + JSON.stringify(form_data));
+
+                // BMI Computation:
+                    // let bmi = (form_data.weight / form_data.height / form_data.height) * 10000
+                    // form_data.bmi = bmi;
+                    // form_data.bmi_category = check_bmi_category(bmi)
+
+                    $.ajax({
+                        url: form_url,
+                        method: "PUT",
+                        data: JSON.stringify(form_data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": API_TOKEN,
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log("Data boy ohh from reweigh!!: " + JSON.stringify(data));
+                            // let filteredData = {};
+                            // // Iterate through the keys in form_data
+                            // Object.keys(form_data).forEach(key => {
+                            //     // Check if the key exists in data and has the same value
+                            //     if (data.hasOwnProperty(key)) {
+                            //         filteredData[key] = data[key];
+                            //     }
+                            // });
+                            // console.log('filteredData:', JSON.stringify(filteredData));
+                            // console.log('form_data:', JSON.stringify(form_data));
+                            // Check if form_data is form_data from data
+                            // if (JSON.stringify(form_data) !== JSON.stringify(filteredData)) { 
+
+                                $.ajax({
+                                    url: API_URL + '/history_of_individual_records',
+                                    method: "POST",
+                                    data: JSON.stringify({
+                                        individual_record_id: data.id, // Ensure you include this line
+                                        child_number: data.child_number,
+                                        address: data.address,
+                                        mother_last_name: data.mother_last_name,
+                                        mother_first_name: data.mother_first_name,
+                                        child_last_name: data.child_last_name,
+                                        child_first_name: data.child_first_name,
+                                        date_measured: data.date_measured,
+                                        ip_group: data.ip_group,
+                                        micronutrient: data.micronutrient,
+                                        sex: data.sex,
+                                        birthdate: data.birthdate,
+                                        height: data.height,
+                                        weight: data.weight,
+                                        length: data.length,
+                                    }),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function(historyData) {
+                                        notification('success', "{{ Str::singular($page_title) }}");
+                                        $("#createForm").trigger("reset");
+                                        $("#create_card").collapse("hide");
+                                        refresh();
+                                    },
+                                    error: function(error) {
+                                        console.log(error);
+                                    }
+                                });
+                                notification('info', "{{ Str::singular($page_title) }}");
+                                refresh();
+                                $('#reweighModal').modal('hide');
                                 console.log(data);
                             // } else {
                             //     // Create a warning that no data was edited
