@@ -85,4 +85,18 @@ class HistoryOfIndividualRecordController extends Controller
             ->make(true);
     }
 
+    public function data_chart($month)
+    {
+        $latestRecords = HistoryOfIndividualRecord::whereIn('created_at', function($query) use ($month) {
+            $query->selectRaw('MAX(created_at)')
+                  ->from('history_of_individual_records')
+                  ->whereMonth('created_at', $month)
+                  ->groupBy('child_number');
+        })->get();
+
+        return response()->json($latestRecords);
+    }
+
+
+    
 }
