@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
+                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
                     <button type="button" class="btn btn-success btnUpdate">Save</button>
                 </div>
 
@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
+                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
                     <button type="button" class="btn btn-success btnUpdateReweigh">Save</button>
                 </div>
 
@@ -176,7 +176,7 @@
     {{-- UPLOAD FORM --}}
     <div id="uploadModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" id="uploadCollapseModal">
                 <div class="modal-body">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title fw-semibold mb-4 text-black">► Upload Multiple Record</h5>
@@ -202,7 +202,7 @@
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
+                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
                     <button type="submit" class="btn btn-success">Upload</button>
                 </div>
                 </form>
