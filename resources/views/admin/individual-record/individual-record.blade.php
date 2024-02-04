@@ -101,10 +101,6 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" class="form-control" id="weight_edit" name="weight_edit" tabindex="1" required>
                             </div>
-                                <!-- <div class="form-group col-md-4">
-                                    <label class="required-input" style="font-weight:bold">Length (cm):</label>
-                                    <input type="number" class="form-control" id="length_edit" name="length_edit" tabindex="1" required>
-                                </div> -->
                         </div>
 
                     </form>
@@ -367,7 +363,7 @@
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Weight for Age Status</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Height for Age Status</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Length/Height Status</th>
-                            <th class="bg-dark not-export-column" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Action Buttons</th>
+                            <th class="bg-dark not-export-column" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Action Buttons</th>
                         </tr>
                     </thead>
 
@@ -429,11 +425,13 @@
                 let form_url = API_URL + '/history_of_individual_records'
                 
 
-                $.ajax({
+                $.ajax
+                ({
                     url: form_url,
                     method: "POST",
-                    data: JSON.stringify({
-                        individual_record_id: data.id, // Ensure you include this line
+                    data: JSON.stringify
+                    ({
+                        individual_record_id: data.id,
                         child_number: data.child_number,
                         address: data.address,
                         mother_last_name: data.mother_last_name,
@@ -522,7 +520,7 @@
                     else if (weight > normalLimit) { result = "Normal"; statusClass = "bg-success"; }
                 }
 
-                switch (ageInMonths) // - Dev RJ (input data ranges here)
+                switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
                         if (sex === "Male") { setWeightForAgeStatus(2.1, 2.2, 4.4); }
@@ -594,7 +592,7 @@
                     else if (height > tallLimit) { result = "Tall"; statusClass = "bg-primary"; }
                 }
 
-                switch (ageInMonths) // - Dev RJ (input data ranges here)
+                switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
                         if (sex === "Male") { setHeightForAgeStatus(44.1, 44.2, 46.1, 53.8); }
@@ -666,7 +664,7 @@
                     else if (height > tallLimit) { result = "Tall"; statusClass = "bg-primary"; }
                 }
 
-                switch (ageInMonths) // - Dev RJ (input data ranges here)
+                switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
                         if (sex === "Male") { setLtHtStatus(44.1, 44.2, 46.1, 53.8); }
@@ -742,9 +740,9 @@
                     },
 
                     // "searching": false,
-                    "ordering": true, // - Dev RJ (removes asc/desc button)
-                    "paging": false, // - Dev RJ (removes pagination info: number of entries; prev/next page button)
-                    "info": false, // - Dev RJ (removes entries info)
+                    "ordering": true, // (removes asc/desc button)
+                    "paging": false, // (removes pagination info: number of entries; prev/next page button)
+                    "info": false, // (removes entries info)
 
                     "processing": true,
                     "serverSide": true,
@@ -1051,8 +1049,9 @@
                         $.ajax({
                         url: API_URL + '/history_of_individual_records',
                         method: "POST",
-                        data: JSON.stringify({
-                            individual_record_id: data.id, // Ensure you include this line
+                        data: JSON.stringify
+                        ({
+                            individual_record_id: data.id,
                             child_number: data.child_number,
                             address: data.address,
                             mother_last_name: data.mother_last_name,
@@ -1066,7 +1065,6 @@
                             height: data.height,
                             weight: data.weight,
                             length: data.length,
-                            // ... other fields
                         }),
                         dataType: "JSON",
                         headers: {
