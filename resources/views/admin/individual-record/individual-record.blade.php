@@ -848,7 +848,17 @@
                             data: "micronutrient", visible: true
                         },
                         {
-                            data: "date_measured", visible: true
+                            data: "date_measured", visible: true,
+                            render: function(data, type, row)
+                            {
+                                if (data === null)
+                                {
+                                    return " ";
+                                }
+
+                                var dateMeasured = moment(data, 'YYYY-MM-DD');
+                                return dateMeasured.format('MMMM D, YYYY');
+                            }
                         },
                         {
                             data: "weight", visible: true,
