@@ -342,6 +342,27 @@
                     style="width: 265%; table-layout:fixed; text-align:center; border:1px solid black; border-radius:5px">
                 
                     <thead>
+
+                        <tr class="text-dark" id="search_bar">
+                            <th style="width:10%; padding:15px 0 15px 0">ID Number</th>
+                            <th style="width:20%; padding:15px 0 15px 0">Address or Location of Child's Residence</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Last Name of Parent/Guardian</th>
+                            <th style="width:15%; padding:15px 0 15px 0">First Name of Parent/Guardian</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Last Name of Child</th>
+                            <th style="width:10%; padding:15px 0 15px 0">First Name of Child</th>
+                            <th style="width:5%; padding:15px 0 15px 0">Sex</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Age in Months</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Belongs to IP Group?</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Taking Micronutrient Supplementation?</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Date Measured</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Weight (kg)</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Height (cm)</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Weight for Age Status</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Height for Age Status</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Length/Height Status</th>
+                            <th style="width:15%; visibility:hidden"></th>
+                        </tr>
+
                         <tr class="text-dark">
                                 <!-- <th class="not-export-column">ID</th> -->
                                 <!-- <th class="not-export-column">Created At</th> -->
@@ -365,30 +386,10 @@
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Length/Height Status</th>
                             <th class="bg-dark not-export-column" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Action Buttons</th>
                         </tr>
+
                     </thead>
 
                     <tbody></tbody>
-
-                    <!-- <tfoot>
-                        <tr class="text-dark">
-                            <th class="not-export-column">ID</th>
-                            <th class="not-export-column">Created At</th>
-                            <th>Child Seq.</th>
-                            <th>Address of Child's Residence</th>
-                            <th>Name of Mother/Caregiver</th>
-                            <th>Child's Full Name</th>
-                            <th>Belongs to IP Group?</th>
-                            <th>Sex</th>
-                            <th>Date of Birth</th>
-                            <th>Date Measured</th>
-                            <th>Weight (kg)</th>
-                            <th>Height (cm)</th>
-                            <th>Age in Months</th>
-                            <th>Weight for Age Status</th>
-                            <th>Height for Age Status</th>
-                            <th>Weight for Lt/Ht Status</th>
-                        </tr>
-                    </tfoot> -->
                     
                 </table>
             </div>
@@ -725,11 +726,11 @@
             // Script for Data Table Function:
             function dataTable()
             {
-                // For Table Footer (which generates Search Input):
-                $('#dataTable tfoot th').each(function(i)
+                // For Table Header (which generates Search Input):
+                $('#search_bar th').each(function(i)
                 {
-                    let title = $('#dataTable thead th').eq($(this).index()).text();
-                    $(this).html('<input size="15" class="form-control" type="text" placeholder="' + title + '" data-index="' + i + '" />');
+                    let title = $(this).text();
+                    $(this).html('<input size="15" class="form-control" type="text" placeholder="' + title + '" data-index="' + i + '" style="text-align: center; color: black;" />');
                 });
 
                 dataTable = $('#dataTable').DataTable
@@ -737,6 +738,22 @@
                     "ajax":
                     {
                         url: BASE_API + '/datatable'
+                    },
+
+                    "initComplete": function ()
+                    {
+                        this.api().columns().every(function ()
+                        {
+                            var column = this;
+                            var columnIndex = column.index();
+                            $('input', $('#search_bar')).on('keyup change', function ()
+                            {
+                                if (columnIndex === $(this).data('index'))
+                                {
+                                    column.search(this.value).draw();
+                                }
+                            });
+                        });
                     },
 
                     // "searching": false,
@@ -772,7 +789,7 @@
                             data: "address", visible: true,
                         },
                         {
-                            data: "null", visible: true,
+                            data: "mother_last_name", visible: true,
                             render: function(data, type, row)
                             {
                                 var motherLastName = row.mother_last_name;
@@ -780,7 +797,7 @@
                             }
                         },
                         {
-                            data: "null", visible: true, 
+                            data: "mother_first_name", visible: true, 
                             render: function(data, type, row)
                             {
                                 var motherFirstName = row.mother_first_name;
@@ -788,7 +805,7 @@
                             }
                         },
                         {
-                            data: "null", visible: true,
+                            data: "child_last_name", visible: true,
                             render: function(data, type, row)
                             {
                                 var childLastName = row.child_last_name;
@@ -796,7 +813,7 @@
                             }
                         },
                         {
-                            data: "null", visible: true,
+                            data: "child_first_name", visible: true,
                             render: function(data, type, row)
                             {
                                 var childFirstName = row.child_first_name;
@@ -941,7 +958,7 @@
                             extend: 'pdfHtml5',
                             text: 'Export as PDF',
                             orientation: 'landscape',
-                            pageSize: 'A3',
+                            pageSize: 'A2',
                             exportOptions:
                             {
                                 // columns: ':visible',
