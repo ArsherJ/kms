@@ -29,120 +29,120 @@
                     <div class="col-md-3">
                         <div class="card-body">
                             <div>
-                                <h5 style="padding:5px">
+                                <h6 style="padding:5px; text-align:right">
                                     <strong>Child's Residence:</strong>
                                     <!-- <span id="address" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px; text-align:right">
                                     <strong>Name of Parent/Guardian:</strong>
                                     <!-- <span id="parent_name" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px; text-align:right">
                                     <strong>Sex:</strong>
                                     <!-- <span id="sex" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px; text-align:right">
                                     <strong>Date of Birth:</strong>
                                     <!-- <span id="birthdate" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px; text-align:right">
                                     <strong>Recent Date Measured:</strong>
                                     <!-- <span id="date_measured" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px; text-align:right">
                                     <strong>Belongs to IP Group:</strong>
                                     <!-- <span id="ip_group" class="card-text"></span> -->
-                                </h5>
+                                </h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card-body">
                             <div>
-                                <h5 style="padding:5px">
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Child's Residence:</strong> -->
                                     <span id="address" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Name of Parent/Guardian:</strong> -->
                                     <span id="parent_name" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Sex:</strong> -->
                                     <span id="sex" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Date of Birth:</strong> -->
                                     <span id="birthdate" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Recent Date Measured:</strong> -->
                                     <span id="date_measured" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Belongs to IP Group:</strong> -->
                                     <span id="ip_group" class="card-text"></span>
-                                </h5>
+                                </h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card-body">
                             <div>
-                                <h5 style="padding:5px">
+                                <h6 style="padding:5px;  text-align:right">
                                     <strong>On Supplementation:</strong>
                                     <!-- <span id="micronutrient" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:right">
                                     <strong>Child's Weight (kg):</strong>
                                     <!-- <span id="weight" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:right">
                                     <strong>Child's Weight (cm):</strong>
                                     <!-- <span id="height" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:right">
                                     <strong>Weight for Age Status:</strong>
                                     <!-- <span id="weight_for_age_status" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:right">
                                     <strong>Height for Age Status:</strong>
                                     <!-- <span id="height_for_age_status" class="card-text"></span> -->
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:right">
                                     <strong>Length/Height Status:</strong>
                                     <!-- <span id="ltht_status" class="card-text"></span> -->
-                                </h5>
+                                </h6>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card-body">
                             <div>
-                                <h5 style="padding:5px">
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Taking Micronutrient Supplementation:</strong> -->
                                     <span id="micronutrient" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Child's Weight (kg):</strong> -->
                                     <span id="weight" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:5px;  text-align:left">
                                     <!-- <strong>Child's Weight (cm):</strong> -->
                                     <span id="height" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:2px;  text-align:left">
                                     <!-- <strong>Weight for Age Status:</strong> -->
                                     <span id="weight_for_age_status" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:2px;  text-align:left">
                                     <!-- <strong>Height for Age Status:</strong> -->
                                     <span id="height_for_age_status" class="card-text"></span>
-                                </h5>
-                                <h5 style="padding:5px">
+                                </h6>
+                                <h6 style="padding:2px;  text-align:left">
                                     <!-- <strong>Length/Height Status:</strong> -->
                                     <span id="ltht_status" class="card-text"></span>
-                                </h5>
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                         <div class="card-body">
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h5 class="card-title fw-semibold">History of BMI</h5>
+                                <h6 class="card-title fw-semibold">History of BMI</h6>
                             </div>
                             
                             <table class="table table-hover table-sm table-borderless" id="bmiDataTable" style="width:100%">
