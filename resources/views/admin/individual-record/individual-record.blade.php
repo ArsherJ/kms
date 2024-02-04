@@ -264,7 +264,7 @@
                 <div>
                     <button type="button" class="btn btn-info mx-2 btnReweigh">Reweighing 
                         <span><i class="ti ti-plus"></i></span></button>
-                    <button type="button" class="btn btn-dark mx-2 btnUpload">Add Multiple Record 
+                    <button type="button" class="btn btn-success mx-2 btnUpload">Add Multiple Record
                         <span><i class="ti ti-plus"></i></span></button>
                     <button type="button" class="btn btn-dark mx-2" data-toggle="collapse"
                         data-target="#create_card" aria-expanded="false" aria-controls="create_card">Add
@@ -796,6 +796,7 @@
                             }
                         },
                         {
+                            data: "null", visible: true, 
                             data: "null", visible: true, 
                             render: function(data, type, row)
                             {
@@ -1353,7 +1354,22 @@
                 })
             });
             // END OF DEACTIVATE FUNCTION
+            var jq = jQuery.noConflict();
 
+jq(document).ready(function() {
+    // Use jq instead of $
+    // ...
+
+    // Your existing DataTable initialization or other code
+    jq('#dataTable').DataTable({
+        // DataTable configuration options
+    });
+
+    // Example of DataTable reload
+    jq('#reloadButton').on('click', function() {
+        jq('#dataTable').DataTable().ajax.reload();
+    });
+});
             // Function Calling:
             dataTable();
         })

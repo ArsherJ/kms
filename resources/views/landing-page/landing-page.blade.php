@@ -162,8 +162,8 @@
         <div class="event-container">
             <div class="col-lg-12">
                 <div class="feeding-program-container">
-                    <h2 style="" class="text-center section-title">Acvtivities</h2>
-                    <div id="feedingProgramContainer" class="m-4">
+                    <h2 style="" class="text-center section-title">Activities</h2>
+                    <div id="feedingProgramContainer" style='display:flex; flex-wrap:wrap'>
                     </div>
                 </div>
             </div>
@@ -480,6 +480,21 @@
                 });
             }
 
+            function getProgressColor(progress) {
+                switch (progress) {
+                    case 'Success':
+                        return 'green';
+                    case 'Postponed':
+                        return 'lightcoral';
+                    case 'Ongoing':
+                        return 'blue';
+                    case 'Cancelled':
+                        return 'red';
+                    default:
+                        return 'gray';
+                }
+            }
+
 
             // Call the fetchFeedingProgram function
             function fetchFeedingProgram() {
@@ -502,6 +517,21 @@
                         data.forEach((el) => {
                             html_content += `
                                             <style>
+                                                .event-card {
+                                                    position: relative;
+                                                }
+
+                                                .event-card .progress-indicator {
+                                                    position: absolute;
+                                                    top: 5px;
+                                                    right: 5px;
+                                                    font-size: 20px;
+                                                    padding: 5px;
+                                                    border-radius: 5px;
+                                                    color: #fff; /* Text color for progress */
+                                                    font-weight: bold;
+                                                }
+
                                                 .activity-images-container .image-container {
                                                     display: flex;
                                                     justify-content: center;
@@ -510,13 +540,14 @@
                                                 }
 
                                                 .activity-images-container .image-container img {
-                                                    max-width: 100%; /* Set max-width to none for actual image size */
+                                                    max-width: 40%; /* Set max-width to none for actual image size */
                                                     height: auto; /* Maintain the aspect ratio of the images */
                                                     margin: 5px; /* Add spacing between images */
                                                     border: 1px solid #ddd; /* Add a border around images */
                                                     border-radius: 5px; /* Add a border-radius for rounded corners */
                                                 }
                                             </style>
+
                                             <div class="event-card" data-activity-id="${el.id}">
                                                 <div class="left-30">
                                                     <div class="date-time dt1">
@@ -524,7 +555,7 @@
                                                         <p id="time_of_program" class="time">${moment(el.date_of_program + " " + el.time_of_program).format('LT')}</p>
                                                     </div>
 
-                                                    <div class="event-info-70">
+                                                    <div class="event-info-70" style="word-wrap: break-word;">
                                                         <h3 id="title" class="event-name">
                                                             ${el.title}
                                                         </h3>
@@ -535,9 +566,14 @@
                                                             ${el.description}
                                                         </p>
                                                     </div>
-                                                    
+                                                </div>
+
+                                                <!-- Progress Indicator -->
+                                                <div class="progress-indicator" style="color: ${getProgressColor(el.progress)}">
+                                                    ${el.progress}
                                                 </div>
                                             </div>
+
                                             <!-- Container for the images (initially hidden) -->
                                             <div class="activity-images-container" id="eventImagesContainer-${el.id}" style="display: none;">
                                                 <div class="image-container"></div>

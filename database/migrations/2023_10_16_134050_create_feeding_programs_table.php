@@ -27,6 +27,8 @@ return new class extends Migration {
             $table->date('date_of_program');
             $table->dateTime('date_posted');
             $table->string('status');
+            $table->string('type');
+            $table->string('progress');
         });
     }
 

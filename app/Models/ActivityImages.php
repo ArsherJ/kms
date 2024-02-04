@@ -13,7 +13,8 @@ class ActivityImages extends Model
     protected $fillable =
     [
         'activity_id',
-        'blob_image'
+        'blob_image',
+        'image_reference',
     ];
     
     public function createdByUser()
