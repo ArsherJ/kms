@@ -40,11 +40,11 @@ class HistoryOfIndividualRecordController extends Controller
             'child_last_name' => 'required',
             'child_first_name' => 'required',
             'ip_group' => 'required',
+            'micronutrient' => 'required',
             'sex' => 'required',
             'birthdate' => 'required',
             'height' => 'required',
             'weight' => 'required',
-            'length' => 'required',
         ]);
 
         return HistoryOfIndividualRecord::create($request->all());

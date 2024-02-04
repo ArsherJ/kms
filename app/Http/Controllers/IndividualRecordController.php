@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\IndividualRecord;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreIndividualRecordRequest;
+use App\Http\Requests\StoreHistoryOfIndividualRecordRequest;
 use App\Http\Requests\UpdateIndividualRecordRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
-
-use App\Imports\IndividualRecordImport;
 use Maatwebsite\Excel\Facades\Excel;
 
+use App\Imports\IndividualRecordImport;
 
 class IndividualRecordController extends Controller
 {
@@ -30,41 +32,29 @@ class IndividualRecordController extends Controller
 
     public function create()
     {
+        // Your create logic here if needed
     }
-
 
     public function import(StoreIndividualRecordRequest $request)
     {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx',
+        ]);
+
         $file = $request->file('file');
 
-        if ($file)
-        {
+        try {
             Excel::import(new IndividualRecordImport, $file);
-            return 'success';
-        }
-        else
-        {
-            return 'error';
+            return response()->json(['message' => 'File imported successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error('Error importing file: ' . $e->getMessage());
+            return response()->json(['message' => 'Error importing file. Please check the file format.'], 500);
         }
     }
-    
+
     public function store(StoreIndividualRecordRequest $request)
     {
-
-        $request->validate
-        ([
-            // Original User Input Validations:
-                // 'first_name' => 'required',
-                // 'last_name' => 'required',
-                // 'gender' => 'required',
-                // 'birthdate' => 'required',
-                // 'height' => 'required',
-                // 'weight' => 'required',
-                // 'bmi' => 'required',
-                // 'bmi_category' => 'required',
-                // 'status' => 'required',
-                // 'id_number' => 'required|unique:individual_records',
-
+        $request->validate([
             'child_number' => 'required',
             'address' => 'required',
             'mother_last_name' => 'required',
@@ -72,11 +62,11 @@ class IndividualRecordController extends Controller
             'child_last_name' => 'required',
             'child_first_name' => 'required',
             'ip_group' => 'required',
+            'micronutrient' => 'required',
             'sex' => 'required',
             'birthdate' => 'required',
             'height' => 'required',
             'weight' => 'required',
-            'length' => 'required',
         ]);
 
         return IndividualRecord::create($request->all());
@@ -89,6 +79,7 @@ class IndividualRecordController extends Controller
 
     public function edit(IndividualRecord $individual_record)
     {
+        // Your edit logic here if needed
     }
 
     public function update(UpdateIndividualRecordRequest $request, IndividualRecord $individual_record, $id)
