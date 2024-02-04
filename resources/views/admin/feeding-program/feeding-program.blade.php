@@ -118,7 +118,7 @@
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" id="btnEditCloseModal">Close</button>
                     <button type="button" class="btn btn-success btnUpdate">Save</button>
                 </div>
             </div>
@@ -234,6 +234,7 @@
                     <h5 class="modal-title" style="color: white;">Upload Images</h5>
                 </div >
                 <div class="modal-body">
+                    <caption>Select Image</caption>
                     <input type="file" class="form-control" id="imageUpload" name="images[]" tabindex="1" aaccept="image/*" multiple>
 
                     <div id="selectedImagesContainer" class="d-flex flex-wrap mb-3"></div>
@@ -543,6 +544,10 @@
             })
             // END OF EDIT FUNCTION
 
+            $(document).on("click", "#btnEditCloseModal", async function() {
+                        $('#editModal').modal('hide');
+                });
+
             // UPDATE FUNCTION
             $(document).on('click', '.btnUpdate', function() {
                 var id = this.id;
@@ -708,7 +713,8 @@ async function convertImageToFormDataAndInsert(file, uploadButtonId, referenceNu
               'src': URL.createObjectURL(files[i]),
               'alt': files[i].name,
               'class': 'img-fluid m-1', // Added margin for spacing
-              'width': '200',
+              'width': '100',
+              'aspect-ratio': '3/2'
              
           });
 
