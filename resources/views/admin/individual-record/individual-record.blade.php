@@ -885,7 +885,9 @@
                             data: "weight_for_age_status", visible: true,
                             render: function(data, type, row)
                             {
-                                const ageInMonths = row.age_in_months;
+                                var birthdate = moment(row.birthdate, 'YYYY-MM-DD');
+                                var currentDate = moment();
+                                var ageInMonths = currentDate.diff(birthdate, 'months');
                                 const sex = row.sex;
                                 const weight = row.weight;
 

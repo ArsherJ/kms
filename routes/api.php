@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\HistoryOfIndividualRecordController;
+
 use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +16,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HistoryOfIndividualRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/history_of_individual_records/destroy/{id}', [HistoryOfIndividualRecordController::class, 'destroy']);
     Route::put('/history_of_individual_records/restore/{id}', [HistoryOfIndividualRecordController::class, 'restore']);
     Route::get('/history_of_individual_records/search_individual_records/{id}', [HistoryOfIndividualRecordController::class, 'search_individual_records']);
+    Route::post('/history_of_individual_records/data_chart/{month}', [HistoryOfIndividualRecordController::class, 'data_chart']);
+    Route::post('/history_of_individual_records/data_chart_year/{year}', [HistoryOfIndividualRecordController::class, 'data_chart_year']);
+
 
     // FEEDING PROGRAM
     Route::get('/feeding_programs', [FeedingProgramController::class, 'index']);

@@ -97,4 +97,6 @@ class IndividualRecordController extends Controller
         $individual_record->delete();
         return $individual_record;
     }
+
+
 }
