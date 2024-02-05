@@ -1,4 +1,4 @@
-# KMS (KA-In Management System) Installation Guide
+# KMS (LittleLife: Children Nutrition Monitoring System) Installation Guide
 
 ## Prerequisites
 Before you can run the KMS application locally, you need to have the following software installed on your system:
