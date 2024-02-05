@@ -770,7 +770,6 @@
             function getIndividualRecordIdRecord(id)
             {
                 let form_url = BASE_API + '/' + id;
-
                 $.ajax
                 ({
                     url: form_url,
@@ -832,51 +831,82 @@
             // bmiDataTable()
 
 
-        var months = ['1st Month', '2nd Month', '3rd Month', '4th Month', '5th Month', '6th Month', '7th Month', '8th Month', '9th Month', '10th Month', '11th Month', '12th Month'];
-        var dataset1 = [10, 20, 30, 25, 15, 35, 45, 40, 50, 55, 60, 65];
-        var dataset2 = [25, 30, 15, 40, 20, 30, 50, 45, 55, 50, 40, 35];
-        var dataset3 = [15, 10, 20, 35, 30, 25, 60, 50, 45, 40, 30, 25];
+        let currentYear = new Date().getFullYear();
+        $('#monthDropdown').val(currentYear);
 
-        var data = {
-            labels: months,
-            datasets: [{
-                label: 'Weight For Age',
-                backgroundColor: '#6CE5E8',
-                borderColor: '#6CE5E8',
-                borderWidth: 1,
-                data: dataset1
-            }, {
-                label: 'Height For Age',
-                backgroundColor: '#41B8D5',
-                borderColor: '#41B8D5',
-                borderWidth: 1,
-                data: dataset2
-            }, {
-                label: 'Weight for Lt/Ht',
-                backgroundColor: '#2D8BBA',
-                borderColor: '#2D8BBA',
-                borderWidth: 1,
-                data: dataset3
-            }]
-        };
 
-        var options = {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
+        function updateLineChart(selectedYear,child_number){
+            urlzx = API_URL+ "/history_of_individual_records" + "/individual_view_graph/" + selectedYear + "/" + child_number,
+            $.ajax({
+                url: urlzx,
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": API_TOKEN,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data){
+                    var WFA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    var HFA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    var WFH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+                    data.forEach(function(child){
+                        var created_at = moment(child.created_at, 'YYYY-MM-DD');
+                        var monthNumber = created_at.format("MM")
+                        WFA[monthNumber-1] = child.weight
+                        HFA[monthNumber-1] = child.height
+                    })
+                    updateDataGraph(WFA,HFA,WFH)
+                }
+            })
+        }
+        
+        updateLineChart(2024,212)
+        
+        function updateDataGraph(WFA,HFA,WFH){
+            var months = ['1st Month', '2nd Month', '3rd Month', '4th Month', '5th Month', '6th Month', '7th Month', '8th Month', '9th Month', '10th Month', '11th Month', '12th Month'];
+            var data = {
+                labels: months,
+                datasets: [{
+                    label: 'Weight For Age',
+                    backgroundColor: '#6CE5E8',
+                    borderColor: '#6CE5E8',
+                    borderWidth: 1,
+                    data: WFA
+                }, {
+                    label: 'Height For Age',
+                    backgroundColor: '#41B8D5',
+                    borderColor: '#41B8D5',
+                    borderWidth: 1,
+                    data: HFA
+                }, {
+                    label: 'Weight for Lt/Ht',
+                    backgroundColor: '#2D8BBA',
+                    borderColor: '#2D8BBA',
+                    borderWidth: 1,
+                    data: WFH
                 }]
-            }
-        };
+            };
 
-        var ctx = document.getElementById('myLineChart').getContext('2d');
-        var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: options
-        });
+            var options = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
 
-        })
+            var ctx = document.getElementById('myLineChart').getContext('2d');
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: options
+            });
+        }
+        
+    })
     </script>
 @endsection
