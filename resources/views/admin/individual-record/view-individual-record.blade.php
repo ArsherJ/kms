@@ -505,10 +505,17 @@
             bmiDataTable()
 
 
+
+
+        $.ajax({
+            url: API_URL+ "/history_of_individual_records" + "/data_chart_year_id/" + selectedYear + / ""
+        })
+        
+
         var months = ['1st Month', '2nd Month', '3rd Month', '4th Month', '5th Month', '6th Month', '7th Month', '8th Month', '9th Month', '10th Month', '11th Month', '12th Month'];
-        var dataset1 = [10, 20, 30, 25, 15, 35, 45, 40, 50, 55, 60, 65];
-        var dataset2 = [25, 30, 15, 40, 20, 30, 50, 45, 55, 50, 40, 35];
-        var dataset3 = [15, 10, 20, 35, 30, 25, 60, 50, 45, 40, 30, 25];
+        var WFA = [0, 0, 30, 25, 15, 35, 45, 40, 50, 55, 60, 65];
+        var HFA = [25, 30, 15, 40, 20, 30, 50, 45, 55, 50, 40, 35];
+        var WFH = [15, 10, 20, 35, 30, 25, 60, 50, 45, 40, 30, 25];
 
         var data = {
             labels: months,
@@ -517,19 +524,19 @@
                 backgroundColor: '#6CE5E8',
                 borderColor: '#6CE5E8',
                 borderWidth: 1,
-                data: dataset1
+                data: WFA
             }, {
                 label: 'Height For Age',
                 backgroundColor: '#41B8D5',
                 borderColor: '#41B8D5',
                 borderWidth: 1,
-                data: dataset2
+                data: HFA
             }, {
                 label: 'Weight for Lt/Ht',
                 backgroundColor: '#2D8BBA',
                 borderColor: '#2D8BBA',
                 borderWidth: 1,
-                data: dataset3
+                data: WFH
             }]
         };
 
