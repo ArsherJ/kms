@@ -24,11 +24,11 @@ return new class extends Migration
             $table->enum('sex', ['Male', 'Female']);
 
             $table->date('birthdate');
+            $table->integer('age_in_months');
             $table->date('date_measured')->nullable();
             $table->float('height');
             $table->float('weight');
 
-            $table->integer('age_in_months')->default(0)->nullable();
             $table->string('weight_for_age_status')->nullable();
             $table->string('height_for_age_status')->nullable();
             $table->string('ltht_status')->nullable();
@@ -39,20 +39,14 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
-
-            // Original Table Properties:
-                // $table->string('id_number');
-                // $table->string('first_name');
-                // $table->string('middle_name')->nullable();
-                // $table->string('last_name');
-                // $table->string('gender');
-                // $table->date('birthdate');
-                // $table->float('height');
-                // $table->float('weight');
-                // $table->float('bmi');
-                // $table->string('bmi_category');
-                // $table->string('status');
         });
+
+        DB::statement
+        ('
+            CREATE TRIGGER calculate_age_in_months BEFORE INSERT ON individual_records
+            FOR EACH ROW
+            SET NEW.age_in_months = TIMESTAMPDIFF(MONTH, NEW.birthdate, NOW());
+        ');
     }
 
     public function down(): void

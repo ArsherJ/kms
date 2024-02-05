@@ -302,11 +302,6 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" step="0.01" class="form-control" id="weight" name="weight" tabindex="1" required>
                             </div>
-                                <!-- <div class="form-group col-md-4">
-                                    <label class="required-input" style="font-weight:bold">Length (cm):</label>
-                                    <input type="number" step="0.01" class="form-control" id="length" name="length" tabindex="1" required>
-                                </div> -->
-                            </div>
                         </div>
 
                     <div class="card-footer d-flex justify-content-between" style="margin-top:-15px">
@@ -357,9 +352,9 @@
                             <th style="width:10%; padding:15px 0 15px 0">Date Measured</th>
                             <th style="width:10%; padding:15px 0 15px 0">Weight (kg)</th>
                             <th style="width:10%; padding:15px 0 15px 0">Height (cm)</th>
-                            <th style="width:10%; padding:15px 0 15px 0">Weight for Age Status</th>
-                            <th style="width:10%; padding:15px 0 15px 0">Height for Age Status</th>
-                            <th style="width:10%; padding:15px 0 15px 0">Length/Height Status</th>
+                            <th style="width:10%; visibility:hidden">Weight for Age Status</th>
+                            <th style="width:10%; visibility:hidden">Height for Age Status</th>
+                            <th style="width:10%; visibility:hidden">Length/Height Status</th>
                             <th style="width:15%; visibility:hidden"></th>
                         </tr>
 
@@ -696,28 +691,28 @@
                         else if (sex === "Female") { setLtHtStatus(58.8, 58.9, 61.2, 70.4); }
                         break;
                     case 7:
-                        if (sex === "Male") { setHeightForAgeStatus(62.6, 62.7, 64.8, 73.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(60.2, 60.3, 62.7, 72.0); }
+                        if (sex === "Male") { setLtHtStatus(62.6, 62.7, 64.8, 73.6); }
+                        else if (sex === "Female") { setLtHtStatus(60.2, 60.3, 62.7, 72.0); }
                         break;
                     case 8:
-                        if (sex === "Male") { setHeightForAgeStatus(63.9, 64.0, 66.2, 75.1); }
-                        else if (sex === "Female") { setHeightForAgeStatus(61.6, 61.7, 64.0, 73.6); }
+                        if (sex === "Male") { setLtHtStatus(63.9, 64.0, 66.2, 75.1); }
+                        else if (sex === "Female") { setLtHtStatus(61.6, 61.7, 64.0, 73.6); }
                         break;
                     case 9:
-                        if (sex === "Male") { setHeightForAgeStatus(65.1, 65.2, 67.5, 76.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(62.8, 62.9, 65.3, 75.1); }
+                        if (sex === "Male") { setLtHtStatus(65.1, 65.2, 67.5, 76.6); }
+                        else if (sex === "Female") { setLtHtStatus(62.8, 62.9, 65.3, 75.1); }
                         break;
                     case 10:
-                        if (sex === "Male") { setHeightForAgeStatus(66.3, 66.4, 68.7, 78.0); }
-                        else if (sex === "Female") { setHeightForAgeStatus(64.0, 64.1, 66.5, 76.5); }
+                        if (sex === "Male") { setLtHtStatus(66.3, 66.4, 68.7, 78.0); }
+                        else if (sex === "Female") { setLtHtStatus(64.0, 64.1, 66.5, 76.5); }
                         break;
                     case 11:
-                        if (sex === "Male") { setHeightForAgeStatus(67.5, 67.6, 69.9, 79.3); }
-                        else if (sex === "Female") { setHeightForAgeStatus(65.1, 65.2, 67.7, 77.9); }
+                        if (sex === "Male") { setLtHtStatus(67.5, 67.6, 69.9, 79.3); }
+                        else if (sex === "Female") { setLtHtStatus(65.1, 65.2, 67.7, 77.9); }
                         break;
                     case 12:
-                        if (sex === "Male") { setHeightForAgeStatus(68.5, 68.6, 71.0, 80.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(66.2, 66.3, 68.9, 79.3); }
+                        if (sex === "Male") { setLtHtStatus(68.5, 68.6, 71.0, 80.6); }
+                        else if (sex === "Female") { setLtHtStatus(66.2, 66.3, 68.9, 79.3); }
                         break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
@@ -740,19 +735,40 @@
                         url: BASE_API + '/datatable'
                     },
 
-                    "initComplete": function ()
+                    // "initComplete": function ()
+                    // {
+                    //     this.api().columns().every(function ()
+                    //     {
+                    //         var column = this;
+                    //         var columnIndex = column.index();
+
+                    //         $('input', $('#search_bar')).on('keyup change', function ()
+                    //         {
+                    //             console.log('Search value:', this.value);
+                    //             if (columnIndex === $(this).data('index'))
+                    //             {
+                    //                 column.search(this.value).draw();
+                    //             }
+                    //         });
+                    //     });
+                    // },
+
+                    "initComplete": function()
                     {
-                        this.api().columns().every(function ()
+                        var dataTableApi = this.api();
+
+                        $('#search_bar input').on('keyup change', function()
                         {
-                            var column = this;
-                            var columnIndex = column.index();
-                            $('input', $('#search_bar')).on('keyup change', function ()
+                            var columnIndex = $(this).data('index');
+
+                            if (columnIndex === 6)
                             {
-                                if (columnIndex === $(this).data('index'))
-                                {
-                                    column.search(this.value).draw();
-                                }
-                            });
+                                dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
+                            }
+                            else
+                            {
+                                dataTableApi.column(columnIndex).search(this.value).draw();
+                            }
                         });
                     },
 
@@ -822,17 +838,16 @@
                         },
                         {
                             data: "sex", visible: true,
+                            search:
+                            {
+                                function (data, _, columnData, columnIndex, rowIndex, columnIndexVisible)
+                                {
+                                    return data.toLowerCase() === this.value.toLowerCase();
+                                }
+                            }
                         },
                         {
-                            data: "birthdate", visible: true,
-                            render: function(data, type, row)
-                            {
-                                var birthdate = moment(data, 'YYYY-MM-DD');
-                                var currentDate = moment();
-                                var ageInMonths = currentDate.diff(birthdate, 'months');
-
-                                return ageInMonths;
-                            }
+                            data: "age_in_months", visible: true,
                         },
                         {
                             data: "ip_group", visible: true
