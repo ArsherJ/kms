@@ -235,7 +235,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -828,8 +828,8 @@
 
             // Function Calling:
             getIndividualRecordIdRecord(INDIVIDUAL_RECORD_ID)
-            dataTable()
-            bmiDataTable()
+            // dataTable()
+            // bmiDataTable()
 
 
         var months = ['1st Month', '2nd Month', '3rd Month', '4th Month', '5th Month', '6th Month', '7th Month', '8th Month', '9th Month', '10th Month', '11th Month', '12th Month'];
