@@ -23,7 +23,7 @@
         <div class="card-body">
             <h1>Graph Reports</h1>
             <div class="table-responsive">
-                <button id="exportPdfButton" class="btn btn-dark mb-4">Export PDF</button>
+                <!-- <button id="exportPdfButton" class="btn btn-dark mb-4">Export PDF</button> -->
             </div>
             <div class="btn-group mb-3">
                     <select id="monthDropdown" class="form-control btn btn-secondary">

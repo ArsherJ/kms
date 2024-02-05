@@ -39,8 +39,8 @@ class HistoryOfIndividualRecord extends Model
             'weight',
             'age_in_months',
             'weight_for_age_status',
-            'height_for_age_status',
-            'lt_ht_status'
+            'height_length_for_age_status',
+            'weight_for_length_status'
     ];
 
     public function individual_records()

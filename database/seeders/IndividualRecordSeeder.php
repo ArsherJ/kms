@@ -261,7 +261,6 @@ class IndividualRecordSeeder extends Seeder
         $commonData =
         [
             'ip_group' => 'No',
-            'micronutrient' => 'No',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ];

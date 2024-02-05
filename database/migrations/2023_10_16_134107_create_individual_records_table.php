@@ -30,8 +30,8 @@ return new class extends Migration
             $table->float('weight');
 
             $table->string('weight_for_age_status')->nullable();
-            $table->string('height_for_age_status')->nullable();
-            $table->string('ltht_status')->nullable();
+            $table->string('height_length_for_age_status')->nullable();
+            $table->string('weight_for_length_status')->nullable();
 
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
@@ -45,7 +45,16 @@ return new class extends Migration
         ('
             CREATE TRIGGER calculate_age_in_months BEFORE INSERT ON individual_records
             FOR EACH ROW
-            SET NEW.age_in_months = TIMESTAMPDIFF(MONTH, NEW.birthdate, NOW());
+                BEGIN
+                    SET NEW.age_in_months = TIMESTAMPDIFF(MONTH, NEW.birthdate, NOW());
+
+                    IF NEW.age_in_months BETWEEN 0 AND 5
+                    THEN SET NEW.micronutrient = "No";
+                    ELSEIF NEW.age_in_months BETWEEN 6 AND 23
+                    THEN SET NEW.micronutrient = "Yes";
+                    ELSE SET NEW.micronutrient = "No";
+                    END IF;
+                END;
         ');
     }
 
