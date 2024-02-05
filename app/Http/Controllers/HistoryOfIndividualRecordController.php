@@ -109,20 +109,23 @@ class HistoryOfIndividualRecordController extends Controller
     
         return response()->json($latestRecords);
     }
-
-    public function data_chart_year_id($year, $child_id)
+    public function individual_view_graph($year, $id)
     {
-        $latestRecords = HistoryOfIndividualRecord::whereIn('created_at', function($query) use ($year) {
-            $query->selectRaw('MAX(created_at)')
-                ->from('history_of_individual_records')
-                ->whereYear('created_at', $year)
-                ->groupBy(DB::raw('MONTH(created_at)'), 'child_number');
-        })
-        ->where('child_id', $child_id) 
-        ->get();
+        $latestRecords = DB::select("
+            SELECT *
+            FROM history_of_individual_records h1
+            WHERE h1.created_at IN (
+                SELECT MAX(created_at)
+                FROM history_of_individual_records h2
+                WHERE YEAR(h2.created_at) = ?
+                GROUP BY MONTH(h2.created_at), child_number
+            )
+            AND h1.child_number = ?
+        ", [$year, $id]);
     
         return response()->json($latestRecords);
     }
+    
     
 
     
