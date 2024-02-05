@@ -66,7 +66,7 @@
                     </a>
                 </li>
 
-                {{-- USER MANAGEMENT --}}
+                <!-- {{-- USER MANAGEMENT --}}
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">USER MANAGEMENT</span>
@@ -78,7 +78,7 @@
                         </span>
                         <span class="hide-menu">User Accounts</span>
                     </a>
-                </li>
+                </li> -->
                 <!-- <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/roles" aria-expanded="false">
                         <span>

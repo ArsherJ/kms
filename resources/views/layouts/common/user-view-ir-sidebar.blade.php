@@ -4,7 +4,7 @@
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-center">
             <a href="{{ env('APP_URL') }}/user/dashboard" class="text-nowrap logo-img">
-                <h5>Ka-IN Monitoring System</h5>
+                <h4>LittleLife</h4>
                 {{-- <img src="{{ asset('import/assets/images/logos/kms-logo.png') }}" width="200" alt="" /> --}}
             </a>
             <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
