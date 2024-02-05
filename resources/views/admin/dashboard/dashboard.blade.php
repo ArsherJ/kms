@@ -178,6 +178,7 @@
                                     "Obese Class I": "bg-danger",
                                     "Obese Class II": "bg-danger",
                                     "Obese Class III": "bg-danger"
+                                    
                                 };
 
                                 const bmiClass = bmiCategoryClasses[data] || "bg-success";
