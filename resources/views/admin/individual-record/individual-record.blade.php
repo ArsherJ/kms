@@ -101,10 +101,6 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" class="form-control" id="weight_edit" name="weight_edit" tabindex="1" required>
                             </div>
-                                <!-- <div class="form-group col-md-4">
-                                    <label class="required-input" style="font-weight:bold">Length (cm):</label>
-                                    <input type="number" class="form-control" id="length_edit" name="length_edit" tabindex="1" required>
-                                </div> -->
                         </div>
 
                     </form>
@@ -112,7 +108,7 @@
                 </div>
 
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
+                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
                     <button type="button" class="btn btn-success btnUpdate">Save</button>
                 </div>
 
@@ -167,7 +163,7 @@
                 </div>
 
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
+                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
                     <button type="button" class="btn btn-success btnUpdateReweigh">Save</button>
                 </div>
 
@@ -180,7 +176,7 @@
     {{-- UPLOAD FORM --}}
     <div id="uploadModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" id="uploadCollapseModal">
                 <div class="modal-body">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title fw-semibold mb-4 text-black">► Upload Multiple Record</h5>
@@ -206,7 +202,7 @@
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal" style="border:solid 1px gray">Close</button>
+                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
                     <button type="submit" class="btn btn-success">Upload</button>
                 </div>
                 </form>
@@ -346,6 +342,27 @@
                     style="width: 265%; table-layout:fixed; text-align:center; border:1px solid black; border-radius:5px">
                 
                     <thead>
+
+                        <tr class="text-dark" id="search_bar">
+                            <th style="width:10%; padding:15px 0 15px 0">ID Number</th>
+                            <th style="width:20%; padding:15px 0 15px 0">Address or Location of Child's Residence</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Last Name of Parent/Guardian</th>
+                            <th style="width:15%; padding:15px 0 15px 0">First Name of Parent/Guardian</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Last Name of Child</th>
+                            <th style="width:10%; padding:15px 0 15px 0">First Name of Child</th>
+                            <th style="width:5%; padding:15px 0 15px 0">Sex</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Age in Months</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Belongs to IP Group?</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Taking Micronutrient Supplementation?</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Date Measured</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Weight (kg)</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Height (cm)</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Weight for Age Status</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Height for Age Status</th>
+                            <th style="width:10%; padding:15px 0 15px 0">Length/Height Status</th>
+                            <th style="width:15%; visibility:hidden"></th>
+                        </tr>
+
                         <tr class="text-dark">
                                 <!-- <th class="not-export-column">ID</th> -->
                                 <!-- <th class="not-export-column">Created At</th> -->
@@ -367,32 +384,12 @@
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Weight for Age Status</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Height for Age Status</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Length/Height Status</th>
-                            <th class="bg-dark not-export-column" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Action Buttons</th>
+                            <th class="bg-dark not-export-column" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Action Buttons</th>
                         </tr>
+
                     </thead>
 
                     <tbody></tbody>
-
-                    <!-- <tfoot>
-                        <tr class="text-dark">
-                            <th class="not-export-column">ID</th>
-                            <th class="not-export-column">Created At</th>
-                            <th>Child Seq.</th>
-                            <th>Address of Child's Residence</th>
-                            <th>Name of Mother/Caregiver</th>
-                            <th>Child's Full Name</th>
-                            <th>Belongs to IP Group?</th>
-                            <th>Sex</th>
-                            <th>Date of Birth</th>
-                            <th>Date Measured</th>
-                            <th>Weight (kg)</th>
-                            <th>Height (cm)</th>
-                            <th>Age in Months</th>
-                            <th>Weight for Age Status</th>
-                            <th>Height for Age Status</th>
-                            <th>Weight for Lt/Ht Status</th>
-                        </tr>
-                    </tfoot> -->
                     
                 </table>
             </div>
@@ -429,11 +426,13 @@
                 let form_url = API_URL + '/history_of_individual_records'
                 
 
-                $.ajax({
+                $.ajax
+                ({
                     url: form_url,
                     method: "POST",
-                    data: JSON.stringify({
-                        individual_record_id: data.id, // Ensure you include this line
+                    data: JSON.stringify
+                    ({
+                        individual_record_id: data.id,
                         child_number: data.child_number,
                         address: data.address,
                         mother_last_name: data.mother_last_name,
@@ -468,82 +467,39 @@
             }
 
             // Script for Upload Excel File:
-            $('#uploadForm').on('submit', async function(e)
-            {
+            $('#uploadForm').on('submit', function (e) {
                 e.preventDefault();
 
-                let excelFile = $('#excelFile').val()
-                let Extension = excelFile.substring(excelFile.lastIndexOf('.') + 1).toLowerCase();
+                let excelFile = $('#excelFile')[0].files[0];
+                let formData = new FormData();
+                formData.append('file', excelFile);
 
-                if (Extension == "xlsx")
-                {
-                    Swal.fire
-                    ({
-                        title: "Are you sure?",
-                        text: "All record in the excel will be added to the record after this.",
-                        icon: "info",
-                        showCancelButton: true,
-                        confirmButtonColor: "blue",
-                        confirmButtonText: "Yes, upload it!",
-                    })
-                    .then((result) =>
-                    {
-                        $.ajax
-                        ({
-                            url: BASE_API + '/import',
-                            type: "POST",
-                            data: new FormData(this),
-                            processData: false,
-                            contentType: false,
-                            async: false,
-                            cache: false,
-                            headers:
-                            {
-                                "Authorization": API_TOKEN,
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function(data)
-                            {
-                                console.log(data)
-                                toastr['success'](`Multiple individuals added successfully.`)
-                                $('#uploadModal').modal('hide');
-                                $('#uploadForm').trigger('reset')
-                                refresh();
-                            },
-                            error: function(error)
-                            {
-                                console.log(error)
-                                if (error.responseJSON.message == "Division by zero")
-                                {
-                                    swalAlert('warning', "There is something wrong with the record, ensure file has atleast 3 individuals for and filled with correct formats and required inputs to use this multiple upload.")
-                                }
-                                else if (error.responseJSON.errors == null)
-                                {
-                                    swalAlert('warning', error.responseJSON.message)
-                                }
-                                else
-                                {
-                                    $.each(error.responseJSON.errors, function(key, value)
-                                    {
-                                        swalAlert('warning', value)
-                                    });
-                                }
-                            }
-                        })
-                    });
-                }
-                else
-                {
-                    Swal.fire
-                    ({
-                        title: 'Warning!',
-                        text: 'Should be .xlsx file!',
-                        icon: 'warning',
-                        confirmButtonText: 'Ok'
-                    })
-
-                    $("#btnAddExcel").attr("disabled", false);
-                }
+                $.ajax({
+                    url: BASE_API + '/import',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Authorization': API_TOKEN,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        console.log(data.message);
+                        toastr.success('Multiple individuals added successfully.');
+                        $('#uploadModal').modal('hide');
+                        $('#uploadForm').trigger('reset');
+                        refresh();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        if (error.responseJSON.message) {
+                            swalAlert('warning', error.responseJSON.message);
+                        } else {
+                            swalAlert('error', 'An error occurred while processing the file.');
+                        }
+                    }
+                });
             });
 
             $('.btnUpload').on('click', function()
@@ -565,7 +521,7 @@
                     else if (weight > normalLimit) { result = "Normal"; statusClass = "bg-success"; }
                 }
 
-                switch (ageInMonths) // - Dev RJ (input data ranges here)
+                switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
                         if (sex === "Male") { setWeightForAgeStatus(2.1, 2.2, 4.4); }
@@ -637,7 +593,7 @@
                     else if (height > tallLimit) { result = "Tall"; statusClass = "bg-primary"; }
                 }
 
-                switch (ageInMonths) // - Dev RJ (input data ranges here)
+                switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
                         if (sex === "Male") { setHeightForAgeStatus(44.1, 44.2, 46.1, 53.8); }
@@ -709,7 +665,7 @@
                     else if (height > tallLimit) { result = "Tall"; statusClass = "bg-primary"; }
                 }
 
-                switch (ageInMonths) // - Dev RJ (input data ranges here)
+                switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
                         if (sex === "Male") { setLtHtStatus(44.1, 44.2, 46.1, 53.8); }
@@ -770,11 +726,11 @@
             // Script for Data Table Function:
             function dataTable()
             {
-                // For Table Footer (which generates Search Input):
-                $('#dataTable tfoot th').each(function(i)
+                // For Table Header (which generates Search Input):
+                $('#search_bar th').each(function(i)
                 {
-                    let title = $('#dataTable thead th').eq($(this).index()).text();
-                    $(this).html('<input size="15" class="form-control" type="text" placeholder="' + title + '" data-index="' + i + '" />');
+                    let title = $(this).text();
+                    $(this).html('<input size="15" class="form-control" type="text" placeholder="' + title + '" data-index="' + i + '" style="text-align: center; color: black;" />');
                 });
 
                 dataTable = $('#dataTable').DataTable
@@ -784,10 +740,26 @@
                         url: BASE_API + '/datatable'
                     },
 
+                    "initComplete": function ()
+                    {
+                        this.api().columns().every(function ()
+                        {
+                            var column = this;
+                            var columnIndex = column.index();
+                            $('input', $('#search_bar')).on('keyup change', function ()
+                            {
+                                if (columnIndex === $(this).data('index'))
+                                {
+                                    column.search(this.value).draw();
+                                }
+                            });
+                        });
+                    },
+
                     // "searching": false,
-                    "ordering": true, // - Dev RJ (removes asc/desc button)
-                    "paging": false, // - Dev RJ (removes pagination info: number of entries; prev/next page button)
-                    "info": false, // - Dev RJ (removes entries info)
+                    "ordering": true, // (removes asc/desc button)
+                    "paging": false, // (removes pagination info: number of entries; prev/next page button)
+                    "info": false, // (removes entries info)
 
                     "processing": true,
                     "serverSide": true,
@@ -817,7 +789,7 @@
                             data: "address", visible: true,
                         },
                         {
-                            data: "null", visible: true,
+                            data: "mother_last_name", visible: true,
                             render: function(data, type, row)
                             {
                                 var motherLastName = row.mother_last_name;
@@ -825,7 +797,7 @@
                             }
                         },
                         {
-                            data: "null", visible: true, 
+                            data: "mother_first_name", visible: true, 
                             render: function(data, type, row)
                             {
                                 var motherFirstName = row.mother_first_name;
@@ -833,7 +805,7 @@
                             }
                         },
                         {
-                            data: "null", visible: true,
+                            data: "child_last_name", visible: true,
                             render: function(data, type, row)
                             {
                                 var childLastName = row.child_last_name;
@@ -841,7 +813,7 @@
                             }
                         },
                         {
-                            data: "null", visible: true,
+                            data: "child_first_name", visible: true,
                             render: function(data, type, row)
                             {
                                 var childFirstName = row.child_first_name;
@@ -876,7 +848,17 @@
                             data: "micronutrient", visible: true
                         },
                         {
-                            data: "date_measured", visible: true
+                            data: "date_measured", visible: true,
+                            render: function(data, type, row)
+                            {
+                                if (data === null)
+                                {
+                                    return " ";
+                                }
+
+                                var dateMeasured = moment(data, 'YYYY-MM-DD');
+                                return dateMeasured.format('MMMM D, YYYY');
+                            }
                         },
                         {
                             data: "weight", visible: true,
@@ -988,7 +970,7 @@
                             extend: 'pdfHtml5',
                             text: 'Export as PDF',
                             orientation: 'landscape',
-                            pageSize: 'A3',
+                            pageSize: 'A2',
                             exportOptions:
                             {
                                 // columns: ':visible',
@@ -1096,8 +1078,9 @@
                         $.ajax({
                         url: API_URL + '/history_of_individual_records',
                         method: "POST",
-                        data: JSON.stringify({
-                            individual_record_id: data.id, // Ensure you include this line
+                        data: JSON.stringify
+                        ({
+                            individual_record_id: data.id,
                             child_number: data.child_number,
                             address: data.address,
                             mother_last_name: data.mother_last_name,
@@ -1111,7 +1094,6 @@
                             height: data.height,
                             weight: data.weight,
                             length: data.length,
-                            // ... other fields
                         }),
                         dataType: "JSON",
                         headers: {
@@ -1516,8 +1498,23 @@
                     }
                 })
             });
-            // End of Script for Soft-Delete Function
+            // END OF DEACTIVATE FUNCTION
+            var jq = jQuery.noConflict();
 
+jq(document).ready(function() {
+    // Use jq instead of $
+    // ...
+
+    // Your existing DataTable initialization or other code
+    jq('#dataTable').DataTable({
+        // DataTable configuration options
+    });
+
+    // Example of DataTable reload
+    jq('#reloadButton').on('click', function() {
+        jq('#dataTable').DataTable().ajax.reload();
+    });
+});
             // Function Calling:
             dataTable();
         })

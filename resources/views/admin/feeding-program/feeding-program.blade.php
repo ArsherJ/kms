@@ -11,18 +11,62 @@
 @endsection
 
 {{-- CONTENT --}}
+
+
 @section('content')
+<style>
+
+#imageUpload {
+    
+}
+        .chip {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .chip-success {
+            background-color: green;
+            color: white;
+        }
+
+        .chip-start {
+            background-color: black;
+            color: white;
+        }
+
+        .chip-danger {
+            background-color: red;
+            color: white;
+        }
+
+        .chip-info {
+            background-color: blue;
+            color: white;
+        }
+
+        .chip-warning {
+            background-color: orange;
+            color: white;
+        }
+    </style>
     {{-- EDIT MODAL --}}
     <div id="editModal" class="modal" tabindex="-1" feeding_program="dialog">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h5 class="card-title fw-semibold mb-4 text-black">Edit {{ Str::singular($page_title) }}</h5>
+                    <h5 class="card-title fw-semibold mb-4 text-black">Edit Activity</h5>
                     <form id="editForm">
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="required-input">Program Name</label>
+                            <div class="form-group col-md-4">
+                                <label class="required-input">Activity Name</label>
                                 <input type="text" class="form-control" id="title_edit" name="title_edit" tabindex="1"
+                                    required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="required-input">Activity Type</label>
+                                <input type="text" class="form-control" id="type_edit" name="type_edit" tabindex="1"
                                     required>
                             </div>
                         </div>
@@ -51,6 +95,18 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
+                                <label class="required-input">Progress</label>
+                                <select class="form-control" id="progress_edit" name="progress_edit">
+                                <option value="Coming Soon">Coming Soon</option>
+                                    <option value="Success">Success</option>
+                                    <option value="Postponed">Postponed</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
                                 <label class="required-input">Status</label>
                                 <select class="form-control" id="status_edit" name="status_edit">
                                     <option value="Draft">Draft</option>
@@ -62,7 +118,7 @@
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" id="btnEditCloseModal">Close</button>
                     <button type="button" class="btn btn-success btnUpdate">Save</button>
                 </div>
             </div>
@@ -74,15 +130,20 @@
         <div class="col-md-12 collapse" id="create_card">
             <div class="card">
                 <div class="card-header bg-info">
-                    <h4 class="text-light"> <span id="create_card_title">New</span> {{ Str::singular($page_title) }}</h4>
+                    <h4 class="text-light"> <span id="create_card_title">New</span> Activity</h4>
                 </div>
 
                 <form id="createForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="required-input">Program Name</label>
+                                <label class="required-input">Activity Name</label>
                                 <input type="text" class="form-control" id="title" name="title" tabindex="1"
+                                    required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required-input">Activity Type</label>
+                                <input type="text" class="form-control" id="type" name="type" tabindex="1"
                                     required>
                             </div>
                         </div>
@@ -126,45 +187,79 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="card-title fw-semibold">List of Feeding Program/s</h5>
+                <h5 class="card-title fw-semibold">List of Activities</h5>
                 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#create_card"
                     aria-expanded="false" aria-controls="create_card">Add
-                    {{ Str::singular($page_title) }} <span><i class="ti ti-plus"></i></span></button>
+                    Activity <span><i class="ti ti-plus"></i></span></button>
             </div>
             <table class="table table-hover table-borderless" id="dataTable" style="width:100%">
                 <thead>
-                    <tr class="text-dark">
+                    <tr class="text-dark" >
                         <th class="not-export-column">ID</th>
                         <th class="not-export-column">Created at</th>
                         <th>Title</th>
+                        <th>Label</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
+                        <th >Progress</th>
+
                         <th class="not-export-column">Action</th>
                     </tr>
                 </thead>
                 <tbody>
 
                 </tbody>
-                <tfoot>
-                    <tr class="text-dark">
+                <tfoot >
+                    <tr class="text-dark" >
                         <th class="not-export-column">ID</th>
                         <th class="not-export-column">Created at</th>
                         <th>Title</th>
+                        <th>Label</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
+                        <th >Progress</th>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
+
+    <!-- UPLOAD MODAL -->
+    <div id="uploadModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white" style="border-radius: 0.5rem 0.5rem 0 0;">
+                    <h5 class="modal-title" style="color: white;">Upload Images</h5>
+                </div >
+                <div class="modal-body">
+                    <caption>Select Image</caption>
+                    <input type="file" class="form-control" id="imageUpload" name="images[]" tabindex="1" aaccept="image/*" multiple>
+
+                    <div id="selectedImagesContainer" class="d-flex flex-wrap mb-3"></div>
+                    <div id="imagePreviewContainer" class="d-flex flex-wrap"></div>
+
+                    <!-- </div> -->
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCloseModal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnUploadFile">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 @endsection
 
 
 {{-- SCRIPTS --}}
 @section('scripts')
     <script>
+
         // START SCRIPT TAG
         $(document).ready(function() {
 
@@ -182,6 +277,9 @@
                     let title = $('#dataTable thead th').eq($(this).index()).text();
                     $(this).html('<input size="15" class="form-control" type="text" placeholder="' + title +
                         '" data-index="' + i + '" />');
+                columnDefs: [
+                    { targets: [7], className: 'text-center' } // Targets the "Progress" column (adjust index as needed)
+                ]
                 });
 
                 dataTable = $('#dataTable').DataTable({
@@ -209,6 +307,9 @@
                             data: "title",
                         },
                         {
+                            data: 'type'
+                        },
+                        {
                             data: "date_of_program",
                             render: function(data, type, row) {
                                 return moment(data).format('ll')
@@ -224,14 +325,43 @@
                             data: "status",
                         },
                         {
+                    data: 'progress', render: function(data) {
+                    let chipClass = '';
+                    switch (data) {
+                        case 'Coming Soon':
+                            chipClass = 'chip-start';
+                            break;
+                        case 'Success':
+                            chipClass = 'chip-success';
+                            break;
+                        case 'Postponed':
+                            chipClass = 'chip-warning';
+                            break;
+                        case 'On Going':
+                            chipClass = 'chip-info';
+                            break;
+                        case 'Cancelled':
+                            chipClass = 'chip-danger';
+                            break;
+                        default:
+                            chipClass = 'chip-info';
+                            break;
+                    }
+
+                    return `<div class="chip ${chipClass}">${data}</div>`;
+                }
+                        },
+                        {
                             data: "deleted_at",
                             render: function(data, type, row) {
+                                // <button id="${row.id}" type="button" class="btn btn-sm btn-info btnView">View</button>
                                 console.log(data)
                                 if (data == null) {
                                     return `<div>
-                                        <button id="${row.id}" type="button" class="btn btn-sm btn-info btnView">View</button>
+                                    <button id="${row.id}" type="button" class="btn btn-sm btn-info btnUpload" data-id="${row.id}">Add pictures</button>                                        
                                         <button id="${row.id}" type="button" class="btn btn-sm btn-warning btnEdit">Edit</button>
                                         <button id="${row.id}" type="button" class="btn btn-sm btn-danger btnDelete">Delete</button>
+                                       
                                         </div>`;
                                 } else {
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -308,6 +438,8 @@
             }
             // REFRESH DATATABLE FUNCTION
 
+
+
             // CREATE FUNCTION
             $('#createForm').on('submit', function(e) {
                 e.preventDefault()
@@ -325,7 +457,9 @@
                 currDatetime = moment().format("YYYY-MM-DD HH:mm:ss");
                 form_data.date_posted = currDatetime
                 form_data.status = 'Draft';
-
+                form_data.progress = 'Coming Soon';
+                console.log("CREATE ACTIVITY FORM DATA")
+                console.log(form_data)
                 // ajax opening tag
                 $.ajax({
                     url: form_url,
@@ -362,7 +496,8 @@
             // VIEW FUNCTION
             $(document).on('click', '.btnView', function() {
                 var id = this.id;
-                var redirect_to = APP_URL + '/admin/feeding_programs/feeding_program/' + id;
+                var redirect_to = APP_URL + '/admin/activities/activity/' + id;
+                var redirect_to = APP_URL + '/admin/activities/activity/' + id;
 
                 window.location = redirect_to;
             })
@@ -390,7 +525,7 @@
                         $('#time_of_program_edit').val(data.time_of_program)
                         $('#description_edit').val(data.description)
                         $('#location_edit').val(data.location)
-
+                        $('#type_edit').val(data.type)
                         $('#editModal').modal('show');
                     },
                     error: function(error) {
@@ -408,6 +543,10 @@
 
             })
             // END OF EDIT FUNCTION
+
+            $(document).on("click", "#btnEditCloseModal", async function() {
+                        $('#editModal').modal('hide');
+                });
 
             // UPDATE FUNCTION
             $(document).on('click', '.btnUpdate', function() {
@@ -531,9 +670,160 @@
             });
             // END OF DEACTIVATE FUNCTION
 
-            // FUNCTION CALLING
-            dataTable();
+
+
+
+async function convertImageToFormDataAndInsert(file, uploadButtonId, referenceNumber) {
+    return new Promise((resolve, reject) => {
+        // Convert the image to base64
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64Image = reader.result.split(',')[1]; // Extract the base64 part
+            var formData = new FormData();
+            formData.append('image', base64Image);
+            formData.append('activity_id', uploadButtonId);
+            formData.append('image_reference', referenceNumber)
+
+            insertImage(formData)
+                .then(() => resolve())
+                .catch(error => reject(error));
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
+
+  // Update the click event for the "Upload" button
+  $(document).on("click", ".btnUpload", function(){
+      var uploadButtonId = $(this).data('id');
+      $('#uploadModal').data('uploadButtonId', uploadButtonId).modal('show');
+  });
+
+  $(document).on("change", "#imageUpload", function() {
+      // Get the selected image files
+      var files = $('#imageUpload')[0].files;
+
+      // Display the selected images in the modal
+      var selectedImagesContainer = $('#selectedImagesContainer');
+      selectedImagesContainer.empty(); // Clear previous content
+
+      for (var i = 0; i < files.length; i++) {
+          // Create an img element and set its attributes
+          var imgElement = $('<img>').attr({
+              'src': URL.createObjectURL(files[i]),
+              'alt': files[i].name,
+              'class': 'img-fluid m-1', // Added margin for spacing
+              'width': '100',
+              'aspect-ratio': '3/2'
+             
+          });
+
+          // Append the img element to the container
+          selectedImagesContainer.append(imgElement);
+      }
+  });
+
+// Function to generate a random string with a specified length
+function generateRandomString(length) {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        result += charset.charAt(randomIndex);
+    }
+    return result;
+}
+
+// Function to generate a random number within a specified range
+function generateRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Function to generate a reference number of exactly 25 characters
+function generateReferenceNumber() {
+    const randomString = generateRandomString(13); 
+    const randomNumber = generateRandomNumber(100000, 999999);
+    return `REF-${randomString}-${randomNumber}`;
+}
+
+$(document).on("click", "#btnCloseModal", async function() {
+    
+
+      // Clear the selected image files
+      $('#imageUpload').val('');
+      // Clear the displayed images
+      $('#selectedImagesContainer').empty();
+      // Hide modal after processing the images
+      $('#uploadModal').modal('hide');
+  });
+
+  $(document).on("click", "#btnUploadFile", async function() {
+      // Get the selected image files
+      var files = $('#imageUpload')[0].files;
+      var uploadButtonId = $('#uploadModal').data('uploadButtonId');
+
+      const referenceNumber = generateReferenceNumber();
+      console.log("REFERENCE NUMBER")
+      console.log(referenceNumber);
+
+      console.log('Clicked Upload button ID:', uploadButtonId);
+
+      // Convert and upload each image sequentially
+      for (var i = 0; i < files.length; i++) {
+          try {
+              await convertImageToFormDataAndInsert(files[i], uploadButtonId, referenceNumber);
+              console.log(files[i].name);
+          } catch (error) {
+              console.error('Error processing file:', error);
+          }
+      }
+      // Clear the selected image files
+      $('#imageUpload').val('');
+      // Clear the displayed images
+      $('#selectedImagesContainer').empty();
+      // Hide modal after processing the images
+      $('#uploadModal').modal('hide');
+  });
+
+  function insertImage(formData) {
+    return new Promise((resolve, reject) => {
+        fetch('/upload/upload.php', {
+            method: 'POST',
+            body: formData
         })
-        // END OF SCRIPT TAG
+        .then(response => response.text())
+        .then(data => {
+            console.log("SUCCESS AS HECK");
+            console.log(data); // Output from the server
+            resolve(); // Resolve the Promise upon success
+        })
+        .catch(error => {
+            console.log("ERROR AS HECK");
+            console.error('Error:', error);
+            reject(error); // Reject the Promise upon error
+        });
+    });
+}
+var jq = jQuery.noConflict();
+
+jq(document).ready(function() {
+    // Use jq instead of $
+    // ...
+
+    // Your existing DataTable initialization or other code
+    jq('#dataTable').DataTable({
+        // DataTable configuration options
+    });
+
+    // Example of DataTable reload
+    jq('#reloadButton').on('click', function() {
+        jq('#dataTable').DataTable().ajax.reload();
+    });
+});
+
+// FUNCTION CALLING
+dataTable();
+        })
+        // END OF SCRIPT TAG    
     </script>
 @endsection

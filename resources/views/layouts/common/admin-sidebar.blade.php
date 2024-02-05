@@ -35,19 +35,20 @@
                     <span class="hide-menu">POSTING</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/feeding_programs" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/activities" aria-expanded="false">
                         <span>
                             <i class="ti ti-bowl"></i>
                         </span>
-                        <span class="hide-menu">Feeding Programs</span>
+                        <span class="hide-menu">Activities</span>
                     </a>
                 </li>
+                
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/announcements" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/calendar" aria-expanded="false">
                         <span>
-                            <i class="ti ti-speakerphone"></i>
+                            <i class="ti ti-calendar"></i>
                         </span>
-                        <span class="hide-menu">Announcements</span>
+                        <span class="hide-menu">Calendar</span>
                     </a>
                 </li>
 
@@ -65,7 +66,7 @@
                     </a>
                 </li>
 
-                {{-- USER MANAGEMENT --}}
+                <!-- {{-- USER MANAGEMENT --}}
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">USER MANAGEMENT</span>
@@ -77,15 +78,15 @@
                         </span>
                         <span class="hide-menu">User Accounts</span>
                     </a>
-                </li>
-                <li class="sidebar-item">
+                </li> -->
+                <!-- <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/roles" aria-expanded="false">
                         <span>
                             <i class="ti ti-user-check"></i>
                         </span>
                         <span class="hide-menu">Roles</span>
                     </a>
-                </li>
+                </li> -->
 
 
                 {{-- REPORTS --}}
