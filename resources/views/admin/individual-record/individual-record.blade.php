@@ -1496,51 +1496,60 @@
                 let id = this.id;
                 let form_url = BASE_API + '/' + id;
                 console.log("id: " + id);
-                $.ajax
-                ({
-                    url: form_url,
-                    method: "GET",
-                    headers:
+                
+                $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js', function()
+                {
+                    $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js', function()
                     {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data)
-                    {
-                        console.log("jatsen lang masarap" + JSON.stringify(data));
-
-                        $('.btnUpdateReweigh').attr('id', data.id);
-                        $('#child_last_name_reweigh').val(data.child_last_name);
-                        $('#child_first_name_reweigh').val(data.child_first_name);
-                        let today = new Date().toISOString().slice(0, 10);
-                        $('#date_measured_edit').val(today);
-                        $('#date_measured_hidden').val(today);
-                        $('#height_edit').val(data.height);
-                        $('#weight_edit').val(data.weight);
-
-                        tempWeight = data.weight;
-                        tempHeight = data.height;
-                        tempIndividualId = data.id;
-                        tempDateRecorded = data?.updated_at ?? data.created_at;
-                        $('#reweighModal').modal('show');
-                    },
-                    error: function(error)
-                    {
-                        console.log(error);
-                        if (error.responseJSON.errors == null)
-                        {
-                            swalAlert('warning', error.responseJSON.message);
-                        }
-                        else
-                        {
-                            $.each(error.responseJSON.errors, function(key, value)
+                        $.ajax
+                        ({
+                            url: form_url,
+                            method: "GET",
+                            headers:
                             {
-                                swalAlert('warning', value);
-                            });
-                        }
-                    }
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": API_TOKEN,
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data)
+                            {
+                                console.log("jatsen lang masarap" + JSON.stringify(data));
+
+                                $('.btnUpdateReweigh').attr('id', data.id);
+                                $('#child_last_name_reweigh').val(data.child_last_name);
+                                $('#child_first_name_reweigh').val(data.child_first_name);
+
+                                let today = moment().tz('Asia/Shanghai').format('YYYY-MM-DD');
+                                $('#date_measured_edit').val(today);
+                                $('#date_measured_hidden').val(today);
+                                
+                                $('#height_edit').val(data.height);
+                                $('#weight_edit').val(data.weight);
+
+                                tempWeight = data.weight;
+                                tempHeight = data.height;
+                                tempIndividualId = data.id;
+                                tempDateRecorded = data?.updated_at ?? data.created_at;
+                                $('#reweighModal').modal('show');
+                            },
+                            error: function(error)
+                            {
+                                console.log(error);
+                                if (error.responseJSON.errors == null)
+                                {
+                                    swalAlert('warning', error.responseJSON.message);
+                                }
+                                else
+                                {
+                                    $.each(error.responseJSON.errors, function(key, value)
+                                    {
+                                        swalAlert('warning', value);
+                                    });
+                                }
+                            }
+                        });
+                    });
                 });
             });
             // End of Script for Reweigh Function
