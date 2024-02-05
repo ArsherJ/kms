@@ -570,6 +570,54 @@
                         if (sex === "Male") { setWeightForAgeStatus(6.9, 7.0, 12.0); }
                         else if (sex === "Female") { setWeightForAgeStatus(6.3, 6.4, 11.5); }
                         break;
+                    case 13:
+                        if (sex === "Male") { setWeightForAgeStatus(7.1, 7.2, 12.3); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.4, 6.5, 11.8); }
+                        break;
+                    case 14:
+                        if (sex === "Male") { setWeightForAgeStatus(7.2, 7.3, 12.6); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.6, 6.7, 12.1); }
+                        break;
+                    case 15:
+                        if (sex === "Male") { setWeightForAgeStatus(7.4, 7.5, 12.8); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.7, 6.8, 12.4); }
+                        break;
+                    case 16:
+                        if (sex === "Male") { setWeightForAgeStatus(7.5, 7.6, 13.1); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.9, 7.0, 12.6); }
+                        break;
+                    case 17:
+                        if (sex === "Male") { setWeightForAgeStatus(7.7, 7.8, 13.4); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.9, 7.0, 12.9); }
+                        break;
+                    case 18:
+                        if (sex === "Male") { setWeightForAgeStatus(7.8, 7.9, 13.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.2, 7.3, 13.2); }
+                        break;
+                    case 19:
+                        if (sex === "Male") { setWeightForAgeStatus(8.0, 8.1, 13.9); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.3, 7.4, 13.5); }
+                        break;
+                    case 20:
+                        if (sex === "Male") { setWeightForAgeStatus(8.1, 8.2, 14.2); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.5, 6.4, 13.7); }
+                        break;
+                    case 21:
+                        if (sex === "Male") { setWeightForAgeStatus(8.2, 8.3, 14.5); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.6, 7.7, 14.0); }
+                        break;
+                    case 22:
+                        if (sex === "Male") { setWeightForAgeStatus(8.4, 8.5, 14.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.8, 7.9, 14.3); }
+                        break;
+                    case 23:
+                        if (sex === "Male") { setWeightForAgeStatus(8.5, 8.6, 15.0); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.9, 8.0, 14.6); }
+                        break;
+                    case 24:
+                        if (sex === "Male") { setWeightForAgeStatus(8.6, 8.7, 15.3); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.1, 8.2, 14.8); }
+                        break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
@@ -764,6 +812,11 @@
                             if (columnIndex === 6)
                             {
                                 dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
+                            }
+                            else if (columnIndex === 7)
+                            {
+                                var searchValue = this.value.trim() === '' ? '' : '^' + this.value + '$';
+                                dataTableApi.column(columnIndex).search(searchValue, true, false, true).draw();
                             }
                             else
                             {
