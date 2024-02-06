@@ -552,7 +552,7 @@
             // End of Script for Refresh Data Table Function
 
             // Script for Weight for Age Status:
-                function calculateWeightForAgeStatus(ageInMonths, sex, weight)
+            function calculateWeightForAgeStatus(ageInMonths, sex, weight)
             {
                 let result = "Unknown";
                 let statusClass = "";
@@ -800,7 +800,7 @@
                         $('#micronutrient').html(data.micronutrient)
                         $('#height').html(data.height + " " + "centimeters")
                         $('#weight').html(data.weight + " " + "kilograms")
-                        $('#weight_for_age_status').html(weightStatus)
+                        $('#weight_for_age_status').html(data.weight_for_age_status)
                         $('#height_for_age_status').html(heightStatus)
                         $('#ltht_status').html(lthtStatus)
                     },
