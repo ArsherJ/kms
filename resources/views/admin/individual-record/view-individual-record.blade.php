@@ -766,6 +766,10 @@
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
 
+
+            
+
+
             // Script for Fetching Individual Record Function:
             function getIndividualRecordIdRecord(id)
             {
