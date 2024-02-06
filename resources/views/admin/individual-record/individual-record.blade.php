@@ -943,9 +943,9 @@
                 //     return result
                 // } else {
                 //     return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
-                // }
-                    
+                // }       
             }
+            
 
             // Script for Data Table Function:
             function dataTable()
