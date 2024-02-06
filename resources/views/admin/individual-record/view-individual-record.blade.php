@@ -552,75 +552,75 @@
             // End of Script for Refresh Data Table Function
 
             // Script for Weight for Age Status:
-                function calculateWeightForAgeStatus(ageInMonths, sex, weight)
-            {
-                let result = "Unknown";
-                let statusClass = "";
+            // function calculateWeightForAgeStatus(ageInMonths, sex, weight)
+            // {
+            //     let result = "Unknown";
+            //     let statusClass = "";
 
-                function setWeightForAgeStatus(severelyUnderweightLimit, underweightLimit, normalLimit)
-                {
-                    if (weight <= severelyUnderweightLimit) { result = "Severely Underweight"; statusClass = "bg-danger"; }
-                    else if (weight >= underweightLimit && weight <= normalLimit) { result = "Underweight"; statusClass = "bg-warning"; }
-                    else if (weight > normalLimit) { result = "Normal"; statusClass = "bg-success"; }
-                }
+            //     function setWeightForAgeStatus(severelyUnderweightLimit, underweightLimit, normalLimit)
+            //     {
+            //         if (weight <= severelyUnderweightLimit) { result = "Severely Underweight"; statusClass = "bg-danger"; }
+            //         else if (weight >= underweightLimit && weight <= normalLimit) { result = "Underweight"; statusClass = "bg-warning"; }
+            //         else if (weight > normalLimit) { result = "Normal"; statusClass = "bg-success"; }
+            //     }
 
-                switch (ageInMonths) // (input data ranges here)
-                {
-                    case 0:
-                        if (sex === "Male") { setWeightForAgeStatus(2.1, 2.2, 4.4); }
-                        else if (sex === "Female") { setWeightForAgeStatus(2.0, 2.1, 4.2); }
-                        break;
-                    case 1:
-                        if (sex === "Male") { setWeightForAgeStatus(2.9, 3.0, 5.8); }
-                        else if (sex === "Female") { setWeightForAgeStatus(2.7, 2.8, 5.5); }
-                        break;
-                    case 2:
-                        if (sex === "Male") { setWeightForAgeStatus(3.8, 3.9, 7.1); }
-                        else if (sex === "Female") { setWeightForAgeStatus(3.4, 3.5, 6.6); }
-                        break;
-                    case 3:
-                        if (sex === "Male") { setWeightForAgeStatus(4.4, 4.5, 8.0); }
-                        else if (sex === "Female") { setWeightForAgeStatus(4.0, 4.1, 7.5); }
-                        break;
-                    case 4:
-                        if (sex === "Male") { setWeightForAgeStatus(4.9, 5.0, 8.7); }
-                        else if (sex === "Female") { setWeightForAgeStatus(4.4, 4.5, 8.2); }
-                        break;
-                    case 5:
-                        if (sex === "Male") { setWeightForAgeStatus(5.3, 5.4, 9.3); }
-                        else if (sex === "Female") { setWeightForAgeStatus(4.8, 4.9, 8.8); }
-                        break;
-                    case 6:
-                        if (sex === "Male") { setWeightForAgeStatus(5.7, 5.8, 9.8); }
-                        else if (sex === "Female") { setWeightForAgeStatus(5.1, 5.2, 9.3); }
-                        break;
-                    case 7:
-                        if (sex === "Male") { setWeightForAgeStatus(5.9, 6.0, 10.3); }
-                        else if (sex === "Female") { setWeightForAgeStatus(5.3, 5.4, 9.8); }
-                        break;
-                    case 8:
-                        if (sex === "Male") { setWeightForAgeStatus(6.2, 6.3, 10.7); }
-                        else if (sex === "Female") { setWeightForAgeStatus(5.6, 5.7, 10.2); }
-                        break;
-                    case 9:
-                        if (sex === "Male") { setWeightForAgeStatus(6.4, 6.5, 11.0); }
-                        else if (sex === "Female") { setWeightForAgeStatus(5.8, 5.9, 10.5); }
-                        break;
-                    case 10:
-                        if (sex === "Male") { setWeightForAgeStatus(6.6, 6.7, 11.4); }
-                        else if (sex === "Female") { setWeightForAgeStatus(5.9, 6.0, 10.9); }
-                        break;
-                    case 11:
-                        if (sex === "Male") { setWeightForAgeStatus(6.8, 6.9, 11.7); }
-                        else if (sex === "Female") { setWeightForAgeStatus(6.1, 6.2, 11.2); }
-                        break;
-                    case 12:
-                        if (sex === "Male") { setWeightForAgeStatus(6.9, 7.0, 12.0); }
-                        else if (sex === "Female") { setWeightForAgeStatus(6.3, 6.4, 11.5); }
-                        break;
-                }
-                return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
-            }
+            //     switch (ageInMonths) // (input data ranges here)
+            //     {
+            //         case 0:
+            //             if (sex === "Male") { setWeightForAgeStatus(2.1, 2.2, 4.4); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(2.0, 2.1, 4.2); }
+            //             break;
+            //         case 1:
+            //             if (sex === "Male") { setWeightForAgeStatus(2.9, 3.0, 5.8); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(2.7, 2.8, 5.5); }
+            //             break;
+            //         case 2:
+            //             if (sex === "Male") { setWeightForAgeStatus(3.8, 3.9, 7.1); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(3.4, 3.5, 6.6); }
+            //             break;
+            //         case 3:
+            //             if (sex === "Male") { setWeightForAgeStatus(4.4, 4.5, 8.0); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(4.0, 4.1, 7.5); }
+            //             break;
+            //         case 4:
+            //             if (sex === "Male") { setWeightForAgeStatus(4.9, 5.0, 8.7); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(4.4, 4.5, 8.2); }
+            //             break;
+            //         case 5:
+            //             if (sex === "Male") { setWeightForAgeStatus(5.3, 5.4, 9.3); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(4.8, 4.9, 8.8); }
+            //             break;
+            //         case 6:
+            //             if (sex === "Male") { setWeightForAgeStatus(5.7, 5.8, 9.8); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(5.1, 5.2, 9.3); }
+            //             break;
+            //         case 7:
+            //             if (sex === "Male") { setWeightForAgeStatus(5.9, 6.0, 10.3); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(5.3, 5.4, 9.8); }
+            //             break;
+            //         case 8:
+            //             if (sex === "Male") { setWeightForAgeStatus(6.2, 6.3, 10.7); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(5.6, 5.7, 10.2); }
+            //             break;
+            //         case 9:
+            //             if (sex === "Male") { setWeightForAgeStatus(6.4, 6.5, 11.0); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(5.8, 5.9, 10.5); }
+            //             break;
+            //         case 10:
+            //             if (sex === "Male") { setWeightForAgeStatus(6.6, 6.7, 11.4); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(5.9, 6.0, 10.9); }
+            //             break;
+            //         case 11:
+            //             if (sex === "Male") { setWeightForAgeStatus(6.8, 6.9, 11.7); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(6.1, 6.2, 11.2); }
+            //             break;
+            //         case 12:
+            //             if (sex === "Male") { setWeightForAgeStatus(6.9, 7.0, 12.0); }
+            //             else if (sex === "Female") { setWeightForAgeStatus(6.3, 6.4, 11.5); }
+            //             break;
+            //     }
+            //     return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+            // }
 
             // Script for Height for Age Status:
                 function calculateHeightForAgeStatus(ageInMonths, sex, height)
@@ -800,7 +800,7 @@
                         $('#micronutrient').html(data.micronutrient)
                         $('#height').html(data.height + " " + "centimeters")
                         $('#weight').html(data.weight + " " + "kilograms")
-                        $('#weight_for_age_status').html(weightStatus)
+                        $('#weight_for_age_status').html(data.weight_for_age_status)
                         $('#height_for_age_status').html(heightStatus)
                         $('#ltht_status').html(lthtStatus)
                     },
