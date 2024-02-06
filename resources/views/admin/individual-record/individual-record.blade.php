@@ -417,6 +417,17 @@
             const BASE_API = API_URL + '/individual_records'
             const authenticatedUserId = window.authenticatedUserId
 
+            function convert_age_in_months(birthdate){
+                birthdate = moment(birthdate, 'YYYY-MM-DD');
+                var currentDate = moment();
+                var ageInMonths = currentDate.diff(birthdate, 'months');
+
+                return ageInMonths
+            }
+            console.log("BIRHLAJSD: " + convert_age_in_months("2023-02-07"));
+            
+            
+
             function storeHistoryOfIndividualRecord(data)
             {
 
@@ -516,7 +527,7 @@
             // End of Script for Upload Excel File
 
             // Script for Weight for Age Status:
-            function calculateWeightForAgeStatus(ageInMonths, sex, weight)
+            function calculateWeightForAgeStatus(ageInMonths, sex, weight, database)
             {
                 let result = "Unknown";
                 let statusClass = "";
@@ -775,11 +786,15 @@
                         else if (sex === "Female") { setWeightForAgeStatus(12.1, 12.2, 24.7); }
                         break;
                 }
-                return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+                if (database){
+                    return result
+                } else {
+                    return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+                }
             }
 
             // Script for Height/Length for Age Status:
-            function calculateHeightLengthForAgeStatus(ageInMonths, sex, height)
+            function calculateHeightLengthForAgeStatus(ageInMonths, sex, height, database)
             {
                 let result = "Unknown";
                 let statusClass = "";
@@ -847,7 +862,11 @@
                         else if (sex === "Female") { setHeightLengthForAgeStatus(66.2, 66.3, 68.9, 79.3); }
                         break;
                 }
-                return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+                if (database){
+                    return result
+                } else {
+                    return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+                }
             }
 
             // Script for Weight for Length Status:
@@ -920,6 +939,12 @@
                         break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+                // if (database){
+                //     return result
+                // } else {
+                //     return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+                // }
+                    
             }
 
             // Script for Data Table Function:
@@ -1136,7 +1161,7 @@
                                 const sex = row.sex;
                                 const weight = row.weight;
 
-                                return calculateWeightForAgeStatus(ageInMonths, sex, weight);
+                                return calculateWeightForAgeStatus(ageInMonths, sex, weight, false);
                             }
                         },
                         {
@@ -1147,7 +1172,7 @@
                                 const sex = row.sex;
                                 const height = row.height;
                                 
-                                return calculateHeightLengthForAgeStatus(ageInMonths, sex, height);
+                                return calculateHeightLengthForAgeStatus(ageInMonths, sex, height, false);
                             }
                         },
                         {
@@ -1290,31 +1315,28 @@
 
                 form_data.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 3);
 
-                $.ajax
-                ({
+                $.ajax({
                     url: form_url,
                     method: "POST",
                     data: JSON.stringify(form_data),
                     dataType: "JSON",
-                    headers:
-                    {
+                    headers: {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
                         "Authorization": API_TOKEN,
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(data)
-                    {
-                        notification('success', "{{ Str::singular($page_title) }}")
-                        $("#createForm").trigger("reset")
-                        $("#create_card").collapse("hide")
+                    success: function(data) {
+                        notification('success', "{{ Str::singular($page_title) }}");
+                        $("#createForm").trigger("reset");
+                        $("#create_card").collapse("hide");
                         refresh();
-                        $.ajax
-                        ({
+                        console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
+                        // Second AJAX request
+                        $.ajax({
                             url: API_URL + '/history_of_individual_records',
                             method: "POST",
-                            data: JSON.stringify
-                            ({
+                            data: JSON.stringify({
                                 individual_record_id: data.id,
                                 child_number: data.child_number,
                                 address: data.address,
@@ -1329,44 +1351,40 @@
                                 height: data.height,
                                 weight: data.weight,
                                 length: data.length,
+                                age_in_months: convert_age_in_months(data.birthdate),
+                                weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
+                                height_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
+            
                             }),
                             dataType: "JSON",
-                            headers:
-                            {
+                            headers: {
                                 "Accept": "application/json",
                                 "Content-Type": "application/json",
                                 "Authorization": API_TOKEN,
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            success: function(historyData)
-                            {
+                            success: function(historyData) {
                                 notification('success', "{{ Str::singular($page_title) }}");
                                 $("#createForm").trigger("reset");
                                 $("#create_card").collapse("hide");
                                 refresh();
                             },
-                            error: function(error)
-                            {
+                            error: function(error) {
                                 console.log(error);
                             }
                         });
                     },
-                    error: function(error)
-                    {
-                        console.log(error)
-                        if (error.responseJSON.errors == null)
-                        {
-                            swalAlert('warning', error.responseJSON.message)
-                        }
-                        else
-                        {
-                            $.each(error.responseJSON.errors, function(key, value)
-                            {
-                                swalAlert('warning', value)
+                    error: function(error) {
+                        console.log(error);
+                        if (error.responseJSON.errors == null) {
+                            swalAlert('warning', error.responseJSON.message);
+                        } else {
+                            $.each(error.responseJSON.errors, function(key, value) {
+                                swalAlert('warning', value);
                             });
                         }
                     }
-                })
+                });
             });
             // End of Script for Create Function
 
