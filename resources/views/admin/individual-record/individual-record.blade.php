@@ -870,7 +870,7 @@
             }
 
             // Script for Weight for Length Status:
-            function calculateWeightForLengthStatus(ageInMonths, sex, height)
+            function calculateWeightForLengthStatus(ageInMonths, sex, height, database)
             {
                 let result = "Unknown";
                 let statusClass = "";
@@ -938,12 +938,12 @@
                         else if (sex === "Female") { setWeightForLengthStatus(66.2, 66.3, 68.9, 79.3); }
                         break;
                 }
-                return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
-                // if (database){
-                //     return result
-                // } else {
-                //     return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
-                // }       
+                if (database){
+                    return result
+                } else {
+                    return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+                }
+                    
             }
             
 
@@ -1183,7 +1183,7 @@
                                 const sex = row.sex;
                                 const height = row.height;
                                 
-                                return calculateWeightForLengthStatus(ageInMonths, sex, height);
+                                return calculateWeightForLengthStatus(ageInMonths, sex, height, false);
                             }
                         },
                         {
@@ -1315,6 +1315,13 @@
 
                 form_data.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 3);
 
+                // Additional data fields
+                form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.weight, true);
+                form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
+                form_data.weight_for_length_status = calculateWeightForLengthStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
+
+                console.log("form data: " + JSON.stringify(form_data))
+
                 $.ajax({
                     url: form_url,
                     method: "POST",
@@ -1353,7 +1360,8 @@
                                 length: data.length,
                                 age_in_months: convert_age_in_months(data.birthdate),
                                 weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
-                                height_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
+                                height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
+                                weight_for_length_status: calculateWeightForLengthStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
             
                             }),
                             dataType: "JSON",
