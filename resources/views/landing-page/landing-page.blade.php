@@ -106,7 +106,7 @@
                     <div class="col-lg-7">
                         <div class="header-hero-content">
                             <h1 class="hero-title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
-                                <b>LittleLife: Children Nutrition Management System</b> <b></b>
+                                <b>LittleLife: Children Nutrition Monitoring System</b> <b></b>
                             </h1>
                             <p class="text wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">Nutrition workers in the community can use this system to record, 
                                 evaluate, and summarize results from the OPT Plus, an annual assessment of children's nutritional status conducted in barangays nationwide from 0 to 59 months of age.
@@ -520,6 +520,15 @@
                                                 .event-card {
                                                     position: relative;
                                                 }
+                                                
+                                                .left-30 {
+                                                    display: flex;
+                                                    align-items: flex-start;
+                                                }
+
+                                                .date-time {
+                                                    margin-right: 10px;
+                                                }
 
                                                 .event-card .progress-indicator {
                                                     position: absolute;
@@ -528,45 +537,49 @@
                                                     font-size: 20px;
                                                     padding: 5px;
                                                     border-radius: 5px;
-                                                    color: #fff; /* Text color for progress */
+                                                    color: #fff;
                                                     font-weight: bold;
+                                                }
+
+                                                .event-info-70 {
+                                                    min-width: 500px;
+                                                    word-wrap: break-word;
+                                                }
+
+                                                .activity-images-container {
+                                                    overflow-x: auto;
                                                 }
 
                                                 .activity-images-container .image-container {
                                                     display: flex;
-                                                    justify-content: center;
+                                                    flex-wrap: nowrap;
+                                                    justify-content: flex-start;
                                                     align-items: center;
-                                                    flex-wrap: wrap; /* Allow images to wrap to the next line if needed */
+                                                    margin-top: 10px;
                                                 }
 
                                                 .activity-images-container .image-container img {
-                                                    max-width: 40%; /* Set max-width to none for actual image size */
-                                                    height: auto; /* Maintain the aspect ratio of the images */
-                                                    margin: 5px; /* Add spacing between images */
-                                                    border: 1px solid #ddd; /* Add a border around images */
-                                                    border-radius: 5px; /* Add a border-radius for rounded corners */
+                                                    max-width: 40%;
+                                                    height: auto;
+                                                    margin-right: 5px;
+                                                    border: 1px solid #ddd;
+                                                    border-radius: 5px;
                                                 }
                                             </style>
 
                                             <div class="event-card" data-activity-id="${el.id}">
-                                                <div class="left-30">
-                                                    <div class="date-time dt1">
-                                                        <p id="date_of_program" class="date">${moment(el.date_of_program).format('ll')}</p>
-                                                        <p id="time_of_program" class="time">${moment(el.date_of_program + " " + el.time_of_program).format('LT')}</p>
-                                                    </div>
-
-                                                    <div class="event-info-70" style="word-wrap: break-word;">
-                                                        <h3 id="title" class="event-name">
-                                                            ${el.title}
-                                                        </h3>
-                                                        <h4 id="location" class="event-detail">
-                                                            Location: ${el.location}
-                                                        </h4>
-                                                        <p id="description" class="event-detail">
-                                                            ${el.description}
-                                                        </p>
-                                                    </div>
+                                            <div class="left-30">
+                                                <div class="date-time dt1">
+                                                    <p id="date_of_program" class="date">${moment(el.date_of_program).format('ll')}</p>
+                                                    <p id="time_of_program" class="time">${moment(el.date_of_program + " " + el.time_of_program).format('LT')}</p>
                                                 </div>
+
+                                                <div class="event-info-70">
+                                                    <h3 id="title" class="event-name">${el.title}</h3>
+                                                    <h4 id="location" class="event-detail">Location: ${el.location}</h4>
+                                                    <p id="description" class="event-detail">${el.description}</p>
+                                                </div>
+                                            </div>
 
                                                 <!-- Progress Indicator -->
                                                 <div class="progress-indicator" style="color: ${getProgressColor(el.progress)}">

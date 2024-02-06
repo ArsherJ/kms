@@ -55,6 +55,7 @@
 
                         $('#calendar').fullCalendar({
                             height: 777,
+                            handleWindowResize: true,
                             header:{
                                 left:'prev,next today',
                                 center:'title',

@@ -5,3 +5,8 @@
 .image-item {
     cursor: pointer;
 }
+
+.fc-content {
+    padding: 35px 0;
+    text-align: center;
+}

@@ -61,7 +61,7 @@
 
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Date of Birth:</label>
+                                <label class="required-input" style="font-weight:bold">Date of Birth (mm-dd-yyyy):</label>
                                 <input type="date" class="form-control" id="birthdate_edit" name="birthdate_edit" tabindex="1" required>
                             </div>
                             <div class="form-group col-md-4">
@@ -144,9 +144,8 @@
 
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="required-input" style="font-weight:bold">Date Measured:</label>
+                                <label class="required-input" style="font-weight:bold">Date Measured (mm-dd-yyyy):</label>
                                 <input type="date" class="form-control" id="date_measured_hidden" name="date_measured_hidden" disabled tabindex="1" style="opacity: 1; background-color: #fff;">
-                                <!-- Hidden field to store the date value -->
                                 <input type="hidden" id="date_measured_edit" name="date_measured_edit">
                             </div>
                             <div class="form-group col-md-4">
@@ -177,21 +176,27 @@
     <div id="uploadModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content" id="uploadCollapseModal">
+
                 <div class="modal-body">
+
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title fw-semibold mb-4 text-black">► Upload Multiple Record</h5>
                         <a href="{{ asset('download/MultiIndividualFormat.xlsx') }}"><button
                                 class="btn btn-sm btn-dark float-end">Download Excel Format</button></a>
                     </div>
+
                     <div class="row">
                         <form id="uploadForm" action="" method="post" name="uploadForm" data-parsley-validate>
+
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-12">
+                                        
                                         <div class="d-flex justify-content-between">
                                             <label class="required-input" style="font-weight:bold; margin-bottom:10px">Import File:</label>
                                             <span class="text-info" style="font-weight:bold"> Note: Please upload at least 3 individual records.</span>
                                         </div>
+
                                         <input type="file" class="form-control" id="excelFile" name="file"
                                             tabindex="1"
                                             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
@@ -201,11 +206,12 @@
                     </div>
 
                 </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
-                    <button type="submit" class="btn btn-success">Upload</button>
-                </div>
-                </form>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
+                                <button type="submit" class="btn btn-success">Upload</button>
+                            </div>
+
+                        </form>
 
             </div>
         </div>
@@ -302,19 +308,17 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" step="0.01" class="form-control" id="weight" name="weight" tabindex="1" required>
                             </div>
-                                <!-- <div class="form-group col-md-4">
-                                    <label class="required-input" style="font-weight:bold">Length (cm):</label>
-                                    <input type="number" step="0.01" class="form-control" id="length" name="length" tabindex="1" required>
-                                </div> -->
-                            </div>
                         </div>
 
-                    <div class="card-footer d-flex justify-content-between" style="margin-top:-15px">
-                        <button type="button" class="btn btn-light" data-toggle="collapse" 
-                            data-target="#create_card" style="border:solid 1px gray"> Cancel </button>
-                        <button type="submit" class="btn btn-success ml-1" id="create_btn"> Create New Record </button>
+                        <div class="card-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-light" data-toggle="collapse"  data-target="#create_card" style="border:solid 1px gray; margin-left:-30px"> Cancel </button>
+                            <button type="submit" class="btn btn-success ml-1" id="create_btn" style="margin-right:-30px"> Create New Record </button>
+                        </div>
+
                     </div>
+
                 </form>
+
             </div>
         </div>
     </div>
@@ -344,7 +348,7 @@
                     <thead>
 
                         <tr class="text-dark" id="search_bar">
-                            <th style="width:10%; padding:15px 0 15px 0">ID Number</th>
+                            <th style="width:10%; padding:15px 0 15px 0;">ID Number</th>
                             <th style="width:20%; padding:15px 0 15px 0">Address or Location of Child's Residence</th>
                             <th style="width:15%; padding:15px 0 15px 0">Last Name of Parent/Guardian</th>
                             <th style="width:15%; padding:15px 0 15px 0">First Name of Parent/Guardian</th>
@@ -353,38 +357,38 @@
                             <th style="width:5%; padding:15px 0 15px 0">Sex</th>
                             <th style="width:10%; padding:15px 0 15px 0">Age in Months</th>
                             <th style="width:10%; padding:15px 0 15px 0">Belongs to IP Group?</th>
-                            <th style="width:15%; padding:15px 0 15px 0">Taking Micronutrient Supplementation?</th>
+                            <th style="width:20%; padding:15px 0 15px 0">Taking Micronutrient Supplementation?</th>
                             <th style="width:10%; padding:15px 0 15px 0">Date Measured</th>
                             <th style="width:10%; padding:15px 0 15px 0">Weight (kg)</th>
                             <th style="width:10%; padding:15px 0 15px 0">Height (cm)</th>
-                            <th style="width:10%; padding:15px 0 15px 0">Weight for Age Status</th>
-                            <th style="width:10%; padding:15px 0 15px 0">Height for Age Status</th>
-                            <th style="width:10%; padding:15px 0 15px 0">Length/Height Status</th>
-                            <th style="width:15%; visibility:hidden"></th>
+                            <th style="width:15%; padding:15px 0 15px 0">Weight for Age Status</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Height/Length for Age Status</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Weight for Length Status</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Code Moosaic</th>
                         </tr>
 
                         <tr class="text-dark">
                                 <!-- <th class="not-export-column">ID</th> -->
                                 <!-- <th class="not-export-column">Created At</th> -->
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">ID Number</th>
-                            <th class="bg-dark" style="width:20%; text-align:center; color: white; border-bottom:1px solid black">Address or Location of Child's Residence</th>
-                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Last Name of Parent/Guardian</th>
-                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">First Name of Parent/Guardian</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Last Name of Child</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">First Name of Child</th>
-                            <th class="bg-dark" style="width:5%; text-align:center; color: white; border-bottom:1px solid black">Sex</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Age in Months</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Belongs to IP Group?</th>
-                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Taking Micronutrient Supplementation?</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">ID Number</th>
+                            <th class="bg-dark" style="width:20%; text-align:center; color: white; border-right:2px solid white;">Address or Location of Child's Residence</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Last Name of Parent/Guardian</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">First Name of Parent/Guardian</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Last Name of Child</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">First Name of Child</th>
+                            <th class="bg-dark" style="width:5%; text-align:center; color: white; border-right:2px solid white;">Sex</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Age in Months</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Belongs to IP Group?</th>
+                            <th class="bg-dark" style="width:20%; text-align:center; color: white; border-right:2px solid white;">Taking Micronutrient Supplementation?</th>
                                 <!-- <th style="text-align:center">Date of Birth</th> -->
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Date Measured</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Weight (kg)</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Height (cm)</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Date Measured</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Weight (kg)</th>
+                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Height (cm)</th>
                                 <!-- <th style="text-align:center">Length</th> -->
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Weight for Age Status</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Height for Age Status</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-bottom:1px solid black">Length/Height Status</th>
-                            <th class="bg-dark not-export-column" style="width:15%; text-align:center; color: white; border-bottom:1px solid black">Action Buttons</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Weight for Age Status</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Height/Length for Age Status</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Weight for Length Status</th>
+                            <th class="bg-dark not-export-column" style="width:15%; text-align:center; color: white">Action Buttons</th>
                         </tr>
 
                     </thead>
@@ -413,18 +417,10 @@
             const BASE_API = API_URL + '/individual_records'
             const authenticatedUserId = window.authenticatedUserId
 
-            let tempIndividualId;
-            let tempWeight;
-            let tempHeight;
-            // let tempBmi;
-            // let tempBmiCategory;
-            // let tempDateRecorded;
-
             function storeHistoryOfIndividualRecord(data)
             {
 
                 let form_url = API_URL + '/history_of_individual_records'
-                
 
                 $.ajax
                 ({
@@ -448,54 +444,65 @@
                         length: data.length,
                     }),
                     dataType: "JSON",
-                    headers: {
+                    headers:
+                    {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
                         "Authorization": API_TOKEN,
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(historyData) {
+                    success: function(historyData)
+                    {
                         notification('success', "{{ Str::singular($page_title) }}");
                         $("#createForm").trigger("reset");
                         $("#create_card").collapse("hide");
                         refresh();
                     },
-                    error: function(error) {
+                    error: function(error)
+                    {
                         console.log(error);
                     }
                 });
             }
 
             // Script for Upload Excel File:
-            $('#uploadForm').on('submit', function (e) {
+            $('#uploadForm').on('submit', function (e)
+            {
                 e.preventDefault();
 
                 let excelFile = $('#excelFile')[0].files[0];
                 let formData = new FormData();
                 formData.append('file', excelFile);
 
-                $.ajax({
+                $.ajax
+                ({
                     url: BASE_API + '/import',
                     type: 'POST',
                     data: formData,
                     processData: false,
                     contentType: false,
-                    headers: {
+                    headers:
+                    {
                         'Authorization': API_TOKEN,
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function (data) {
+                    success: function (data)
+                    {
                         console.log(data.message);
                         toastr.success('Multiple individuals added successfully.');
                         $('#uploadModal').modal('hide');
                         $('#uploadForm').trigger('reset');
                         refresh();
                     },
-                    error: function (error) {
+                    error: function (error)
+                    {
                         console.log(error);
-                        if (error.responseJSON.message) {
+                        if (error.responseJSON.message)
+                        {
                             swalAlert('warning', error.responseJSON.message);
-                        } else {
+                        }
+                        else
+                        {
                             swalAlert('error', 'An error occurred while processing the file.');
                         }
                     }
@@ -575,17 +582,209 @@
                         if (sex === "Male") { setWeightForAgeStatus(6.9, 7.0, 12.0); }
                         else if (sex === "Female") { setWeightForAgeStatus(6.3, 6.4, 11.5); }
                         break;
+                    case 13:
+                        if (sex === "Male") { setWeightForAgeStatus(7.1, 7.2, 12.3); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.4, 6.5, 11.8); }
+                        break;
+                    case 14:
+                        if (sex === "Male") { setWeightForAgeStatus(7.2, 7.3, 12.6); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.6, 6.7, 12.1); }
+                        break;
+                    case 15:
+                        if (sex === "Male") { setWeightForAgeStatus(7.4, 7.5, 12.8); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.7, 6.8, 12.4); }
+                        break;
+                    case 16:
+                        if (sex === "Male") { setWeightForAgeStatus(7.5, 7.6, 13.1); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.9, 7.0, 12.6); }
+                        break;
+                    case 17:
+                        if (sex === "Male") { setWeightForAgeStatus(7.7, 7.8, 13.4); }
+                        else if (sex === "Female") { setWeightForAgeStatus(6.9, 7.0, 12.9); }
+                        break;
+                    case 18:
+                        if (sex === "Male") { setWeightForAgeStatus(7.8, 7.9, 13.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.2, 7.3, 13.2); }
+                        break;
+                    case 19:
+                        if (sex === "Male") { setWeightForAgeStatus(8.0, 8.1, 13.9); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.3, 7.4, 13.5); }
+                        break;
+                    case 20:
+                        if (sex === "Male") { setWeightForAgeStatus(8.1, 8.2, 14.2); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.5, 6.4, 13.7); }
+                        break;
+                    case 21:
+                        if (sex === "Male") { setWeightForAgeStatus(8.2, 8.3, 14.5); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.6, 7.7, 14.0); }
+                        break;
+                    case 22:
+                        if (sex === "Male") { setWeightForAgeStatus(8.4, 8.5, 14.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.8, 7.9, 14.3); }
+                        break;
+                    case 23:
+                        if (sex === "Male") { setWeightForAgeStatus(8.5, 8.6, 15.0); }
+                        else if (sex === "Female") { setWeightForAgeStatus(7.9, 8.0, 14.6); }
+                        break;
+                    case 24:
+                        if (sex === "Male") { setWeightForAgeStatus(8.6, 8.7, 15.3); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.1, 8.2, 14.8); }
+                        break;
+                    case 25:
+                        if (sex === "Male") { setWeightForAgeStatus(8.8, 8.9, 15.5); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.2, 8.3, 15.1); }
+                        break;
+                    case 26:
+                        if (sex === "Male") { setWeightForAgeStatus(8.9, 9.0, 15.8); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.4, 8.5, 15.4); }
+                        break;
+                    case 27:
+                        if (sex === "Male") { setWeightForAgeStatus(9.0, 9.1, 16.1); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.5, 8.6, 15.7); }
+                        break;
+                    case 28:
+                        if (sex === "Male") { setWeightForAgeStatus(9.1, 9.2, 16.3); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.6, 8.7, 16.0); }
+                        break;
+                    case 29:
+                        if (sex === "Male") { setWeightForAgeStatus(9.2, 9.3, 16.6); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.8, 8.9, 16.2); }
+                        break;
+                    case 30:
+                        if (sex === "Male") { setWeightForAgeStatus(9.4, 9.5, 16.9); }
+                        else if (sex === "Female") { setWeightForAgeStatus(8.9, 9.0, 16.5); }
+                        break;
+                    case 31:
+                        if (sex === "Male") { setWeightForAgeStatus(9.5, 9.6, 17.1); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.0, 9.1, 16.8); }
+                        break;
+                    case 32:
+                        if (sex === "Male") { setWeightForAgeStatus(9.6, 9.7, 17.4); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.1, 9.2, 17.1); }
+                        break;
+                    case 33:
+                        if (sex === "Male") { setWeightForAgeStatus(9.7, 9.8, 17.6); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.3, 9.4, 17.3); }
+                        break;
+                    case 34:
+                        if (sex === "Male") { setWeightForAgeStatus(9.8, 9.9, 17.8); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.4, 9.5, 17.6); }
+                        break;
+                    case 35:
+                        if (sex === "Male") { setWeightForAgeStatus(9.9, 10.0, 18.1); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.5, 9.6, 17.9); }
+                        break;
+                    case 36:
+                        if (sex === "Male") { setWeightForAgeStatus(10.0, 10.1, 18.3); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.6, 9.7, 18.1); }
+                        break;
+                    case 37:
+                        if (sex === "Male") { setWeightForAgeStatus(10.1, 10.2, 18.6); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.7, 9.8, 18.4); }
+                        break;
+                    case 38:
+                        if (sex === "Male") { setWeightForAgeStatus(10.2, 10.3, 18.8); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.8, 9.9, 18.7); }
+                        break;
+                    case 39:
+                        if (sex === "Male") { setWeightForAgeStatus(10.3, 10.4, 19.0); }
+                        else if (sex === "Female") { setWeightForAgeStatus(9.9, 10.0, 19.0); }
+                        break;
+                    case 40:
+                        if (sex === "Male") { setWeightForAgeStatus(10.4, 10.5, 19.3); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.1, 10.2, 19.2); }
+                        break;
+                    case 41:
+                        if (sex === "Male") { setWeightForAgeStatus(10.5, 10.6, 19.5); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.2, 10.3, 19.5); }
+                        break;
+                    case 42:
+                        if (sex === "Male") { setWeightForAgeStatus(10.6, 10.7, 19.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.3, 10.4, 19.8); }
+                        break;
+                    case 43:
+                        if (sex === "Male") { setWeightForAgeStatus(10.7, 10.8, 20.0); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.4, 10.5, 20.1); }
+                        break;
+                    case 44:
+                        if (sex === "Male") { setWeightForAgeStatus(10.8, 10.9, 20.2); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.5, 10.6, 20.4); }
+                        break;
+                    case 45:
+                        if (sex === "Male") { setWeightForAgeStatus(10.9, 11.0, 20.5); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.6, 10.7, 20.7); }
+                        break;
+                    case 46:
+                        if (sex === "Male") { setWeightForAgeStatus(11.0, 11.1, 20.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.7, 10.8, 20.9); }
+                        break;
+                    case 47:
+                        if (sex === "Male") { setWeightForAgeStatus(11.1, 11.2, 20.9); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.8, 10.9, 21.2); }
+                        break;
+                    case 48:
+                        if (sex === "Male") { setWeightForAgeStatus(11.2, 11.3, 21.2); }
+                        else if (sex === "Female") { setWeightForAgeStatus(10.9, 11.0, 21.5); }
+                        break;
+                    case 49:
+                        if (sex === "Male") { setWeightForAgeStatus(11.3, 11.4, 21.4); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.0, 11.1, 21.8); }
+                        break;
+                    case 50:
+                        if (sex === "Male") { setWeightForAgeStatus(11.4, 11.5, 21.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.1, 11.2, 22.1); }
+                        break;
+                    case 51:
+                        if (sex === "Male") { setWeightForAgeStatus(11.5, 11.6, 21.9); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.2, 11.3, 22.4); }
+                        break;
+                    case 52:
+                        if (sex === "Male") { setWeightForAgeStatus(11.6, 11.7, 22.2); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.3, 11.4, 22.6); }
+                        break;
+                    case 53:
+                        if (sex === "Male") { setWeightForAgeStatus(11.7, 11.8, 22.4); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.4, 11.5, 22.9); }
+                        break;
+                    case 54:
+                        if (sex === "Male") { setWeightForAgeStatus(11.8, 11.9, 22.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.5, 11.6, 23.2); }
+                        break;
+                    case 55:
+                        if (sex === "Male") { setWeightForAgeStatus(11.9, 12.0, 22.9); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.6, 11.7, 23.5); }
+                        break;
+                    case 56:
+                        if (sex === "Male") { setWeightForAgeStatus(12.0, 12.1, 23.2); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.7, 11.8, 23.8); }
+                        break;
+                    case 57:
+                        if (sex === "Male") { setWeightForAgeStatus(12.1, 12.2, 23.4); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.8, 11.9, 24.1); }
+                        break;
+                    case 58:
+                        if (sex === "Male") { setWeightForAgeStatus(12.2, 12.3, 23.7); }
+                        else if (sex === "Female") { setWeightForAgeStatus(11.9, 12.0, 24.4); }
+                        break;
+                    case 59:
+                        if (sex === "Male") { setWeightForAgeStatus(12.3, 12.4, 23.9); }
+                        else if (sex === "Female") { setWeightForAgeStatus(12.0, 12.1, 24.6); }
+                        break;
+                    case 60:
+                        if (sex === "Male") { setWeightForAgeStatus(12.4, 12.5, 24.2); }
+                        else if (sex === "Female") { setWeightForAgeStatus(12.1, 12.2, 24.7); }
+                        break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
 
-            // Script for Height for Age Status:
-            function calculateHeightForAgeStatus(ageInMonths, sex, height)
+            // Script for Height/Length for Age Status:
+            function calculateHeightLengthForAgeStatus(ageInMonths, sex, height)
             {
                 let result = "Unknown";
                 let statusClass = "";
 
-                function setHeightForAgeStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
+                function setHeightLengthForAgeStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
                 {
                     if (height <= severelyStuntedLimit) { result = "Severely Stunted"; statusClass = "bg-danger"; }
                     else if (height >= stuntedLimit && height <= normalLimit) { result = "Stunted"; statusClass = "bg-warning"; }
@@ -596,68 +795,68 @@
                 switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
-                        if (sex === "Male") { setHeightForAgeStatus(44.1, 44.2, 46.1, 53.8); }
-                        else if (sex === "Female") { setHeightForAgeStatus(43.5, 43.6, 45.4, 53.0); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(44.1, 44.2, 46.1, 53.8); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(43.5, 43.6, 45.4, 53.0); }
                         break;
                     case 1:
-                        if (sex === "Male") { setHeightForAgeStatus(48.8, 48.9, 50.8, 58.7); }
-                        else if (sex === "Female") { setHeightForAgeStatus(47.7, 47.8, 49.8, 57.7); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(48.8, 48.9, 50.8, 58.7); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(47.7, 47.8, 49.8, 57.7); }
                         break;
                     case 2:
-                        if (sex === "Male") { setHeightForAgeStatus(52.3, 52.4, 54.4, 62.5); }
-                        else if (sex === "Female") { setHeightForAgeStatus(50.9, 51.0, 53.0, 61.2); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(52.3, 52.4, 54.4, 62.5); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(50.9, 51.0, 53.0, 61.2); }
                         break;
                     case 3:
-                        if (sex === "Male") { setHeightForAgeStatus(55.2, 55.3, 57.3, 65.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(53.4, 53.5, 55.6, 64.1); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(55.2, 55.3, 57.3, 65.6); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(53.4, 53.5, 55.6, 64.1); }
                         break;
                     case 4:
-                        if (sex === "Male") { setHeightForAgeStatus(57.5, 57.6, 59.7, 68.1); }
-                        else if (sex === "Female") { setHeightForAgeStatus(55.5, 55.6, 57.8, 66.5); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(57.5, 57.6, 59.7, 68.1); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(55.5, 55.6, 57.8, 66.5); }
                         break;
                     case 5:
-                        if (sex === "Male") { setHeightForAgeStatus(59.5, 59.6, 61.7, 70.2); }
-                        else if (sex === "Female") { setHeightForAgeStatus(57.3, 57.4, 59.6, 68.6); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(59.5, 59.6, 61.7, 70.2); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(57.3, 57.4, 59.6, 68.6); }
                         break;
                     case 6:
-                        if (sex === "Male") { setHeightForAgeStatus(61.1, 61.2, 63.3, 72.0); }
-                        else if (sex === "Female") { setHeightForAgeStatus(58.8, 58.9, 61.2, 70.4); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(61.1, 61.2, 63.3, 72.0); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(58.8, 58.9, 61.2, 70.4); }
                         break;
                     case 7:
-                        if (sex === "Male") { setHeightForAgeStatus(62.6, 62.7, 64.8, 73.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(60.2, 60.3, 62.7, 72.0); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(62.6, 62.7, 64.8, 73.6); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(60.2, 60.3, 62.7, 72.0); }
                         break;
                     case 8:
-                        if (sex === "Male") { setHeightForAgeStatus(63.9, 64.0, 66.2, 75.1); }
-                        else if (sex === "Female") { setHeightForAgeStatus(61.6, 61.7, 64.0, 73.6); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(63.9, 64.0, 66.2, 75.1); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(61.6, 61.7, 64.0, 73.6); }
                         break;
                     case 9:
-                        if (sex === "Male") { setHeightForAgeStatus(65.1, 65.2, 67.5, 76.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(62.8, 62.9, 65.3, 75.1); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(65.1, 65.2, 67.5, 76.6); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(62.8, 62.9, 65.3, 75.1); }
                         break;
                     case 10:
-                        if (sex === "Male") { setHeightForAgeStatus(66.3, 66.4, 68.7, 78.0); }
-                        else if (sex === "Female") { setHeightForAgeStatus(64.0, 64.1, 66.5, 76.5); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(66.3, 66.4, 68.7, 78.0); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(64.0, 64.1, 66.5, 76.5); }
                         break;
                     case 11:
-                        if (sex === "Male") { setHeightForAgeStatus(67.5, 67.6, 69.9, 79.3); }
-                        else if (sex === "Female") { setHeightForAgeStatus(65.1, 65.2, 67.7, 77.9); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(67.5, 67.6, 69.9, 79.3); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(65.1, 65.2, 67.7, 77.9); }
                         break;
                     case 12:
-                        if (sex === "Male") { setHeightForAgeStatus(68.5, 68.6, 71.0, 80.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(66.2, 66.3, 68.9, 79.3); }
+                        if (sex === "Male") { setHeightLengthForAgeStatus(68.5, 68.6, 71.0, 80.6); }
+                        else if (sex === "Female") { setHeightLengthForAgeStatus(66.2, 66.3, 68.9, 79.3); }
                         break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
             }
 
-            // Script for LT/HT Status:
-            function calculateLtHtStatus(ageInMonths, sex, height)
+            // Script for Weight for Length Status:
+            function calculateWeightForLengthStatus(ageInMonths, sex, height)
             {
                 let result = "Unknown";
                 let statusClass = "";
 
-                function setLtHtStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
+                function setWeightForLengthStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
                 {
                     if (height <= severelyStuntedLimit) { result = "Severely Stunted"; statusClass = "bg-danger"; }
                     else if (height >= stuntedLimit && height <= normalLimit) { result = "Stunted"; statusClass = "bg-warning"; }
@@ -668,56 +867,56 @@
                 switch (ageInMonths) // (input data ranges here)
                 {
                     case 0:
-                        if (sex === "Male") { setLtHtStatus(44.1, 44.2, 46.1, 53.8); }
-                        else if (sex === "Female") { setLtHtStatus(43.5, 43.6, 45.4, 53.0); }
+                        if (sex === "Male") { setWeightForLengthStatus(44.1, 44.2, 46.1, 53.8); }
+                        else if (sex === "Female") { setWeightForLengthStatus(43.5, 43.6, 45.4, 53.0); }
                         break;
                     case 1:
-                        if (sex === "Male") { setLtHtStatus(48.8, 48.9, 50.8, 58.7); }
-                        else if (sex === "Female") { setLtHtStatus(47.7, 47.8, 49.8, 57.7); }
+                        if (sex === "Male") { setWeightForLengthStatus(48.8, 48.9, 50.8, 58.7); }
+                        else if (sex === "Female") { setWeightForLengthStatus(47.7, 47.8, 49.8, 57.7); }
                         break;
                     case 2:
-                        if (sex === "Male") { setLtHtStatus(52.3, 52.4, 54.4, 62.5); }
-                        else if (sex === "Female") { setLtHtStatus(50.9, 51.0, 53.0, 61.2); }
+                        if (sex === "Male") { setWeightForLengthStatus(52.3, 52.4, 54.4, 62.5); }
+                        else if (sex === "Female") { setWeightForLengthStatus(50.9, 51.0, 53.0, 61.2); }
                         break;
                     case 3:
-                        if (sex === "Male") { setLtHtStatus(55.2, 55.3, 57.3, 65.6); }
-                        else if (sex === "Female") { setLtHtStatus(53.4, 53.5, 55.6, 64.1); }
+                        if (sex === "Male") { setWeightForLengthStatus(55.2, 55.3, 57.3, 65.6); }
+                        else if (sex === "Female") { setWeightForLengthStatus(53.4, 53.5, 55.6, 64.1); }
                         break;
                     case 4:
-                        if (sex === "Male") { setLtHtStatus(57.5, 57.6, 59.7, 68.1); }
-                        else if (sex === "Female") { setLtHtStatus(55.5, 55.6, 57.8, 66.5); }
+                        if (sex === "Male") { setWeightForLengthStatus(57.5, 57.6, 59.7, 68.1); }
+                        else if (sex === "Female") { setWeightForLengthStatus(55.5, 55.6, 57.8, 66.5); }
                         break;
                     case 5:
-                        if (sex === "Male") { setLtHtStatus(59.5, 59.6, 61.7, 70.2); }
-                        else if (sex === "Female") { setLtHtStatus(57.3, 57.4, 59.6, 68.6); }
+                        if (sex === "Male") { setWeightForLengthStatus(59.5, 59.6, 61.7, 70.2); }
+                        else if (sex === "Female") { setWeightForLengthStatus(57.3, 57.4, 59.6, 68.6); }
                         break;
                     case 6:
-                        if (sex === "Male") { setLtHtStatus(61.1, 61.2, 63.3, 72.0); }
-                        else if (sex === "Female") { setLtHtStatus(58.8, 58.9, 61.2, 70.4); }
+                        if (sex === "Male") { setWeightForLengthStatus(61.1, 61.2, 63.3, 72.0); }
+                        else if (sex === "Female") { setWeightForLengthStatus(58.8, 58.9, 61.2, 70.4); }
                         break;
                     case 7:
-                        if (sex === "Male") { setHeightForAgeStatus(62.6, 62.7, 64.8, 73.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(60.2, 60.3, 62.7, 72.0); }
+                        if (sex === "Male") { setWeightForLengthStatus(62.6, 62.7, 64.8, 73.6); }
+                        else if (sex === "Female") { setWeightForLengthStatus(60.2, 60.3, 62.7, 72.0); }
                         break;
                     case 8:
-                        if (sex === "Male") { setHeightForAgeStatus(63.9, 64.0, 66.2, 75.1); }
-                        else if (sex === "Female") { setHeightForAgeStatus(61.6, 61.7, 64.0, 73.6); }
+                        if (sex === "Male") { setWeightForLengthStatus(63.9, 64.0, 66.2, 75.1); }
+                        else if (sex === "Female") { setWeightForLengthStatus(61.6, 61.7, 64.0, 73.6); }
                         break;
                     case 9:
-                        if (sex === "Male") { setHeightForAgeStatus(65.1, 65.2, 67.5, 76.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(62.8, 62.9, 65.3, 75.1); }
+                        if (sex === "Male") { setWeightForLengthStatus(65.1, 65.2, 67.5, 76.6); }
+                        else if (sex === "Female") { setWeightForLengthStatus(62.8, 62.9, 65.3, 75.1); }
                         break;
                     case 10:
-                        if (sex === "Male") { setHeightForAgeStatus(66.3, 66.4, 68.7, 78.0); }
-                        else if (sex === "Female") { setHeightForAgeStatus(64.0, 64.1, 66.5, 76.5); }
+                        if (sex === "Male") { setWeightForLengthStatus(66.3, 66.4, 68.7, 78.0); }
+                        else if (sex === "Female") { setWeightForLengthStatus(64.0, 64.1, 66.5, 76.5); }
                         break;
                     case 11:
-                        if (sex === "Male") { setHeightForAgeStatus(67.5, 67.6, 69.9, 79.3); }
-                        else if (sex === "Female") { setHeightForAgeStatus(65.1, 65.2, 67.7, 77.9); }
+                        if (sex === "Male") { setWeightForLengthStatus(67.5, 67.6, 69.9, 79.3); }
+                        else if (sex === "Female") { setWeightForLengthStatus(65.1, 65.2, 67.7, 77.9); }
                         break;
                     case 12:
-                        if (sex === "Male") { setHeightForAgeStatus(68.5, 68.6, 71.0, 80.6); }
-                        else if (sex === "Female") { setHeightForAgeStatus(66.2, 66.3, 68.9, 79.3); }
+                        if (sex === "Male") { setWeightForLengthStatus(68.5, 68.6, 71.0, 80.6); }
+                        else if (sex === "Female") { setWeightForLengthStatus(66.2, 66.3, 68.9, 79.3); }
                         break;
                 }
                 return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
@@ -948,10 +1147,47 @@
             function dataTable()
             {
                 // For Table Header (which generates Search Input):
-                $('#search_bar th').each(function(i)
+                const placeholderMap =
+                {
+                    'ID Number': 'ID Number',
+                    'Address or Location of Child\'s Residence': 'Address or Location of Residence',
+                    'Last Name of Parent/Guardian': 'Last Name of Parent/Guardian',
+                    'First Name of Parent/Guardian': 'First Name of Parent/Guardian',
+                    'Last Name of Child': 'Last Name of Child',
+                    'First Name of Child': 'First Name of Child',
+                    'Sex': 'Sex',
+                    'Age in Months': 'Age in Months',
+                    'Belongs to IP Group?': 'IP Group?',
+                    'Taking Micronutrient Supplementation?': 'On Supplementation?',
+                    'Date Measured': 'Date Measured',
+                    'Weight (kg)': 'Weight (kg)',
+                    'Height (cm)': 'Height (cm)',
+                    'Weight for Age Status': 'Weight for Age Status',
+                    'Height/Length For Age Status': 'Height/Length for Age Status',
+                    'Weight For Length Status': 'Weight for Length Status',
+                    'Code Moosaic': 'Powered by Code Moosaic'
+                };
+
+                $('#search_bar th').each(function (i)
                 {
                     let title = $(this).text();
-                    $(this).html('<input size="15" class="form-control" type="text" placeholder="' + title + '" data-index="' + i + '" style="text-align: center; color: black;" />');
+
+                    if (title == 'Code Moosaic')
+                    {
+                        $(this).html
+                        (`
+                            <input size="15" class="form-control" type="text" disabled placeholder='&#128046; ${placeholderMap[title] || title} &#128046' data-index="${i}" 
+                                style="text-align:center; background-color:tranparent; color:black; border:solid 1px 0 1px 0; border-radius:0; opacity: 1; background-color: #fff;" />
+                        `);
+                    }
+                    else
+                    {
+                        $(this).html
+                        (`
+                            <input size="15" class="form-control" type="text" placeholder='&#128269; ${placeholderMap[title] || title}' data-index="${i}" 
+                                style="text-align:center; color:black; border:solid 1px 0 1px 0; border-radius:0" />
+                        `);
+                    }
                 });
 
                 dataTable = $('#dataTable').DataTable
@@ -961,26 +1197,36 @@
                         url: BASE_API + '/datatable'
                     },
 
-                    "initComplete": function ()
+                    "initComplete": function()
                     {
-                        this.api().columns().every(function ()
+                        var dataTableApi = this.api();
+
+                        $('#search_bar input').on('keyup change', function()
                         {
-                            var column = this;
-                            var columnIndex = column.index();
-                            $('input', $('#search_bar')).on('keyup change', function ()
+                            var columnIndex = $(this).data('index');
+
+                            if (columnIndex === 6)
                             {
-                                if (columnIndex === $(this).data('index'))
-                                {
-                                    column.search(this.value).draw();
-                                }
-                            });
+                                dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
+                            }
+                            else if (columnIndex === 7)
+                            {
+                                var searchValue = this.value.trim() === '' ? '' : '^' + this.value + '$';
+                                dataTableApi.column(columnIndex).search(searchValue, true, false, true).draw();
+                            }
+                            else
+                            {
+                                dataTableApi.column(columnIndex).search(this.value).draw();
+                            }
                         });
+
+                        $('.dataTables_info').css({ 'margin-bottom': '15px' });
                     },
 
-                    // "searching": false,
-                    "ordering": true, // (removes asc/desc button)
-                    "paging": false, // (removes pagination info: number of entries; prev/next page button)
-                    "info": false, // (removes entries info)
+                    "info": true, // (number of entries)
+                    "ordering": true, // (asc/desc button)
+                    "paging": false, // (prev/next page button)
+                    
 
                     "processing": true,
                     "serverSide": true,
@@ -997,12 +1243,12 @@
                     },
                     "columns":
                     [   
-                            // {
-                            //     data: "id"
-                            // },
-                            // {
-                            //     data: "created_at"
-                            // },
+                        // {
+                        //     data: "id"
+                        // },
+                        // {
+                        //     data: "created_at"
+                        // },
                         {
                             data: "child_number", visible: true,
                         },
@@ -1043,28 +1289,27 @@
                         },
                         {
                             data: "sex", visible: true,
+                            search:
+                            {
+                                function (data, _, columnData, columnIndex, rowIndex, columnIndexVisible)
+                                {
+                                    return data.toLowerCase() === this.value.toLowerCase();
+                                }
+                            }
                         },
                         {
-                            data: "birthdate", visible: true,
-                            render: function(data, type, row)
-                            {
-                                var birthdate = moment(data, 'YYYY-MM-DD');
-                                var currentDate = moment();
-                                var ageInMonths = currentDate.diff(birthdate, 'months');
-
-                                return ageInMonths;
-                            }
+                            data: "age_in_months", visible: true,
                         },
                         {
                             data: "ip_group", visible: true
                         },
-                            // {
-                            //     data: "birthdate", visible: true,
-                            //     render: function(data, type, row)
-                            //     {
-                            //         return moment(data).format('MMMM D, YYYY')
-                            //     }
-                            // },
+                        // {
+                        //     data: "birthdate", visible: true,
+                        //     render: function(data, type, row)
+                        //     {
+                        //         return moment(data).format('MMMM D, YYYY')
+                        //     }
+                        // },
                         {
                             data: "micronutrient", visible: true
                         },
@@ -1095,13 +1340,13 @@
                                 return data + "cm"
                             }
                         },
-                            // {
-                            //     data: "length",
-                            //     render: function(data, type, row)
-                            //     {
-                            //         return data + "cm"
-                            //     }
-                            // },
+                        // {
+                        //     data: "length",
+                        //     render: function(data, type, row)
+                        //     {
+                        //         return data + "cm"
+                        //     }
+                        // },
                         {
                             data: "weight_for_age_status", visible: true,
                             render: function(data, type, row)
@@ -1116,18 +1361,18 @@
                             }
                         },
                         {
-                            data: "height_for_age_status", visible: true,
+                            data: "height_length_for_age_status", visible: true,
                             render: function(data, type, row)
                             {
                                 const ageInMonths = row.age_in_months;
                                 const sex = row.sex;
                                 const height = row.height;
                                 
-                                return calculateHeightForAgeStatus(ageInMonths, sex, height);
+                                return calculateHeightLengthForAgeStatus(ageInMonths, sex, height);
                             }
                         },
                         {
-                            data: "lt_ht_status", visible: true,
+                            data: "weight_for_length_status", visible: true,
                             render: function(data, type, row)
                             {
                                 const ageInMonths = row.age_in_months;
@@ -1135,7 +1380,7 @@
                                 const height = row.height;
                                 const weight = row.weight
                                 
-                                return calculateWgtHtstatus(height, ageInMonths, weight, sex);
+                                return calculateWeightForLengthStatus(ageInMonths, sex, height);
                             }
                         },
                         {
@@ -1224,17 +1469,6 @@
 
 
                 })
-
-                // FOOTER FILTER
-                $(dataTable.table().container()).on('keyup', 'tfoot input', function() {
-                    dataTable
-                        .column($(this).data('index'))
-                        .search(this.value)
-                        .draw();
-                });
-
-                // TO ADD BUTTON TO DIV TABLE ACTION
-                dataTable.buttons().container().appendTo('#tableActions');
             }
             // End of Script for Data Table Function
 
@@ -1297,44 +1531,47 @@
                         $("#createForm").trigger("reset")
                         $("#create_card").collapse("hide")
                         refresh();
-                        $.ajax({
-                        url: API_URL + '/history_of_individual_records',
-                        method: "POST",
-                        data: JSON.stringify
+                        $.ajax
                         ({
-                            individual_record_id: data.id,
-                            child_number: data.child_number,
-                            address: data.address,
-                            mother_last_name: data.mother_last_name,
-                            mother_first_name: data.mother_first_name,
-                            child_last_name: data.child_last_name,
-                            child_first_name: data.child_first_name,
-                            ip_group: data.ip_group,
-                            micronutrient: data.micronutrient,
-                            sex: data.sex,
-                            birthdate: data.birthdate,
-                            height: data.height,
-                            weight: data.weight,
-                            length: data.length,
-                        }),
-                        dataType: "JSON",
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            "Authorization": API_TOKEN,
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(historyData) {
-                            notification('success', "{{ Str::singular($page_title) }}");
-                            $("#createForm").trigger("reset");
-                            $("#create_card").collapse("hide");
-                            refresh();
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });
-
+                            url: API_URL + '/history_of_individual_records',
+                            method: "POST",
+                            data: JSON.stringify
+                            ({
+                                individual_record_id: data.id,
+                                child_number: data.child_number,
+                                address: data.address,
+                                mother_last_name: data.mother_last_name,
+                                mother_first_name: data.mother_first_name,
+                                child_last_name: data.child_last_name,
+                                child_first_name: data.child_first_name,
+                                ip_group: data.ip_group,
+                                micronutrient: data.micronutrient,
+                                sex: data.sex,
+                                birthdate: data.birthdate,
+                                height: data.height,
+                                weight: data.weight,
+                                length: data.length,
+                            }),
+                            dataType: "JSON",
+                            headers:
+                            {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": API_TOKEN,
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(historyData)
+                            {
+                                notification('success', "{{ Str::singular($page_title) }}");
+                                $("#createForm").trigger("reset");
+                                $("#create_card").collapse("hide");
+                                refresh();
+                            },
+                            error: function(error)
+                            {
+                                console.log(error);
+                            }
+                        });
                     },
                     error: function(error)
                     {
@@ -1374,7 +1611,8 @@
                     },
                     success: function(data)
                     {
-                        console.log("Data boy ohh!!: " + JSON.stringify(data));
+                        console.log("jatsen masarap at hot" + JSON.stringify(data));
+
                         $('.btnUpdate').attr('id', data.id)
                         $('#address_edit').val(data.address)
                         $('#mother_last_name_edit').val(data.mother_last_name)
@@ -1430,54 +1668,41 @@
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
 
-                console.log("form data from edit: " + JSON.stringify(form_data));
+                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
-                // BMI Computation:
-                    // let bmi = (form_data.weight / form_data.height / form_data.height) * 10000
-                    // form_data.bmi = bmi;
-                    // form_data.bmi_category = check_bmi_category(bmi)
-
-                    $.ajax({
+                    $.ajax
+                    ({
                         url: form_url,
                         method: "PUT",
                         data: JSON.stringify(form_data),
                         dataType: "JSON",
-                        headers: {
+                        headers:
+                        {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
                             "Authorization": API_TOKEN,
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success: function(data) {
-                            console.log("Data boy ohh!!: " + JSON.stringify(data));
-                            // let filteredData = {};
-                            // // Iterate through the keys in form_data
-                            // Object.keys(form_data).forEach(key => {
-                            //     // Check if the key exists in data and has the same value
-                            //     if (data.hasOwnProperty(key)) {
-                            //         filteredData[key] = data[key];
-                            //     }
-                            // });
-                            // console.log('filteredData:', JSON.stringify(filteredData));
-                            // console.log('form_data:', JSON.stringify(form_data));
-                            // Check if form_data is form_data from data
-                            // if (JSON.stringify(form_data) !== JSON.stringify(filteredData)) {   
-                                storeHistoryOfIndividualRecord(data);
-                                notification('info', "{{ Str::singular($page_title) }}");
-                                refresh();
-                                $('#editModal').modal('hide');
-                                console.log(data);
-                            // } else {
-                            //     // Create a warning that no data was edited
-                            //     swalAlert('warning', 'No data was edited.');
-                            // }
+                        success: function(data)
+                        {
+                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
+
+                            storeHistoryOfIndividualRecord(data);
+                            notification('info', "{{ Str::singular($page_title) }}");
+                            refresh();
+                            $('#editModal').modal('hide');
+                            console.log(data);
                         },
-                        error: function(error) {
+                        error: function(error)
+                        {
                             console.log(error);
-                            if (error.responseJSON.errors == null) {
+                            if (error.responseJSON.errors == null)
+                            {
                                 swalAlert('warning', error.responseJSON.message);
-                            } else {
-                                $.each(error.responseJSON.errors, function(key, value) {
+                            } else
+                            {
+                                $.each(error.responseJSON.errors, function(key, value)
+                                {
                                     swalAlert('warning', value);
                                 });
                             }
@@ -1488,46 +1713,65 @@
             // End of Script for Update Function for edit
 
             // Script for Reweigh Function:
-            $(document).on('click', '.btnReweigh', function() {
+            $(document).on('click', '.btnReweigh', function()
+            {
                 let id = this.id;
                 let form_url = BASE_API + '/' + id;
                 console.log("id: " + id);
-                $.ajax({
-                    url: form_url,
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        console.log("Data boy ohh!!: " + JSON.stringify(data));
-                        $('.btnUpdateReweigh').attr('id', data.id);
-                        $('#child_last_name_reweigh').val(data.child_last_name);
-                        $('#child_first_name_reweigh').val(data.child_first_name);
-                        let today = new Date().toISOString().slice(0, 10);
-                        $('#date_measured_edit').val(today);
-                        $('#date_measured_hidden').val(today); // Set the hidden input value
-                        $('#height_edit').val(data.height);
-                        $('#weight_edit').val(data.weight);
+                
+                $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js', function()
+                {
+                    $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js', function()
+                    {
+                        $.ajax
+                        ({
+                            url: form_url,
+                            method: "GET",
+                            headers:
+                            {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": API_TOKEN,
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data)
+                            {
+                                console.log("jatsen lang masarap" + JSON.stringify(data));
 
-                        tempWeight = data.weight;
-                        tempHeight = data.height;
-                        tempIndividualId = data.id;
-                        tempDateRecorded = data?.updated_at ?? data.created_at;
-                        $('#reweighModal').modal('show');
-                    },
-                    error: function(error) {
-                        console.log(error);
-                        if (error.responseJSON.errors == null) {
-                            swalAlert('warning', error.responseJSON.message);
-                        } else {
-                            $.each(error.responseJSON.errors, function(key, value) {
-                                swalAlert('warning', value);
-                            });
-                        }
-                    }
+                                $('.btnUpdateReweigh').attr('id', data.id);
+                                $('#child_last_name_reweigh').val(data.child_last_name);
+                                $('#child_first_name_reweigh').val(data.child_first_name);
+
+                                let today = moment().tz('Asia/Shanghai').format('YYYY-MM-DD');
+                                $('#date_measured_edit').val(today);
+                                $('#date_measured_hidden').val(today);
+                                
+                                $('#height_edit').val(data.height);
+                                $('#weight_edit').val(data.weight);
+
+                                tempWeight = data.weight;
+                                tempHeight = data.height;
+                                tempIndividualId = data.id;
+                                tempDateRecorded = data?.updated_at ?? data.created_at;
+                                $('#reweighModal').modal('show');
+                            },
+                            error: function(error)
+                            {
+                                console.log(error);
+                                if (error.responseJSON.errors == null)
+                                {
+                                    swalAlert('warning', error.responseJSON.message);
+                                }
+                                else
+                                {
+                                    $.each(error.responseJSON.errors, function(key, value)
+                                    {
+                                        swalAlert('warning', value);
+                                    });
+                                }
+                            }
+                        });
+                    });
                 });
             });
             // End of Script for Reweigh Function
@@ -1550,89 +1794,81 @@
 
                 console.log("form data: " + JSON.stringify(form_data));
 
-                // BMI Computation:
-                    // let bmi = (form_data.weight / form_data.height / form_data.height) * 10000
-                    // form_data.bmi = bmi;
-                    // form_data.bmi_category = check_bmi_category(bmi)
-
-                    $.ajax({
+                    $.ajax
+                    ({
                         url: form_url,
                         method: "PUT",
                         data: JSON.stringify(form_data),
                         dataType: "JSON",
-                        headers: {
+                        headers:
+                        {
                             "Accept": "application/json",
                             "Content-Type": "application/json",
                             "Authorization": API_TOKEN,
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success: function(data) {
-                            console.log("Data boy ohh from reweigh!!: " + JSON.stringify(data));
-                            // let filteredData = {};
-                            // // Iterate through the keys in form_data
-                            // Object.keys(form_data).forEach(key => {
-                            //     // Check if the key exists in data and has the same value
-                            //     if (data.hasOwnProperty(key)) {
-                            //         filteredData[key] = data[key];
-                            //     }
-                            // });
-                            // console.log('filteredData:', JSON.stringify(filteredData));
-                            // console.log('form_data:', JSON.stringify(form_data));
-                            // Check if form_data is form_data from data
-                            // if (JSON.stringify(form_data) !== JSON.stringify(filteredData)) { 
+                        success: function(data)
+                        {
+                            console.log("jatsen masarap na, hot pa, kaya kagat na!" + JSON.stringify(data));
 
-                                $.ajax({
-                                    url: API_URL + '/history_of_individual_records',
-                                    method: "POST",
-                                    data: JSON.stringify({
-                                        individual_record_id: data.id, // Ensure you include this line
-                                        child_number: data.child_number,
-                                        address: data.address,
-                                        mother_last_name: data.mother_last_name,
-                                        mother_first_name: data.mother_first_name,
-                                        child_last_name: data.child_last_name,
-                                        child_first_name: data.child_first_name,
-                                        date_measured: data.date_measured,
-                                        ip_group: data.ip_group,
-                                        micronutrient: data.micronutrient,
-                                        sex: data.sex,
-                                        birthdate: data.birthdate,
-                                        height: data.height,
-                                        weight: data.weight,
-                                        length: data.length,
-                                    }),
-                                    dataType: "JSON",
-                                    headers: {
-                                        "Accept": "application/json",
-                                        "Content-Type": "application/json",
-                                        "Authorization": API_TOKEN,
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function(historyData) {
-                                        notification('success', "{{ Str::singular($page_title) }}");
-                                        $("#createForm").trigger("reset");
-                                        $("#create_card").collapse("hide");
-                                        refresh();
-                                    },
-                                    error: function(error) {
-                                        console.log(error);
-                                    }
-                                });
-                                notification('info', "{{ Str::singular($page_title) }}");
-                                refresh();
-                                $('#reweighModal').modal('hide');
-                                console.log(data);
-                            // } else {
-                            //     // Create a warning that no data was edited
-                            //     swalAlert('warning', 'No data was edited.');
-                            // }
+                            $.ajax
+                            ({
+                                url: API_URL + '/history_of_individual_records',
+                                method: "POST",
+                                data: JSON.stringify
+                                ({
+                                    individual_record_id: data.id,
+                                    child_number: data.child_number,
+                                    address: data.address,
+                                    mother_last_name: data.mother_last_name,
+                                    mother_first_name: data.mother_first_name,
+                                    child_last_name: data.child_last_name,
+                                    child_first_name: data.child_first_name,
+                                    date_measured: data.date_measured,
+                                    ip_group: data.ip_group,
+                                    micronutrient: data.micronutrient,
+                                    sex: data.sex,
+                                    birthdate: data.birthdate,
+                                    height: data.height,
+                                    weight: data.weight,
+                                    length: data.length,
+                                }),
+                                dataType: "JSON",
+                                headers:
+                                {
+                                    "Accept": "application/json",
+                                    "Content-Type": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(historyData)
+                                {
+                                    notification('success', "{{ Str::singular($page_title) }}");
+                                    $("#createForm").trigger("reset");
+                                    $("#create_card").collapse("hide");
+                                    refresh();
+                                },
+                                error: function(error)
+                                {
+                                    console.log(error);
+                                }
+                            });
+                            notification('info', "{{ Str::singular($page_title) }}");
+                            refresh();
+                            $('#reweighModal').modal('hide');
+                            console.log(data);
                         },
-                        error: function(error) {
+                        error: function(error)
+                        {
                             console.log(error);
-                            if (error.responseJSON.errors == null) {
+                            if (error.responseJSON.errors == null)
+                            {
                                 swalAlert('warning', error.responseJSON.message);
-                            } else {
-                                $.each(error.responseJSON.errors, function(key, value) {
+                            }
+                            else
+                            {
+                                $.each(error.responseJSON.errors, function(key, value)
+                                {
                                     swalAlert('warning', value);
                                 });
                             }
@@ -1720,23 +1956,20 @@
                     }
                 })
             });
-            // END OF DEACTIVATE FUNCTION
+            // End of Script for Soft-Delete Function
+
             var jq = jQuery.noConflict();
 
-jq(document).ready(function() {
-    // Use jq instead of $
-    // ...
+            jq(document).ready(function()
+            {
+                jq('#dataTable').DataTable({ });
 
-    // Your existing DataTable initialization or other code
-    jq('#dataTable').DataTable({
-        // DataTable configuration options
-    });
+                jq('#reloadButton').on('click', function()
+                {
+                    jq('#dataTable').DataTable().ajax.reload();
+                });
+            });
 
-    // Example of DataTable reload
-    jq('#reloadButton').on('click', function() {
-        jq('#dataTable').DataTable().ajax.reload();
-    });
-});
             // Function Calling:
             dataTable();
         })

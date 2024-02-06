@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class IndividualRecordImport implements ToModel, WithHeadingRow, WithStartRow
+class IndividualRecordImport implements ToModel, WithStartRow
 {
     public function model(array $row)
     {
@@ -17,19 +17,18 @@ class IndividualRecordImport implements ToModel, WithHeadingRow, WithStartRow
         if (count($row) >= 11) {
             // Create IndividualRecord
             $individualRecord = new IndividualRecord([
-                'child_number' => $row['id_number'],
-                'address' => $row['address'],
-                'mother_last_name' => $row['parent_last_name'],
-                'mother_first_name' => $row['parent_first_name'],
-                'child_last_name' => $row['child_last_name'],
-                'child_first_name' => $row['child_first_name'],
-                'ip_group' => $row['ip_group'],
-                'micronutrient' => $row['micronutrient'],
-                'sex' => $row['sex'],
-                'birthdate' => $row['birthdate'],
-                // 'date_measured' => $row['date_measured'],
-                'height' => $row['height'],
-                'weight' => $row['weight'],
+                'child_number' => $row[0],
+                'address' => $row[1],
+                'mother_last_name' => $row[2],
+                'mother_first_name' => $row[3],
+                'child_last_name' => $row[4],
+                'child_first_name' => $row[5],
+                'sex' => $row[6],
+                'birthdate' => $row[7],
+                'ip_group' => $row[8],
+                'micronutrient' => $row[9],
+                'height' => $row[10],
+                'weight' => $row[11],
             ]);
 
             // Save IndividualRecord to the database
@@ -37,19 +36,18 @@ class IndividualRecordImport implements ToModel, WithHeadingRow, WithStartRow
 
             // Create HistoryOfIndividualRecord
             $historyRecord = new HistoryOfIndividualRecord([
-                'child_number' => $row['id_number'],
-                'address' => $row['address'],
-                'mother_last_name' => $row['parent_last_name'],
-                'mother_first_name' => $row['parent_first_name'],
-                'child_last_name' => $row['child_last_name'],
-                'child_first_name' => $row['child_first_name'],
-                'ip_group' => $row['ip_group'],
-                'micronutrient' => $row['micronutrient'],
-                'sex' => $row['sex'],
-                'birthdate' => $row['birthdate'],
-                // 'date_measured' => $row['date_measured'],
-                'height' => $row['height'],
-                'weight' => $row['weight'],
+                'child_number' => $row[0],
+                'address' => $row[1],
+                'mother_last_name' => $row[2],
+                'mother_first_name' => $row[3],
+                'child_last_name' => $row[4],
+                'child_first_name' => $row[5],
+                'sex' => $row[6],
+                'birthdate' => $row[7],
+                'ip_group' => $row[8],
+                'micronutrient' => $row[9],
+                'height' => $row[10],
+                'weight' => $row[11],
                 // Add other fields as needed
             ]);
 
