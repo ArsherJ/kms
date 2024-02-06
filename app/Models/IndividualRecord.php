@@ -39,10 +39,10 @@ class IndividualRecord extends Model
         'micronutrient',
         'sex',
         'birthdate',
+        'age_in_months',
         'date_measured',
         'height',
         'weight',
-        'age_in_months',
         'weight_for_age_status',
         'height_length_for_age_status',
         'weight_for_length_status'

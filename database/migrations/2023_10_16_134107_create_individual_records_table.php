@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('sex', ['Male', 'Female']);
 
             $table->date('birthdate');
-            $table->integer('age_in_months');
+            $table->integer('age_in_months')->nullable();
             $table->date('date_measured')->nullable();
             $table->float('height');
             $table->float('weight');
@@ -40,22 +40,6 @@ return new class extends Migration
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
         });
-
-        DB::statement
-        ('
-            CREATE TRIGGER calculate_age_in_months BEFORE INSERT ON individual_records
-            FOR EACH ROW
-                BEGIN
-                    SET NEW.age_in_months = TIMESTAMPDIFF(MONTH, NEW.birthdate, NOW());
-
-                    IF NEW.age_in_months BETWEEN 0 AND 5
-                    THEN SET NEW.micronutrient = "No";
-                    ELSEIF NEW.age_in_months BETWEEN 6 AND 23
-                    THEN SET NEW.micronutrient = "Yes";
-                    ELSE SET NEW.micronutrient = "No";
-                    END IF;
-                END;
-        ');
     }
 
     public function down(): void
