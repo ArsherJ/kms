@@ -1380,7 +1380,7 @@
                                 const height = row.height;
                                 const weight = row.weight
                                 
-                                return calculateWeightForLengthStatus(ageInMonths, sex, height);
+                                return calculateWgtHtstatus(height, ageInMonths, weight, sex);
                             }
                         },
                         {
