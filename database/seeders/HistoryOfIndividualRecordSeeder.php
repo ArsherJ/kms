@@ -265,7 +265,7 @@ class HistoryOfIndividualRecordSeeder extends Seeder
         foreach ($records as $record)
         {
             $data = array_merge($commonData, $record);
-            DB::table('individual_records')->insert($data);
+            DB::table('history_of_individual_records')->insert($data);
         }
     }
 }
