@@ -145,7 +145,8 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Date Measured (mm-dd-yyyy):</label>
-                                <input type="date" class="form-control" id="date_measured_hidden" name="date_measured_hidden" disabled tabindex="1" style="opacity: 1; background-color: #fff;">
+                                <!-- <input type="date" class="form-control" id="date_measured_hidden" name="date_measured_hidden" disabled tabindex="1" style="opacity: 1; background-color: #fff;"> -->
+                                <input type="date" class="form-control" id="date_measured_hidden" name="date_measured_hidden" tabindex="1">
                                 <input type="hidden" id="date_measured_edit" name="date_measured_edit">
                             </div>
                             <div class="form-group col-md-4">
