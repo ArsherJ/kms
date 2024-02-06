@@ -194,6 +194,19 @@
             </div>
             <table class="table table-hover table-borderless" id="dataTable" style="width:100%">
                 <thead>
+
+                <tr class="text-dark" id="search_bar" >
+                    <th class="not-export-column">ID</th>
+                    <th class="not-export-column">Created at</th>
+                    <th>Title</th>
+                    <th>Label</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th >Progress</th>
+                </tr>
+       
+                    
                     <tr class="text-dark" >
                         <th class="not-export-column">ID</th>
                         <th class="not-export-column">Created at</th>
@@ -210,18 +223,7 @@
                 <tbody>
 
                 </tbody>
-                <tfoot >
-                    <tr class="text-dark" >
-                        <th class="not-export-column">ID</th>
-                        <th class="not-export-column">Created at</th>
-                        <th>Title</th>
-                        <th>Label</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th >Progress</th>
-                    </tr>
-                </tfoot>
+
             </table>
         </div>
     </div>
@@ -273,7 +275,7 @@
             function dataTable() {
 
                 // FOR FOOTER GENERATE OF INPUT
-                $('#dataTable tfoot th').each(function(i) {
+                $('#search_bar th').each(function(i) {
                     let title = $('#dataTable thead th').eq($(this).index()).text();
                     $(this).html('<input size="15" class="form-control" type="text" placeholder="' + title +
                         '" data-index="' + i + '" />');
@@ -420,7 +422,7 @@
                 })
 
                 // FOOTER FILTER
-                $(dataTable.table().container()).on('keyup', 'tfoot input', function() {
+                $(dataTable.table().container()).on('keyup', 'th input', function() {
                     dataTable
                         .column($(this).data('index'))
                         .search(this.value)
