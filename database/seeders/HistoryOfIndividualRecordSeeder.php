@@ -27,6 +27,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-10-20',
                 'height'  => '57.2',
                 'weight'  => '4.4',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Normal',
+                'weight_for_length_status' => 'Normal',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -39,6 +42,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-11-25',
                 'height'  => '44.1',
                 'weight'  => '6.7',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Severely Stunted',
+                'weight_for_length_status' => 'Obese',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -51,6 +57,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-09-21',
                 'height'  => '62.5',
                 'weight'  => '8.2',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Normal',
+                'weight_for_length_status' => 'Overweight',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -63,6 +72,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-03-18',
                 'height'  => '80.2',
                 'weight'  => '7.9',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Tall',
+                'weight_for_length_status' => 'Severe Acute Malnutrition',
             ],
                 [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -75,6 +87,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-01-08',
                 'height'  => '70.2',
                 'weight'  => '6.9',
+                'weight_for_age_status' => 'Severely Underweight',
+                'height_length_for_age_status' => 'Stunted',
+                'weight_for_length_status' => 'Moderate Acute Malnutrition',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -87,6 +102,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-04-20',
                 'height'  => '65.5',
                 'weight'  => '5.7',
+                'weight_for_age_status' => 'Severely Underweight',
+                'height_length_for_age_status' => 'Stunted',
+                'weight_for_length_status' => 'Severe Acute Malnutrition',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -99,6 +117,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-08-03',
                 'height'  => '57.2',
                 'weight'  => '4.4',
+                'weight_for_age_status' => 'Severely Underweight',
+                'height_length_for_age_status' => 'Severely Stunted',
+                'weight_for_length_status' => 'Normal',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -111,6 +132,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-12-22',
                 'height'  => '70.2',
                 'weight'  => '6.9',
+                'weight_for_age_status' => 'Normal',
+                'height_length_for_age_status' => 'Tall',
+                'weight_for_length_status' => 'Normal',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -123,6 +147,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-11-05',
                 'height'  => '44.1',
                 'weight'  => '6.7',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Severely Stunted',
+                'weight_for_length_status' => 'Obese',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -135,6 +162,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-11-12',
                 'height'  => '62.5',
                 'weight'  => '8.2',
+                'weight_for_age_status' => 'Normal',
+                'height_length_for_age_status' => 'Tall',
+                'weight_for_length_status' => 'Overweight',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -147,6 +177,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-08-01',
                 'height'  => '57.2',
                 'weight'  => '4.4',
+                'weight_for_age_status' => 'Severely Underweight',
+                'height_length_for_age_status' => 'Severly Stunted',
+                'weight_for_length_status' => 'Normal',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -159,6 +192,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-10-24',
                 'height'  => '44.1',
                 'weight'  => '6.7',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Severely Stunted',
+                'weight_for_length_status' => 'Obese',
             ],
                 [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -171,6 +207,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-10-12',
                 'height'  => '80.2',
                 'weight'  => '7.9',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Tall',
+                'weight_for_length_status' => 'Severe Acute Malnutrition',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -183,6 +222,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-10-24',
                 'height'  => '44.1',
                 'weight'  => '6.7',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Severely Stunted',
+                'weight_for_length_status' => 'Obese',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -195,6 +237,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-10-12',
                 'height'  => '70.2',
                 'weight'  => '6.9',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Tall',
+                'weight_for_length_status' => 'Moderate Acute Malnutrition',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -207,6 +252,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-12-04',
                 'height'  => '62.5',
                 'weight'  => '8.2',
+                'weight_for_age_status' => 'Normal',
+                'height_length_for_age_status' => 'Normal',
+                'weight_for_length_status' => 'Overweight',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -219,6 +267,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-09-11',
                 'height'  => '57.2',
                 'weight'  => '4.4',
+                'weight_for_age_status' => 'Severely Underweight',
+                'height_length_for_age_status' => 'Severely Stunted',
+                'weight_for_length_status' => 'Normal',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -231,6 +282,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-10-17',
                 'height'  => '80.2',
                 'weight'  => '7.9',
+                'weight_for_age_status' => 'Normal',
+                'height_length_for_age_status' => 'Tall',
+                'weight_for_length_status' => 'Moderate Acute Malnutrition',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -243,6 +297,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-04-10',
                 'height'  => '80.2',
                 'weight'  => '7.9',
+                'weight_for_age_status' => 'Underweight',
+                'height_length_for_age_status' => 'Tall',
+                'weight_for_length_status' => 'Severe Acute Malnutrition',
             ],
             [
                 'child_number' => $childNumber = $faker->numberBetween(100, 999),
@@ -255,6 +312,9 @@ class HistoryOfIndividualRecordSeeder extends Seeder
                 'birthdate' => '2023-12-14',
                 'height'  => '44.1',
                 'weight'  => '6.7',
+                'weight_for_age_status' => 'Normal',
+                'height_length_for_age_status' => 'Severely Stunted',
+                'weight_for_length_status' => 'Obese',
             ],
         ];
 

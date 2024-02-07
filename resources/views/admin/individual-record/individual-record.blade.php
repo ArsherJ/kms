@@ -348,6 +348,7 @@
                     <thead>
 
                         <tr class="text-dark" id="search_bar">
+                            <!-- <th style="width:10%; padding:15px 0 15px 0;">ID</th> -->
                             <th style="width:10%; padding:15px 0 15px 0;">ID Number</th>
                             <th style="width:20%; padding:15px 0 15px 0">Address or Location of Child's Residence</th>
                             <th style="width:15%; padding:15px 0 15px 0">Last Name of Parent/Guardian</th>
@@ -370,6 +371,7 @@
                         <tr class="text-dark">
                                 <!-- <th class="not-export-column">ID</th> -->
                                 <!-- <th class="not-export-column">Created At</th> -->
+                            <!-- <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Data ID</th> -->
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">ID Number</th>
                             <th class="bg-dark" style="width:20%; text-align:center; color: white; border-right:2px solid white;">Address or Location of Child's Residence</th>
                             <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Last Name of Parent/Guardian</th>
@@ -1431,6 +1433,11 @@
                                 var searchValue = this.value.trim() === '' ? '' : '^' + this.value + '$';
                                 dataTableApi.column(columnIndex).search(searchValue, true, false, true).draw();
                             }
+                            else if (columnIndex === 14 || columnIndex === 15 || columnIndex === 16)
+                            {
+                                var searchValue = this.value.trim() === '' ? '' : '^' + this.value + '$';
+                                dataTableApi.column(columnIndex).search(searchValue, true, false, true).draw();
+                            }
                             else
                             {
                                 dataTableApi.column(columnIndex).search(this.value).draw();
@@ -1461,7 +1468,7 @@
                     "columns":
                     [   
                         // {
-                        //     data: "id"
+                        //     data: "id", visible: true,
                         // },
                         // {
                         //     data: "created_at"
