@@ -63,7 +63,7 @@
                         font-weight: 1000; 
                         background: linear-gradient(to right, #cdffd8, #94b9ff); 
                         text-align: center; 
-                        padding: 3%">HEIGHT FOR AGE </h5>
+                        padding: 3%">HEIGHT/LENGTH FOR AGE </h5>
                             <canvas id="pieChart3" class="chart-canvas"></canvas>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                         font-weight: 1000; 
                         background: linear-gradient(to right, #cdffd8, #94b9ff); 
                         text-align: center; 
-                        padding: 3%">LENGTH/HEIGHT FOR AGE</h5>
+                        padding: 3%">WEIGHT FOR LENGTH AGE</h5>
                             <canvas id="pieChart2" class="chart-canvas"></canvas>
                         </div>
                     </div>
