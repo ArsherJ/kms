@@ -455,6 +455,10 @@
                         height: data.height,
                         weight: data.weight,
                         length: data.length,
+                        age_in_months: convert_age_in_months(data.birthdate),
+                        weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
+                        height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
+                        weight_for_length_status: calculateWeightForLengthStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
                     }),
                     dataType: "JSON",
                     headers:
@@ -1894,6 +1898,11 @@
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
 
+                // Additional data fields
+                form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.weight, true);
+                form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
+                form_data.weight_for_length_status = calculateWeightForLengthStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
+
                 console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
                     $.ajax
@@ -2017,6 +2026,10 @@
                 {
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 });
+                form_data.age_in_months = convert_age_in_months(form_data.birthdate),
+                form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.weight, true);
+                form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
+                form_data.weight_for_length_status = calculateWeightForLengthStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
 
                 console.log("form data: " + JSON.stringify(form_data));
 
@@ -2050,7 +2063,6 @@
                                     mother_first_name: data.mother_first_name,
                                     child_last_name: data.child_last_name,
                                     child_first_name: data.child_first_name,
-                                    date_measured: data.date_measured,
                                     ip_group: data.ip_group,
                                     micronutrient: data.micronutrient,
                                     sex: data.sex,
@@ -2058,6 +2070,10 @@
                                     height: data.height,
                                     weight: data.weight,
                                     length: data.length,
+                                    age_in_months: convert_age_in_months(data.birthdate),
+                                    weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
+                                    height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
+                                    weight_for_length_status: calculateWeightForLengthStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
                                 }),
                                 dataType: "JSON",
                                 headers:
