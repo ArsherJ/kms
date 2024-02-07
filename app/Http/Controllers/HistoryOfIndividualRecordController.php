@@ -120,7 +120,7 @@ class HistoryOfIndividualRecordController extends Controller
                 WHERE YEAR(h2.created_at) = ?
                 GROUP BY MONTH(h2.created_at), child_number
             )
-            AND h1.child_number = ?
+            AND h1.id = ?
         ", [$year, $id]);
     
         return response()->json($latestRecords);

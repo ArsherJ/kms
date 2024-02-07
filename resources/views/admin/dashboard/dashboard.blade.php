@@ -90,6 +90,7 @@
 
 {{-- SCRIPTS --}}
 @section('scripts')
+    <script src="{{ asset('js/calculationScript.js') }}"></script>
     <script src="{{ asset('import/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('import/assets/js/dashboard.js') }}"></script>
     <script>
@@ -391,7 +392,7 @@ jq(document).ready(function() {
 
                     var created_at = moment(child.created_at, 'YYYY-MM-DD');
                     var monthNumber = created_at.format("MM")
-                    var heightStatus = calculateHeightForAgeStatus(ageInMonths, child.sex, child.height);
+                    var heightStatus = calculateHeightLengthForAgeStatus(ageInMonths, child.sex, child.height,true);
                         if (heightStatus === "Severely Stunted") {
                             ss[monthNumber-1]++;
                         } else if (heightStatus === "Stunted") {
@@ -399,9 +400,13 @@ jq(document).ready(function() {
                         } else if (heightStatus === "Normal") {
                             n[monthNumber-1]++;
                         } 
-                        // else if (heightStatus === "Tall") {
-                        //     calculateHeightForAgeStatusTable[3]++;
-                        // }
+
+                    var wghtStatus = calculateWgtHtstatus(child.height, ageInMonths, child.weight, child.sex, true);
+                        if (wghtStatus === "Overweight") {
+                            o[monthNumber-1]++;
+                        } else if (wghtStatus === "Obese") {
+                            ob[monthNumber-1]++;
+                        }
                 })
                 updateCharts(ss,s,n,o,ob);
             }
@@ -472,143 +477,6 @@ jq(document).ready(function() {
 
             updateChartData(2024);
 
-
-            function calculateHeightForAgeStatus(ageInMonths, sex, height) {
-        let result = "";
-
-        function setHeightForAgeStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
-        {
-            if (height <= severelyStuntedLimit) { result = "Severely Stunted"}
-            else if (height >= stuntedLimit && height <= normalLimit) { result = "Stunted"}
-            else if (height >= normalLimit && height <= tallLimit) { result = "Normal"}
-            else if (height > tallLimit) { result = "Tall";}
-        }
-
-        switch (ageInMonths)
-        {
-            case 0:
-                if (sex === "Male") { setHeightForAgeStatus(44.1, 44.2, 46.1, 53.8); }
-                else if (sex === "Female") { setHeightForAgeStatus(43.5, 43.6, 45.4, 53.0); }
-                break;
-            case 1:
-                if (sex === "Male") { setHeightForAgeStatus(48.8, 48.9, 50.8, 58.7); }
-                else if (sex === "Female") { setHeightForAgeStatus(47.7, 47.8, 49.8, 57.7); }
-                break;
-            case 2:
-                if (sex === "Male") { setHeightForAgeStatus(52.3, 52.4, 54.4, 62.5); }
-                else if (sex === "Female") { setHeightForAgeStatus(50.9, 51.0, 53.0, 61.2); }
-                break;
-            case 3:
-                if (sex === "Male") { setHeightForAgeStatus(55.2, 55.3, 57.3, 65.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(53.4, 53.5, 55.6, 64.1); }
-                break;
-            case 4:
-                if (sex === "Male") { setHeightForAgeStatus(57.5, 57.6, 59.7, 68.1); }
-                else if (sex === "Female") { setHeightForAgeStatus(55.5, 55.6, 57.8, 66.5); }
-                break;
-            case 5:
-                if (sex === "Male") { setHeightForAgeStatus(59.5, 59.6, 61.7, 70.2); }
-                else if (sex === "Female") { setHeightForAgeStatus(57.3, 57.4, 59.6, 68.6); }
-                break;
-            case 6:
-                if (sex === "Male") { setHeightForAgeStatus(61.1, 61.2, 63.3, 72.0); }
-                else if (sex === "Female") { setHeightForAgeStatus(58.8, 58.9, 61.2, 70.4); }
-                break;
-            case 7:
-                if (sex === "Male") { setHeightForAgeStatus(62.6, 62.7, 64.8, 73.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(60.2, 60.3, 62.7, 72.0); }
-                break;
-            case 8:
-                if (sex === "Male") { setHeightForAgeStatus(63.9, 64.0, 66.2, 75.1); }
-                else if (sex === "Female") { setHeightForAgeStatus(61.6, 61.7, 64.0, 73.6); }
-                break;
-            case 9:
-                if (sex === "Male") { setHeightForAgeStatus(65.1, 65.2, 67.5, 76.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(62.8, 62.9, 65.3, 75.1); }
-                break;
-            case 10:
-                if (sex === "Male") { setHeightForAgeStatus(66.3, 66.4, 68.7, 78.0); }
-                else if (sex === "Female") { setHeightForAgeStatus(64.0, 64.1, 66.5, 76.5); }
-                break;
-            case 11:
-                if (sex === "Male") { setHeightForAgeStatus(67.5, 67.6, 69.9, 79.3); }
-                else if (sex === "Female") { setHeightForAgeStatus(65.1, 65.2, 67.7, 77.9); }
-                break;
-            case 12:
-                if (sex === "Male") { setHeightForAgeStatus(68.5, 68.6, 71.0, 80.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(66.2, 66.3, 68.9, 79.3); }
-                break;
-        }
-        return result;
-    }
-    function calculateWeightForAgeStatus(ageInMonths, sex, weight) {
-        let result = "";
-
-        function setWeightForAgeStatus(severelyUnderweightLimit, underweightLimit, normalLimit)
-        {
-            if (weight <= severelyUnderweightLimit) { result = "Severely Underweight"}
-            else if (weight >= underweightLimit && weight <= normalLimit) { result = "Underweight" }
-            else if (weight > normalLimit) { result = "Normal"}
-        }
-
-        switch (ageInMonths) 
-        {
-            case 0:
-                if (sex === "Male") { setWeightForAgeStatus(2.1, 2.2, 4.4); }
-                else if (sex === "Female") { setWeightForAgeStatus(2.0, 2.1, 4.2); }
-                break;
-            case 1:
-                if (sex === "Male") { setWeightForAgeStatus(2.9, 3.0, 5.8); }
-                else if (sex === "Female") { setWeightForAgeStatus(2.7, 2.8, 5.5); }
-                break;
-            case 2:
-                if (sex === "Male") { setWeightForAgeStatus(3.8, 3.9, 7.1); }
-                else if (sex === "Female") { setWeightForAgeStatus(3.4, 3.5, 6.6); }
-                break;
-            case 3:
-                if (sex === "Male") { setWeightForAgeStatus(4.4, 4.5, 8.0); }
-                else if (sex === "Female") { setWeightForAgeStatus(4.0, 4.1, 7.5); }
-                break;
-            case 4:
-                if (sex === "Male") { setWeightForAgeStatus(4.9, 5.0, 8.7); }
-                else if (sex === "Female") { setWeightForAgeStatus(4.4, 4.5, 8.2); }
-                break;
-            case 5:
-                if (sex === "Male") { setWeightForAgeStatus(5.3, 5.4, 9.3); }
-                else if (sex === "Female") { setWeightForAgeStatus(4.8, 4.9, 8.8); }
-                break;
-            case 6:
-                if (sex === "Male") { setWeightForAgeStatus(5.7, 5.8, 9.8); }
-                else if (sex === "Female") { setWeightForAgeStatus(5.1, 5.2, 9.3); }
-                break;
-            case 7:
-                if (sex === "Male") { setWeightForAgeStatus(5.9, 6.0, 10.3); }
-                else if (sex === "Female") { setWeightForAgeStatus(5.3, 5.4, 9.8); }
-                break;
-            case 8:
-                if (sex === "Male") { setWeightForAgeStatus(6.2, 6.3, 10.7); }
-                else if (sex === "Female") { setWeightForAgeStatus(5.6, 5.7, 10.2); }
-                break;
-            case 9:
-                if (sex === "Male") { setWeightForAgeStatus(6.4, 6.5, 11.0); }
-                else if (sex === "Female") { setWeightForAgeStatus(5.8, 5.9, 10.5); }
-                break;
-            case 10:
-                if (sex === "Male") { setWeightForAgeStatus(6.6, 6.7, 11.4); }
-                else if (sex === "Female") { setWeightForAgeStatus(5.9, 6.0, 10.9); }
-                break;
-            case 11:
-                if (sex === "Male") { setWeightForAgeStatus(6.8, 6.9, 11.7); }
-                else if (sex === "Female") { setWeightForAgeStatus(6.1, 6.2, 11.2); }
-                break;
-            case 12:
-                if (sex === "Male") { setWeightForAgeStatus(6.9, 7.0, 12.0); }
-                else if (sex === "Female") { setWeightForAgeStatus(6.3, 6.4, 11.5); }
-                break;
-        }
-        return result;
-    }
-
      
         let setWeightForAgeStatusTable = [0, 0, 0];
         let calculateHeightForAgeStatusTable = [0, 0, 0, 0];
@@ -636,36 +504,31 @@ jq(document).ready(function() {
                 },
                 success: function(data) {
                     if (data && data.length > 0) {
-                        setWeightForAgeStatusTable = [0, 0, 0];
-                        calculateHeightForAgeStatusTable = [0, 0, 0, 0];
+                        dashboard_pie = [0,0,0,0,0]
 
                         data.forEach(function(child) {
                             var birthdate = moment(child.birthdate, 'YYYY-MM-DD');
                             var currentDate = moment();
                             var ageInMonths = currentDate.diff(birthdate, 'months');
-
-                            var weightStatus = calculateWeightForAgeStatus(ageInMonths, child.sex, child.weight);
-                            if (weightStatus === "Severely Underweight") {
-                                setWeightForAgeStatusTable[0]++;
-                            } else if (weightStatus === "Underweight") {
-                                setWeightForAgeStatusTable[1]++;
-                            } else if (weightStatus === "Normal") {
-                                setWeightForAgeStatusTable[2]++;
+                           
+                            var heightStatus = calculateHeightLengthForAgeStatus(ageInMonths, child.sex, child.height, true);
+                            if (heightStatus === "Severely Stunted") {
+                                dashboard_pie[0]++;
+                            } else if (heightStatus === "Stunted") {
+                                dashboard_pie[1]++;
+                            } else if (heightStatus === "Normal") {
+                                dashboard_pie[2]++;
                             }
 
-                            var heightStatus = calculateHeightForAgeStatus(ageInMonths, child.sex, child.height);
-                            if (heightStatus === "Severely Stunted") {
-                                calculateHeightForAgeStatusTable[0]++;
-                            } else if (heightStatus === "Stunted") {
-                                calculateHeightForAgeStatusTable[1]++;
-                            } else if (heightStatus === "Normal") {
-                                calculateHeightForAgeStatusTable[2]++;
-                            } else if (heightStatus === "Tall") {
-                                calculateHeightForAgeStatusTable[3]++;
+                            var wghtStatus = calculateWgtHtstatus(child.height, ageInMonths, child.weight, child.sex, true);
+                            if (wghtStatus === "Overweight") {
+                                dashboard_pie[3]++;
+                            } else if (wghtStatus === "Obese") {
+                                dashboard_pie[4]++;
                             }
                         });
 
-                        updateChartsPie(setWeightForAgeStatusTable, calculateHeightForAgeStatusTable);
+                        updateChartsPie(dashboard_pie);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -690,10 +553,10 @@ jq(document).ready(function() {
         // Chart 2
         var ctx2 = document.getElementById("pieChart3").getContext('2d');
             var data2 = {
-                labels: ["Severely Stunted", "Stunted", "Normal", "Tall"],
+                labels: ["Severely Stunted", "Stunted", "Normal", "Overweight", "Obese"],
                 datasets: [{
-                    data: calculateHeightForAgeStatusTable,
-                    backgroundColor: ['#6CE5E8', '#41B8D5', '#2D8BBA','#2F5F98']
+                    data: dashboard_pie,
+                    backgroundColor: ['#6CE5E8', '#41B8D5', '#2D8BBA','#2F5F98','#31356E']
                 }]
             };
             var pieChart3 = new Chart(ctx2, {
