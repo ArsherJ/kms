@@ -38,6 +38,7 @@
 
 {{-- SCRIPTS --}}
 @section('scripts')
+<script src="{{ asset('js/calculationScript.js') }}"></script>
 <script>
     
     $(document).ready(function() {
@@ -75,7 +76,7 @@
 
                     var created_at = moment(child.created_at, 'YYYY-MM-DD');
                     var monthNumber = created_at.format("MM")
-                    var heightStatus = calculateHeightForAgeStatus(ageInMonths, child.sex, child.height);
+                    var heightStatus = calculateHeightLengthForAgeStatus(ageInMonths, child.sex, child.height,true);
                         if (heightStatus === "Severely Stunted") {
                             ss[monthNumber-1]++;
                         } else if (heightStatus === "Stunted") {
@@ -83,86 +84,20 @@
                         } else if (heightStatus === "Normal") {
                             n[monthNumber-1]++;
                         } 
-                        // else if (heightStatus === "Tall") {
-                        //     calculateHeightForAgeStatusTable[3]++;
-                        // }
+
+                        var wghtStatus = calculateWgtHtstatus(child.height, ageInMonths, child.weight, child.sex, true);
+                        if (wghtStatus === "Overweight") {
+                            o[monthNumber-1]++;
+                        } else if (wghtStatus === "Obese") {
+                            ob[monthNumber-1]++;
+                        }
+
                 })
-                console.log(ss)
-                console.log(o)
-                console.log(n)
                 updateCharts(ss,s,n,o,ob);
             }
             });
         }
 
-    function calculateHeightForAgeStatus(ageInMonths, sex, height) {
-        let result = "";
-
-        function setHeightForAgeStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
-        {
-            if (height <= severelyStuntedLimit) { result = "Severely Stunted"}
-            else if (height >= stuntedLimit && height <= normalLimit) { result = "Stunted"}
-            else if (height >= normalLimit && height <= tallLimit) { result = "Normal"}
-            else if (height > tallLimit) { result = "Tall";}
-        }
-
-        switch (ageInMonths)
-        {
-            case 0:
-                if (sex === "Male") { setHeightForAgeStatus(44.1, 44.2, 46.1, 53.8); }
-                else if (sex === "Female") { setHeightForAgeStatus(43.5, 43.6, 45.4, 53.0); }
-                break;
-            case 1:
-                if (sex === "Male") { setHeightForAgeStatus(48.8, 48.9, 50.8, 58.7); }
-                else if (sex === "Female") { setHeightForAgeStatus(47.7, 47.8, 49.8, 57.7); }
-                break;
-            case 2:
-                if (sex === "Male") { setHeightForAgeStatus(52.3, 52.4, 54.4, 62.5); }
-                else if (sex === "Female") { setHeightForAgeStatus(50.9, 51.0, 53.0, 61.2); }
-                break;
-            case 3:
-                if (sex === "Male") { setHeightForAgeStatus(55.2, 55.3, 57.3, 65.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(53.4, 53.5, 55.6, 64.1); }
-                break;
-            case 4:
-                if (sex === "Male") { setHeightForAgeStatus(57.5, 57.6, 59.7, 68.1); }
-                else if (sex === "Female") { setHeightForAgeStatus(55.5, 55.6, 57.8, 66.5); }
-                break;
-            case 5:
-                if (sex === "Male") { setHeightForAgeStatus(59.5, 59.6, 61.7, 70.2); }
-                else if (sex === "Female") { setHeightForAgeStatus(57.3, 57.4, 59.6, 68.6); }
-                break;
-            case 6:
-                if (sex === "Male") { setHeightForAgeStatus(61.1, 61.2, 63.3, 72.0); }
-                else if (sex === "Female") { setHeightForAgeStatus(58.8, 58.9, 61.2, 70.4); }
-                break;
-            case 7:
-                if (sex === "Male") { setHeightForAgeStatus(62.6, 62.7, 64.8, 73.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(60.2, 60.3, 62.7, 72.0); }
-                break;
-            case 8:
-                if (sex === "Male") { setHeightForAgeStatus(63.9, 64.0, 66.2, 75.1); }
-                else if (sex === "Female") { setHeightForAgeStatus(61.6, 61.7, 64.0, 73.6); }
-                break;
-            case 9:
-                if (sex === "Male") { setHeightForAgeStatus(65.1, 65.2, 67.5, 76.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(62.8, 62.9, 65.3, 75.1); }
-                break;
-            case 10:
-                if (sex === "Male") { setHeightForAgeStatus(66.3, 66.4, 68.7, 78.0); }
-                else if (sex === "Female") { setHeightForAgeStatus(64.0, 64.1, 66.5, 76.5); }
-                break;
-            case 11:
-                if (sex === "Male") { setHeightForAgeStatus(67.5, 67.6, 69.9, 79.3); }
-                else if (sex === "Female") { setHeightForAgeStatus(65.1, 65.2, 67.7, 77.9); }
-                break;
-            case 12:
-                if (sex === "Male") { setHeightForAgeStatus(68.5, 68.6, 71.0, 80.6); }
-                else if (sex === "Female") { setHeightForAgeStatus(66.2, 66.3, 68.9, 79.3); }
-                break;
-        }
-        return result;
-    }
 
     function updateCharts(ss,s,n,o,ob){
         let chart = Chart.getChart("myChart");

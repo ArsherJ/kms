@@ -109,11 +109,11 @@
                                     <!-- <span id="weight_for_age_status" class="card-text"></span> -->
                                 </h6>
                                 <h6 style="padding:5px;  text-align:right">
-                                    <strong>Height for Age Status:</strong>
+                                    <strong>Height/Length for Age Status:</strong>
                                     <!-- <span id="height_for_age_status" class="card-text"></span> -->
                                 </h6>
                                 <h6 style="padding:5px;  text-align:right">
-                                    <strong>Length/Height Status:</strong>
+                                    <strong>Weight for Length Status:</strong>
                                     <!-- <span id="ltht_status" class="card-text"></span> -->
                                 </h6>
                             </div>
@@ -210,6 +210,7 @@
 
 {{-- SCRIPTS --}}
 @section('scripts')
+<script src="{{ asset('js/calculationScript.js') }}"></script>
     <script>
         $(document).ready(function()
         {
@@ -1307,8 +1308,8 @@
                 }
             })
         }
-        
-        updateLineChart(2024,212)
+        console.log("Individual Record: ",INDIVIDUAL_RECORD_ID)
+        updateLineChart(currentYear,INDIVIDUAL_RECORD_ID)
         
         function updateDataGraph(WFA,HFA,WFH){
             var months = ['1st Month', '2nd Month', '3rd Month', '4th Month', '5th Month', '6th Month', '7th Month', '8th Month', '9th Month', '10th Month', '11th Month', '12th Month'];
@@ -1326,13 +1327,15 @@
                     borderColor: '#41B8D5',
                     borderWidth: 1,
                     data: HFA
-                }, {
-                    label: 'Weight for Lt/Ht',
-                    backgroundColor: '#2D8BBA',
-                    borderColor: '#2D8BBA',
-                    borderWidth: 1,
-                    data: WFH
-                }]
+                },
+                //  {
+                //     label: 'Weight for Lt/Ht',
+                //     backgroundColor: '#2D8BBA',
+                //     borderColor: '#2D8BBA',
+                //     borderWidth: 1,
+                //     data: WFH
+                // }]
+                ]
             };
 
             var options = {
