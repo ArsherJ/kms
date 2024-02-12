@@ -91,6 +91,7 @@
 <script src="{{ asset('js/calculationScript.js') }}"></script>
 <script>
 $(document).ready(function() {
+    var hello = [0,0,0]
     Chart.register(ChartDataLabels);
     Chart.defaults.font.size = 12;
 
@@ -168,8 +169,10 @@ $(document).ready(function() {
                         }
 
                     });
-                    console.log(calculateHeightForWeightStatusTable)
                     updateCharts(setWeightForAgeStatusTable, calculateHeightForAgeStatusTable, calculateHeightForWeightStatusTable);
+                } else {
+                    clearCharts()
+                    console.log("No data available for the selected month.");
                 }
             },
             error: function(xhr, status, error) {
@@ -185,6 +188,14 @@ $(document).ready(function() {
         updateChartData(selectedMonth);
     });
     
+
+    function clearCharts() {
+        setWeightForAgeStatusTable = [0, 0, 0];
+        calculateHeightForAgeStatusTable = [0, 0, 0, 0];
+        calculateHeightForWeightStatusTable = [0, 0, 0, 0, 0];
+        updateCharts(setWeightForAgeStatusTable, calculateHeightForAgeStatusTable, calculateHeightForWeightStatusTable);
+    }
+
     function updateCharts(weightData, heightData, heightForWeightData) {
         let pieChart1Instance = Chart.getChart("pieChart1");
         let pieChart2Instance = Chart.getChart("pieChart2");
@@ -200,7 +211,8 @@ $(document).ready(function() {
             pieChart3Instance.destroy();
         }
 
-        
+
+
         // Chart 1
         var ctx1 = document.getElementById("pieChart1").getContext('2d');
         var data1 = {

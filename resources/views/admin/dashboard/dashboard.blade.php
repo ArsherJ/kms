@@ -529,6 +529,9 @@ jq(document).ready(function() {
                         });
 
                         updateChartsPie(dashboard_pie);
+                    } else {
+                        clearCharts()
+                        console.log("No data available for the selected month.");
                     }
                 },
                 error: function(xhr, status, error) {
@@ -541,6 +544,14 @@ jq(document).ready(function() {
         let selectedMonth = monthDropdown.value;
         updateChartDatas(selectedMonth);
         });
+
+
+        function clearCharts() {
+            dashboard_pie = [0,0,0,0,0]
+            updateChartsPie(dashboard_pie);
+        }
+
+
 
         function updateChartsPie(weightData, heightData) {
         let pieChart3Instance = Chart.getChart("pieChart3");
