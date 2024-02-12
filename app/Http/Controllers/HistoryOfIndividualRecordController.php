@@ -25,6 +25,15 @@ class HistoryOfIndividualRecordController extends Controller
             ->make(true);
     }
 
+    public function datatableshow(HistoryOfIndividualRecord $history_of_individual_records, $child_number)
+    {
+        $data = HistoryOfIndividualRecord::where('child_number', $child_number)->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
     public function create()
     {
     }
