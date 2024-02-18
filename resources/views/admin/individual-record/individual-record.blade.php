@@ -331,7 +331,6 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
 
                 <h5 class="card-title fw-semibold">► List of Individual Record/s</h5>
-
                 <div>
                     <button type="button" class="btn btn-info mx-2 btnUpload">Upload Multiple Record 
                         <span><i class="ti ti-plus"></i></span></button>
@@ -339,9 +338,15 @@
                         data-target="#create_card" aria-expanded="false" aria-controls="create_card">Add
                         {{ Str::singular($page_title) }} <span><i class="ti ti-plus"></i></span></button>
                 </div>
-
             </div>
-            
+            <div>
+                <label for="fromDate" class="mr-2">From/To Date:</label>
+                <div style="display: inline-flex;">
+                    <input type="date" id="fromDate" class="form-control mr-2">
+                    <input type="date" id="toDate" class="form-control">
+                </div>
+            </div>
+
             <div class="table-responsive">
                 <table class="table table-hover table-sm table-borderless" id="dataTable"
                     style="width: 265%; table-layout:fixed; text-align:center; border:1px solid black; border-radius:5px">
@@ -1347,20 +1352,28 @@
                 });
 
                 dataTable = $('#dataTable').DataTable
+
                 ({
                     "ajax":
                     {
-                        url: BASE_API + '/datatable'
+                        url: BASE_API + '/datatable',
+                        data: function (d) {
+                            var fromDate = $('#fromDate').val();
+                            var toDate = $('#toDate').val();
+                            d.fromDate = fromDate;
+                            d.toDate = toDate;
+                        }
                     },
-
                     "initComplete": function()
                     {
                         var dataTableApi = this.api();
-
+                        $('#fromDate, #toDate').on('change', function() {
+                            // Trigger DataTable reload upon change of fromDate or toDate
+                            dataTable.ajax.reload();
+                        });
                         $('#search_bar input').on('keyup change', function()
                         {
                             var columnIndex = $(this).data('index');
-
                             if (columnIndex === 6)
                             {
                                 dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
@@ -1608,7 +1621,7 @@
                                     order: 'current'
                                 }
                             },
-                            className: 'btn btn-dark mb-4',
+                            className: 'btn btn-dark mb-5',
                             titleAttr: 'PDF Export',
                             extension: '.pdf',
                             download: 'open', // This will open the .pdf file to another tab.

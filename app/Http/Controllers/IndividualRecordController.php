@@ -21,9 +21,26 @@ class IndividualRecordController extends Controller
         return IndividualRecord::all();
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        $data = IndividualRecord::all();
+        $query = IndividualRecord::query();
+    
+        $fromDate = $request->input('fromDate');
+        $toDate = $request->input('toDate');
+    
+        if ($fromDate && $toDate) {
+            $query->whereBetween('created_at', [$fromDate, $toDate]);
+        } else {
+            if ($fromDate) {
+                $query->where('created_at', '>=', $fromDate);
+            }
+            if ($toDate) {
+                $query->where('created_at', '<=', $toDate);
+            }
+        }
+    
+        $data = $query->get();
+    
         return DataTables::of($data)
             ->addIndexColumn()
             ->rawColumns(['action'])
