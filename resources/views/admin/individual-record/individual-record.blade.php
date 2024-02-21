@@ -541,8 +541,8 @@
             // Script for Weight for Age Status:
             function calculateWeightForAgeStatus(ageInMonths, sex, weight, database)
             {
-                let result = "Unknown";
-                let statusClass = "";
+                let result = "Out of range";
+                let statusClass = "bg-muted";
 
                 function setWeightForAgeStatus(severelyUnderweightLimit, underweightLimit, normalLimit)
                 {
@@ -805,8 +805,8 @@
             // Script for Height/Length for Age Status:
             function calculateHeightLengthForAgeStatus(ageInMonths, sex, height, database)
             {
-                let result = "Unknown";
-                let statusClass = "";
+                let result = "Out of range";
+                let statusClass = "bg-muted";
 
                 function setHeightLengthForAgeStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
                 {
@@ -1063,14 +1063,19 @@
                         else if (sex === "Female") { setHeightLengthForAgeStatus(95.1, 95.2, 99.9, 119.0); }
                         break;
                 }
+
+                if (result === "Unknown") {
+                    $statusClass = "bg-dark"; // Set default color to black
+                }
+
                 if (database) { return result }
                 else { return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`; }
             }
             
             function calculateWeightForLengthStatus(height, ageInMonths, weight, sex, database)
             {
-                let result = "Unknown";
-                let statusClass = "";
+                let result = "Out of range";
+                let statusClass = "text-secondary";
                 let childHeight = roundOfHeight(height, ageInMonths)
                 let matrix = getLimits(ageInMonths, sex)
                 matrix = matrix[childHeight[1]]
