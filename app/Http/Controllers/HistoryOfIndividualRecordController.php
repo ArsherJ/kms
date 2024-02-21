@@ -25,6 +25,15 @@ class HistoryOfIndividualRecordController extends Controller
             ->make(true);
     }
 
+    public function datatableshow(HistoryOfIndividualRecord $history_of_individual_records, $child_number)
+    {
+        $data = HistoryOfIndividualRecord::where('child_number', $child_number)->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
     public function create()
     {
     }
@@ -120,7 +129,7 @@ class HistoryOfIndividualRecordController extends Controller
                 WHERE YEAR(h2.created_at) = ?
                 GROUP BY MONTH(h2.created_at), child_number
             )
-            AND h1.child_number = ?
+            AND h1.id = ?
         ", [$year, $id]);
     
         return response()->json($latestRecords);

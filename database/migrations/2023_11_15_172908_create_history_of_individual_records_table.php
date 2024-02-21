@@ -30,8 +30,8 @@ return new class extends Migration
 
             $table->integer('age_in_months')->default(0)->nullable();
             $table->string('weight_for_age_status')->nullable();
-            $table->string('height_for_age_status')->nullable();
-            $table->string('ltht_status')->nullable();
+            $table->string('height_length_for_age_status')->nullable();
+            $table->string('weight_for_length_status')->nullable();
 
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
