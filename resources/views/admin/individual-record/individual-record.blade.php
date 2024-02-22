@@ -1982,20 +1982,24 @@
                 let form_data = {}
 
                 $.each(form, function() {
-                let field_name = this.name.slice(0, -5); // Remove the "_edit" suffix
-                let field_value = this.value;
+                    let field_name = this.name.slice(0, -5); // Remove the "_edit" suffix
+                    let field_value = this.value;
 
-                // Populate form_data with each form field
-                form_data[field_name] = field_value;
+                    // Populate form_data with each form field
+                    form_data[field_name] = field_value;
 
-                // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field
-                if (field_name === 'birthdate') {
-                    form_data.age_in_months = convert_age_in_months(field_value);
-                    form_data.weight_for_age_status = calculateWeightForAgeStatus(form_data.age_in_months, form_data.sex, form_data.weight, true);
-                    form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(form_data.age_in_months, form_data.sex, form_data.height, true);
-                    form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
-                }
-            });
+                    // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field
+                    if (field_name === 'birthdate') {
+                        form_data.age_in_months = convert_age_in_months(field_value);
+                        form_data.weight_for_age_status = calculateWeightForAgeStatus(form_data.age_in_months, form_data.sex, form_data.weight, true);
+                        form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(form_data.age_in_months, form_data.sex, form_data.height, true);
+                        form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
+                    }
+                });
+
+                // Use the value of #date_measured_edit as the value for date_measured
+                let measured_date = $('#date_measured_hidden').val();
+                form_data.date_measured = measured_date;
 
             console.log("form data: " + JSON.stringify(form_data));
 
