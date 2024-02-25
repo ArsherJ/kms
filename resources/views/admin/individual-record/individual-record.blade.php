@@ -101,6 +101,8 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" class="form-control" id="weight_edit" name="weight_edit" tabindex="1" required>
                             </div>
+
+                            <input type="hidden" id="date_measured_edit" name="date_measured_edit">
                         </div>
 
                     </form>
@@ -157,6 +159,8 @@
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
                                 <input type="number" class="form-control" id="weight_edit" name="weight_edit" tabindex="1" required>
                             </div>
+
+                            <input type="hidden" id="birthdate_reweigh" name="birthdate_reweigh">
                         </div>
                     </form>
 
@@ -425,14 +429,16 @@
             const BASE_API = API_URL + '/individual_records'
             const authenticatedUserId = window.authenticatedUserId
 
-            function convert_age_in_months(birthdate){
+            function convert_age_in_months(birthdate, date_measured){
                 birthdate = moment(birthdate, 'YYYY-MM-DD');
-                var currentDate = moment();
-                var ageInMonths = currentDate.diff(birthdate, 'months');
+                date_measured = moment(date_measured, 'YYYY-MM-DD');
+                var ageInMonths = date_measured.diff(birthdate, 'months');
+                // var currentDate = moment();
+                // var ageInMonths = currentDate.diff(birthdate, 'months');
 
                 return ageInMonths
             }
-            console.log("BIRHLAJSD: " + convert_age_in_months("2023-02-07"));
+            console.log("BIRHLAJSD: " + convert_age_in_months("2023-02-07", "2024-02-07"));
             
             
 
@@ -461,10 +467,11 @@
                         height: data.height,
                         weight: data.weight,
                         length: data.length,
-                        age_in_months: convert_age_in_months(data.birthdate),
-                        weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
-                        height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
-                        weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
+                        age_in_months: convert_age_in_months(data.birthdate, data.date_measured),
+                        date_measured: data.date_measured,
+                        weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.weight, true),
+                        height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.height, true),
+                        weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate, data.date_measured), data.weight, data.sex, true),
                     }),
                     dataType: "JSON",
                     headers:
@@ -1689,59 +1696,24 @@
 
                 form_data.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 3);
 
-                // Additional data fields
-                form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.weight, true);
-                form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
-                form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
-
-                console.log("form data: " + JSON.stringify(form_data))
-
-                $.ajax
-                ({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(form_data),
-                    dataType: "JSON",
-                    headers:
+                $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js', function()
+                {
+                    $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js', function()
                     {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data)
-                    {
-                        notification('success', "{{ Str::singular($page_title) }}");
-                        $("#createForm").trigger("reset");
-                        $("#create_card").collapse("hide");
-                        refresh();
-                        console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
-                        // Second AJAX request
+                        // Additional data fields
+                        let today = moment().tz('Asia/Shanghai').format('YYYY-MM-DD');
+                        form_data.date_measured = today
+                        form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.sex, form_data.weight, true);
+                        form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.sex, form_data.height, true);
+                        form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.weight, form_data.sex, true);
+
+                        console.log("form data: " + JSON.stringify(form_data))
+
                         $.ajax
                         ({
-                            url: API_URL + '/history_of_individual_records',
+                            url: form_url,
                             method: "POST",
-                            data: JSON.stringify
-                            ({
-                                individual_record_id: data.id,
-                                child_number: data.child_number,
-                                address: data.address,
-                                mother_last_name: data.mother_last_name,
-                                mother_first_name: data.mother_first_name,
-                                child_last_name: data.child_last_name,
-                                child_first_name: data.child_first_name,
-                                ip_group: data.ip_group,
-                                micronutrient: data.micronutrient,
-                                sex: data.sex,
-                                birthdate: data.birthdate,
-                                height: data.height,
-                                weight: data.weight,
-                                length: data.length,
-                                age_in_months: convert_age_in_months(data.birthdate),
-                                weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
-                                height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
-                                weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
-                            }),
+                            data: JSON.stringify(form_data),
                             dataType: "JSON",
                             headers:
                             {
@@ -1750,33 +1722,77 @@
                                 "Authorization": API_TOKEN,
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            success: function(historyData)
+                            success: function(data)
                             {
                                 notification('success', "{{ Str::singular($page_title) }}");
                                 $("#createForm").trigger("reset");
                                 $("#create_card").collapse("hide");
                                 refresh();
+                                console.log("convered age in months: " + convert_age_in_months(data.birthdate, data.date_measured));
+                                // Second AJAX request
+                                $.ajax
+                                ({
+                                    url: API_URL + '/history_of_individual_records',
+                                    method: "POST",
+                                    data: JSON.stringify
+                                    ({
+                                        individual_record_id: data.id,
+                                        child_number: data.child_number,
+                                        address: data.address,
+                                        mother_last_name: data.mother_last_name,
+                                        mother_first_name: data.mother_first_name,
+                                        child_last_name: data.child_last_name,
+                                        child_first_name: data.child_first_name,
+                                        ip_group: data.ip_group,
+                                        micronutrient: data.micronutrient,
+                                        sex: data.sex,
+                                        birthdate: data.birthdate,
+                                        height: data.height,
+                                        weight: data.weight,
+                                        length: data.length,
+                                        age_in_months: convert_age_in_months(data.birthdate, data.date_measured),
+                                        date_measured: data.date_measured,
+                                        weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.weight, true),
+                                        height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.height, true),
+                                        weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate, data.date_measured), data.weight, data.sex, true),
+                                    }),
+                                    dataType: "JSON",
+                                    headers:
+                                    {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function(historyData)
+                                    {
+                                        notification('success', "{{ Str::singular($page_title) }}");
+                                        $("#createForm").trigger("reset");
+                                        $("#create_card").collapse("hide");
+                                        refresh();
+                                    },
+                                    error: function(error)
+                                    {
+                                        console.log(error);
+                                    }
+                                });
                             },
                             error: function(error)
                             {
                                 console.log(error);
+                                if (error.responseJSON.errors == null)
+                                {
+                                    swalAlert('warning', error.responseJSON.message);
+                                } else
+                                {
+                                    $.each(error.responseJSON.errors, function(key, value)
+                                    {
+                                        swalAlert('warning', value);
+                                    });
+                                }
                             }
                         });
-                    },
-                    error: function(error)
-                    {
-                        console.log(error);
-                        if (error.responseJSON.errors == null)
-                        {
-                            swalAlert('warning', error.responseJSON.message);
-                        } else
-                        {
-                            $.each(error.responseJSON.errors, function(key, value)
-                            {
-                                swalAlert('warning', value);
-                            });
-                        }
-                    }
+                    });
                 });
             });
             // End of Script for Create Function
@@ -1812,6 +1828,7 @@
                         $('#micronutrient_edit').val(data.micronutrient)
                         $('#sex_edit').val(data.sex)
                         $('#birthdate_edit').val(data.birthdate)
+                        $('#date_measured_edit').val(data.date_measured)
                         $('#height_edit').val(data.height)
                         $('#weight_edit').val(data.weight)
 
@@ -1858,9 +1875,10 @@
                 })
 
                 // Additional data fields
-                form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.weight, true);
-                form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
-                form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
+                form_data.age_in_months = convert_age_in_months(form_data.birthdate, form_data.date_measured);
+                form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.sex, form_data.weight, true);
+                form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.sex, form_data.height, true);
+                form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.weight, form_data.sex, true);
 
                 console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
@@ -1942,6 +1960,7 @@
                                 
                                 $('#height_edit').val(data.height);
                                 $('#weight_edit').val(data.weight);
+                                $('#birthdate_reweigh').val(data.birthdate);
 
                                 tempWeight = data.weight;
                                 tempHeight = data.height;
@@ -1981,27 +2000,36 @@
                 let form = $("#reweighForm").serializeArray();
                 let form_data = {}
 
+
                 $.each(form, function() {
                     let field_name = this.name.slice(0, -5); // Remove the "_edit" suffix
                     let field_value = this.value;
+
+                    // Use the value of #date_measured_edit as the value for date_measured
+                    let measured_date = $('#date_measured_hidden').val();
+                    form_data.date_measured = measured_date;
+
+                    let birthdate = $('#birthdate_reweigh').val();
+                    form_data.birthdate = birthdate;
+
+                    console.log("form_data.birthdate" + JSON.stringify(form_data.birthdate))
+
+                    form_data.age_in_months = convert_age_in_months(form_data.birthdate, form_data.date_measured);
+
+                    console.log("age_in_months" + JSON.stringify(form_data.age_in_months))
 
                     // Populate form_data with each form field
                     form_data[field_name] = field_value;
 
                     // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field
                     if (field_name === 'birthdate') {
-                        form_data.age_in_months = convert_age_in_months(field_value);
                         form_data.weight_for_age_status = calculateWeightForAgeStatus(form_data.age_in_months, form_data.sex, form_data.weight, true);
                         form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(form_data.age_in_months, form_data.sex, form_data.height, true);
-                        form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
+                        form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.age_in_months, form_data.weight, form_data.sex, true);
                     }
                 });
 
-                // Use the value of #date_measured_edit as the value for date_measured
-                let measured_date = $('#date_measured_hidden').val();
-                form_data.date_measured = measured_date;
-
-            console.log("form data: " + JSON.stringify(form_data));
+                console.log("form data: " + JSON.stringify(form_data));
 
                     $.ajax
                     ({
@@ -2041,10 +2069,10 @@
                                     height: data.height,
                                     weight: data.weight,
                                     length: data.length,
-                                    age_in_months: data.age_in_months,
-                                    weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
-                                    height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
-                                    weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
+                                    age_in_months: convert_age_in_months(data.birthdate, data.date_measured),
+                                    weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.weight, true),
+                                    height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.height, true),
+                                    weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate, data.date_measured), data.weight, data.sex, true),
                                 }),
                                 dataType: "JSON",
                                 headers:
