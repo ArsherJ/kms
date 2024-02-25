@@ -28,6 +28,9 @@ class IndividualRecordImport implements ToModel, WithStartRow
             
             $weightForLengthStatus = $this->calculateWgtHtstatus($row[10], $ageInMonths, $row[11], $row[6]);
 
+            // Get today's date
+            $dateToday = $this->date_today();
+
 
             $individualRecord = new IndividualRecord([
                 'child_number' => $row[0],
@@ -43,6 +46,7 @@ class IndividualRecordImport implements ToModel, WithStartRow
                 'height' => $row[10],
                 'weight' => $row[11],
                 'age_in_months' => $ageInMonths,
+                'date_measured' => $dateToday,
                 'weight_for_age_status' => $weightForAgeStatus,
                 'height_length_for_age_status' => $heightLengthForAgeStatus,
                 'weight_for_length_status' => $weightForLengthStatus,
@@ -66,6 +70,7 @@ class IndividualRecordImport implements ToModel, WithStartRow
                 'height' => $row[10],
                 'weight' => $row[11],
                 'age_in_months' => $ageInMonths,
+                'date_measured' => $dateToday,
                 'weight_for_age_status' => $weightForAgeStatus,
                 'height_length_for_age_status' => $heightLengthForAgeStatus,
                 'weight_for_length_status' => $weightForLengthStatus,
@@ -80,6 +85,10 @@ class IndividualRecordImport implements ToModel, WithStartRow
 
         Log::error('Row does not have enough elements: ' . json_encode($row));
         return null;
+    }
+
+    private function date_today() {
+        return date('Y-m-d');
     }
 
     private function calculateAgeInMonths($birthdate) {

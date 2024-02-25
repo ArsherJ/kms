@@ -1689,59 +1689,24 @@
 
                 form_data.child_number = (Math.floor(Date.now() * Math.random())).toString().slice(0, 3);
 
-                // Additional data fields
-                form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.weight, true);
-                form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
-                form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
-
-                console.log("form data: " + JSON.stringify(form_data))
-
-                $.ajax
-                ({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(form_data),
-                    dataType: "JSON",
-                    headers:
+                $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js', function()
+                {
+                    $.getScript('https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js', function()
                     {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data)
-                    {
-                        notification('success', "{{ Str::singular($page_title) }}");
-                        $("#createForm").trigger("reset");
-                        $("#create_card").collapse("hide");
-                        refresh();
-                        console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
-                        // Second AJAX request
+                        // Additional data fields
+                        let today = moment().tz('Asia/Shanghai').format('YYYY-MM-DD');
+                        form_data.date_measured = today
+                        form_data.weight_for_age_status = calculateWeightForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.weight, true);
+                        form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
+                        form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
+
+                        console.log("form data: " + JSON.stringify(form_data))
+
                         $.ajax
                         ({
-                            url: API_URL + '/history_of_individual_records',
+                            url: form_url,
                             method: "POST",
-                            data: JSON.stringify
-                            ({
-                                individual_record_id: data.id,
-                                child_number: data.child_number,
-                                address: data.address,
-                                mother_last_name: data.mother_last_name,
-                                mother_first_name: data.mother_first_name,
-                                child_last_name: data.child_last_name,
-                                child_first_name: data.child_first_name,
-                                ip_group: data.ip_group,
-                                micronutrient: data.micronutrient,
-                                sex: data.sex,
-                                birthdate: data.birthdate,
-                                height: data.height,
-                                weight: data.weight,
-                                length: data.length,
-                                age_in_months: convert_age_in_months(data.birthdate),
-                                weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
-                                height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
-                                weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
-                            }),
+                            data: JSON.stringify(form_data),
                             dataType: "JSON",
                             headers:
                             {
@@ -1750,33 +1715,77 @@
                                 "Authorization": API_TOKEN,
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            success: function(historyData)
+                            success: function(data)
                             {
                                 notification('success', "{{ Str::singular($page_title) }}");
                                 $("#createForm").trigger("reset");
                                 $("#create_card").collapse("hide");
                                 refresh();
+                                console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
+                                // Second AJAX request
+                                $.ajax
+                                ({
+                                    url: API_URL + '/history_of_individual_records',
+                                    method: "POST",
+                                    data: JSON.stringify
+                                    ({
+                                        individual_record_id: data.id,
+                                        child_number: data.child_number,
+                                        address: data.address,
+                                        mother_last_name: data.mother_last_name,
+                                        mother_first_name: data.mother_first_name,
+                                        child_last_name: data.child_last_name,
+                                        child_first_name: data.child_first_name,
+                                        ip_group: data.ip_group,
+                                        micronutrient: data.micronutrient,
+                                        sex: data.sex,
+                                        birthdate: data.birthdate,
+                                        height: data.height,
+                                        weight: data.weight,
+                                        length: data.length,
+                                        age_in_months: convert_age_in_months(data.birthdate),
+                                        date_measured: data.date_measured,
+                                        weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
+                                        height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
+                                        weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
+                                    }),
+                                    dataType: "JSON",
+                                    headers:
+                                    {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function(historyData)
+                                    {
+                                        notification('success', "{{ Str::singular($page_title) }}");
+                                        $("#createForm").trigger("reset");
+                                        $("#create_card").collapse("hide");
+                                        refresh();
+                                    },
+                                    error: function(error)
+                                    {
+                                        console.log(error);
+                                    }
+                                });
                             },
                             error: function(error)
                             {
                                 console.log(error);
+                                if (error.responseJSON.errors == null)
+                                {
+                                    swalAlert('warning', error.responseJSON.message);
+                                } else
+                                {
+                                    $.each(error.responseJSON.errors, function(key, value)
+                                    {
+                                        swalAlert('warning', value);
+                                    });
+                                }
                             }
                         });
-                    },
-                    error: function(error)
-                    {
-                        console.log(error);
-                        if (error.responseJSON.errors == null)
-                        {
-                            swalAlert('warning', error.responseJSON.message);
-                        } else
-                        {
-                            $.each(error.responseJSON.errors, function(key, value)
-                            {
-                                swalAlert('warning', value);
-                            });
-                        }
-                    }
+                    });
                 });
             });
             // End of Script for Create Function
