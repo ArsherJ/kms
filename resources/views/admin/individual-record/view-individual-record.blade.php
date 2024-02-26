@@ -458,10 +458,10 @@
             // End of Script for Refresh Data Table Function
 
             // Script for Weight for Age Status:
-            function calculateWeightForAgeStatus(ageInMonths, sex, weight, database)
+                function calculateWeightForAgeStatus(ageInMonths, sex, weight, database)
             {
-                let result = "Unknown";
-                let statusClass = "";
+                let result = "Out of range";
+                let statusClass = "bg-muted";
 
                 function setWeightForAgeStatus(severelyUnderweightLimit, underweightLimit, normalLimit)
                 {
@@ -717,18 +717,15 @@
                         else if (sex === "Female") { setWeightForAgeStatus(12.1, 12.2, 24.7); }
                         break;
                 }
-                if (database){
-                    return result
-                } else {
-                    return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
-                }
+                if (database) { return result }
+                else { return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`; }
             }
 
             // Script for Height/Length for Age Status:
             function calculateHeightLengthForAgeStatus(ageInMonths, sex, height, database)
             {
-                let result = "Unknown";
-                let statusClass = "";
+                let result = "Out of range";
+                let statusClass = "bg-muted";
 
                 function setHeightLengthForAgeStatus(severelyStuntedLimit, stuntedLimit, normalLimit, tallLimit)
                 {
@@ -985,22 +982,26 @@
                         else if (sex === "Female") { setHeightLengthForAgeStatus(95.1, 95.2, 99.9, 119.0); }
                         break;
                 }
-                if (database){
-                    return result
-                } else {
-                    return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
+
+                if (result === "Unknown") {
+                    $statusClass = "bg-dark"; // Set default color to black
                 }
+
+                if (database) { return result }
+                else { return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`; }
             }
             
-            function calculateWeightForLengthStatus(height, ageInMonths, weight, sex, database) {
-                let result = "Unknown";
-                let statusClass = "";
+            function calculateWeightForLengthStatus(height, ageInMonths, weight, sex, database)
+            {
+                let result = "Out of range";
+                let statusClass = "text-secondary";
                 let childHeight = roundOfHeight(height, ageInMonths)
                 let matrix = getLimits(ageInMonths, sex)
                 matrix = matrix[childHeight[1]]
                 height = childHeight[0]
 
-                function setWgtHtStatus(SevereAcuteMalnutrition, ModerateAcuteMalnutrition, Normal, Overweight, Obese) {
+                function setWgtHtStatus(SevereAcuteMalnutrition, ModerateAcuteMalnutrition, Normal, Overweight, Obese)
+                {
                     if (weight <= SevereAcuteMalnutrition) { result = "Severe Acute Malnutrition"; statusClass = "bg-danger"; }
                     else if (weight > SevereAcuteMalnutrition && weight <= ModerateAcuteMalnutrition) { result = "Moderate Acute Malnutrition"; statusClass = "bg-warning"; }
                     else if (weight > ModerateAcuteMalnutrition && weight <= Normal) { result = "Normal"; statusClass = "bg-success"; }
@@ -1008,17 +1009,16 @@
                     else if (weight > Overweight && weight <= Obese || weight > Obese) { result = "Obese"; statusClass = "bg-dark" }
                 }
                 setWgtHtStatus(matrix[0], matrix[1], matrix[2], matrix[3], matrix[4])
-                // return result
-                if (database){
-                    return result
-                } else {
-                    return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`;
-                }   
+
+                if (database) { return result }
+                else { return `<span class="badge rounded-1 fw-semibold ${statusClass}">${result}</span>`; }   
             }
 
-        function roundOfHeight(height, ageInMonths) {
+        function roundOfHeight(height, ageInMonths)
+        {
 
-            const matrheightCategories23 = [
+            const matrheightCategories23 =
+            [
                 45.0, 45.5, 46.0, 46.5, 47.0, 47.5, 48.0, 48.5, 49.0, 49.5, 50.0, 50.5,
                 51.0, 51.5, 52.0, 52.5, 53.0, 53.5, 54.0, 54.5, 55.0, 55.5, 56.0, 56.5,
                 57.0, 57.5, 58.0, 58.5, 59.0, 59.5, 60.0, 60.5, 61.0, 61.5, 62.0, 62.5,
@@ -1032,7 +1032,8 @@
                 104.5, 105.0, 105.5, 106.0, 106.5, 107.0, 107.5, 108.0, 108.5, 109.0, 109.5,
                 110.0
             ];
-            const matrheightCategories60 = [
+            const matrheightCategories60 =
+            [
                 65.0, 65.5, 66.0, 66.5, 67.0, 67.5, 68.0, 68.5,
                 69.0, 69.5, 70.0, 70.5, 71.0, 71.5, 72.0, 72.5, 73.0, 73.5, 74.0, 74.5,
                 75.0, 75.5, 76.0, 76.5, 77.0, 77.5, 78.0, 78.5, 79.0, 79.5, 80.0, 80.5,
@@ -1045,34 +1046,46 @@
                 115.5, 116.0, 116.5, 117.0, 117.5, 118.0, 118.5, 119.0, 119.5, 120.0
             ];
 
-            if (ageInMonths >= 0 && ageInMonths <= 22) {
+            if (ageInMonths >= 0 && ageInMonths <= 22)
+            {
                 matrix = matrheightCategories23
-            } else {
+            }
+            else
+            {
                 matrix = matrheightCategories60
             }
 
             const category = matrix.find(cat => height < cat);
             let finalHeight = 0.0;
 
-
-            if (category !== undefined) {
+            if (category !== undefined)
+            {
                 const index = matrix.indexOf(category);
-                if (height - matrix[index - 1] <= matrix[index] - height) {
+
+                if (height - matrix[index - 1] <= matrix[index] - height)
+                {
                     finalHeight = matrix[index - 1];
-                } else {
+                }
+                else
+                {
                     finalHeight = matrix[index];
                 }
-            } else {
+            }
+            else
+            {
                 finalHeight = matrix[matrix.length - 1];
             }
-            return [finalHeight, matrix.indexOf(finalHeight)]
-
+            return [finalHeight, matrix.indexOf(finalHeight)];
         }
 
-        function getLimits(ageInMonths, sex) {
+        function getLimits(ageInMonths, sex)
+        {
             let matrix = []
-            const limits23 = {
-                Male: [
+
+            const limits23 =
+            {
+                Male:
+                [
                     [1.8, 1.9, 3, 3.3, 3.4], [1.8, 2, 3.1, 3.4, 3.5], [1.9, 2.1, 3.1, 3.5, 3.6], [2, 2.2, 3.2, 3.6, 3.7],
                     [2, 2.2, 3.3, 3.7, 3.8], [2.1, 2.3, 3.4, 3.8, 3.9], [2.2, 2.4, 3.6, 3.9, 4], [2.2, 2.5, 3.7, 4, 4.1],
                     [2.3, 2.5, 3.8, 4.2, 4.3], [2.4, 2.6, 3.9, 4.3, 4.4], [2.5, 2.7, 4, 4.4, 4.5], [2.6, 2.8, 4.1, 4.5, 4.6],
@@ -1107,7 +1120,8 @@
                     [13.4, 14.5, 20.6, 22.6, 22.7], [13.5, 14.6, 20.8, 22.8, 22.9], [13.6, 14.8, 21, 23.1, 23.2], [13.7, 14.9, 21.2, 23.3, 23.4],
                     [13.9, 15, 21.4, 23.6, 23.7], [14, 15.2, 21.7, 23.8, 23.9], [14.1, 15.3, 21.9, 24.1, 24.2]
                 ],
-                Female: [
+                Female:
+                [
                     [1.8, 2, 3, 3.3, 3.4], [1.9, 2, 3.1, 3.4, 3.5], [1.9, 2.1, 3.2, 3.5, 3.6], [2, 2.2, 3.3, 3.6, 3.7],
                     [2.1, 2.3, 3.4, 3.7, 3.8], [2.1, 2.3, 3.5, 3.8, 3.9], [2.2, 2.4, 3.6, 4, 4.1], [2.3, 2.5, 3.7, 4.1, 4.2],
                     [2.3, 2.5, 3.8, 4.2, 4.3], [2.4, 2.6, 3.9, 4.3, 4.4], [2.5, 2.7, 4, 4.5, 4.6], [2.6, 2.8, 4.2, 4.6, 4.7],
@@ -1143,8 +1157,10 @@
                     [13.6, 14.9, 21.8, 24.2, 24.3], [13.8, 15, 22, 24.4, 24.5], [13.9, 15.2, 22.3, 24.7, 24.8]
                 ]
             }
-            const limits60 = {
-                Male: [
+            const limits60 =
+            {
+                Male:
+                [
                     [5.8, 6.2, 8.8, 9.6, 9.7], [5.9, 6.3, 8.9, 9.8, 9.9], [6.0, 6.4, 9.1, 9.9, 10.0], [6.0, 6.5, 9.2, 10.1, 10.2],
                     [6.1, 6.6, 9.4, 10.2, 10.3], [6.2, 6.7, 9.5, 10.4, 10.5], [6.3, 6.8, 9.6, 10.5, 10.6], [6.4, 6.9, 9.8, 10.7, 10.8],
                     [6.5, 7.0, 9.9, 10.8, 10.9], [6.6, 7.1, 10.0, 11.0, 11.1], [6.7, 7.2, 10.2, 11.1, 11.2], [6.8, 7.3, 10.3, 11.3, 11.4],
@@ -1174,7 +1190,8 @@
                     [16.1, 17.6, 25.6, 28.3, 28.4], [16.3, 17.8, 25.9, 28.6, 28.7], [16.4, 17.9, 26.1, 28.9, 29.0], [16.6, 18.1, 26.4, 29.2, 29.3],
                     [16.7, 18.2, 26.6, 29.5, 29.6], [16.8, 18.4, 26.9, 29.8, 29.9], [17.0, 18.5, 27.2, 30.1, 30.2]
                 ],
-                Female: [
+                Female:
+                [
                     [5.5, 6, 8.7, 9.7, 9.8], [5.6, 6.1, 8.9, 9.8, 9.9], [5.7, 6.2, 9, 10, 10.1], [5.7, 6.3, 9.1, 10.1, 10.2],
                     [5.8, 6.3, 9.3, 10.2, 10.3], [5.9, 6.4, 9.4, 10.4, 10.5], [6, 6.5, 9.5, 10.5, 10.6], [6.1, 6.6, 9.7, 10.7, 10.8],
                     [6.2, 6.7, 9.8, 10.8, 10.9], [6.2, 6.8, 9.9, 10.9, 11], [6.3, 6.9, 10, 11.1, 11.2], [6.4, 7, 10.1, 11.2, 11.3],
@@ -1206,12 +1223,9 @@
                 ]
             }
 
-            if (ageInMonths >= 0 && ageInMonths <= 22) {
-                matrix = limits23[sex]
-            } else {
-                matrix = limits60[sex]
-            }
-            return matrix
+            if (ageInMonths >= 0 && ageInMonths <= 22) { matrix = limits23[sex] }
+            else { matrix = limits60[sex] }
+            return matrix;
         }
 
             // Script for Fetching Individual Record Function:
