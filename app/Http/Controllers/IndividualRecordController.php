@@ -29,13 +29,13 @@ class IndividualRecordController extends Controller
         $toDate = $request->input('toDate');
     
         if ($fromDate && $toDate) {
-            $query->whereBetween('created_at', [$fromDate, $toDate]);
+            $query->whereBetween('date_measured', [$fromDate, $toDate]);
         } else {
             if ($fromDate) {
-                $query->where('created_at', '>=', $fromDate);
+                $query->where('date_measured', '>=', $fromDate);
             }
             if ($toDate) {
-                $query->where('created_at', '<=', $toDate);
+                $query->where('date_measured', '<=', $toDate);
             }
         }
     
