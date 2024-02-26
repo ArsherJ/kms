@@ -205,6 +205,14 @@
                             },
                             customize: function(doc) {
                                 doc.styles.tableHeader.alignment = 'left';
+                                              
+doc.content.splice(3, 15, {
+    margin: [0, 340, 0, 0],
+    alignment: 'left',
+    text: "PREPARED BY:___________________________________",
+    fontSize: 15, // Change the font size to your desired value
+    bold: true // Make the text bold
+});
                             }
                         }, ]
                     },
