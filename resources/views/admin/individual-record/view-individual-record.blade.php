@@ -223,7 +223,6 @@
             // const FEEDING_PROGRAMS_IR_LOGS_API = API_URL + '/feeding_program_ir_logs'
 
             const INDIVIDUAL_RECORD_ID = "{{ $individual_record_id }}"
-
             async function getChildNumberByRecordId(id) {
                 try {
                     let requestData = {
@@ -244,7 +243,6 @@
                     });
 
                     let childNumber = data.child_number;
-                    console.log("child number: " + childNumber);
                     return childNumber;
                 } catch (error) {
                     console.error("Error fetching child number:", error);
@@ -1296,34 +1294,44 @@
         let currentYear = new Date().getFullYear();
         $('#monthDropdown').val(currentYear);
 
+        function updateLineChart(currentYear,child_number){
+            let childNumberPromise = getChildNumberByRecordId(INDIVIDUAL_RECORD_ID);
+                childNumberPromise.then(childNumber => {
+                    console.log("Child Wazzup: ", childNumber);
+                    urlzx = API_URL+ "/history_of_individual_records" + "/individual_view_graph/" + currentYear + "/" + childNumber,
+                    $.ajax({
+                        url: urlzx,
+                        method: "POST",
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": API_TOKEN,
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data){
+                            var WFA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                            var HFA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                            var WFH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-        function updateLineChart(selectedYear,child_number){
-            urlzx = API_URL+ "/history_of_individual_records" + "/individual_view_graph/" + selectedYear + "/" + child_number,
-            $.ajax({
-                url: urlzx,
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": API_TOKEN,
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(data){
-                    var WFA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    var HFA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                    var WFH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-                    data.forEach(function(child){
-                        var created_at = moment(child.date_measured, 'YYYY-MM-DD');
-                        var monthNumber = created_at.format("MM")
-                        WFA[monthNumber-1] = child.weight
-                        HFA[monthNumber-1] = child.height
+                            data.forEach(function(child){
+                                var created_at = moment(child.date_measured, 'YYYY-MM-DD');
+                                var monthNumber = created_at.format("MM")
+                                WFA[monthNumber-1] = child.weight
+                                HFA[monthNumber-1] = child.height
+                            })
+                            updateDataGraph(WFA,HFA,WFH)
+                        }
                     })
-                    updateDataGraph(WFA,HFA,WFH)
-                }
-            })
+
+                }).catch(error => {
+                    console.error("Error occurred: ", error);
+                });
+            
+
+
+            
         }
-        console.log("Individual Record: ",INDIVIDUAL_RECORD_ID)
+
         updateLineChart(currentYear,INDIVIDUAL_RECORD_ID)
         
         function updateDataGraph(WFA,HFA,WFH){

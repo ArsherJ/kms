@@ -123,13 +123,15 @@ class HistoryOfIndividualRecordController extends Controller
         $latestRecords = DB::select("
             SELECT *
             FROM history_of_individual_records h1
-            WHERE h1.date_measured IN (
-                SELECT MAX(date_measured)
+            WHERE (h1.date_measured, h1.child_number) IN (
+                SELECT MAX(date_measured), child_number
                 FROM history_of_individual_records h2
-                WHERE YEAR(h2.date_measured) = ?
-                GROUP BY MONTH(h2.date_measured), child_number
+                WHERE YEAR(h2.date_measured) = YEAR(h1.date_measured)
+                AND MONTH(h2.date_measured) = MONTH(h1.date_measured)
+                GROUP BY YEAR(h2.date_measured), MONTH(h2.date_measured), child_number
             )
-            AND h1.id = ?
+            AND YEAR(h1.date_measured) = ?
+            AND h1.child_number = ?;
         ", [$year, $id]);
     
         return response()->json($latestRecords);
