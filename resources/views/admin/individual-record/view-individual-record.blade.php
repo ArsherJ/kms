@@ -260,7 +260,8 @@
                 // Get the child number
                 let childNumber = await getChildNumberByRecordId(id);
 
-                console.log("This is the child number" + getChildNumberByRecordId(id))
+                console.log("This is the child numbers" + getChildNumberByRecordId(id))
+
 
                 dataTable = $('#dataTable').DataTable
                 ({
@@ -1299,7 +1300,7 @@
                     var WFH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
                     data.forEach(function(child){
-                        var created_at = moment(child.created_at, 'YYYY-MM-DD');
+                        var created_at = moment(child.date_measured, 'YYYY-MM-DD');
                         var monthNumber = created_at.format("MM")
                         WFA[monthNumber-1] = child.weight
                         HFA[monthNumber-1] = child.height

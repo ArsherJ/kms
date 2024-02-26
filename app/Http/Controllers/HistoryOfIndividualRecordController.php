@@ -97,10 +97,10 @@ class HistoryOfIndividualRecordController extends Controller
 
     public function data_chart($month)
     {
-        $latestRecords = HistoryOfIndividualRecord::whereIn('created_at', function($query) use ($month) {
-            $query->selectRaw('MAX(created_at)')
+        $latestRecords = HistoryOfIndividualRecord::whereIn('date_measured', function($query) use ($month) {
+            $query->selectRaw('MAX(date_measured)')
                   ->from('history_of_individual_records')
-                  ->whereMonth('created_at', $month)
+                  ->whereMonth('date_measured', $month)
                   ->groupBy('child_number');
         })->get();
 
@@ -109,11 +109,11 @@ class HistoryOfIndividualRecordController extends Controller
 
     public function data_chart_year($year)
     {
-        $latestRecords = HistoryOfIndividualRecord::whereIn('created_at', function($query) use ($year) {
-            $query->selectRaw('MAX(created_at)')
+        $latestRecords = HistoryOfIndividualRecord::whereIn('date_measured', function($query) use ($year) {
+            $query->selectRaw('MAX(date_measured)')
                 ->from('history_of_individual_records')
-                ->whereYear('created_at', $year)
-                ->groupBy(DB::raw('MONTH(created_at)'), 'child_number');
+                ->whereYear('date_measured', $year)
+                ->groupBy(DB::raw('MONTH(date_measured)'), 'child_number');
         })->get();
     
         return response()->json($latestRecords);
@@ -123,11 +123,11 @@ class HistoryOfIndividualRecordController extends Controller
         $latestRecords = DB::select("
             SELECT *
             FROM history_of_individual_records h1
-            WHERE h1.created_at IN (
-                SELECT MAX(created_at)
+            WHERE h1.date_measured IN (
+                SELECT MAX(date_measured)
                 FROM history_of_individual_records h2
-                WHERE YEAR(h2.created_at) = ?
-                GROUP BY MONTH(h2.created_at), child_number
+                WHERE YEAR(h2.date_measured) = ?
+                GROUP BY MONTH(h2.date_measured), child_number
             )
             AND h1.id = ?
         ", [$year, $id]);

@@ -74,7 +74,7 @@
                     var currentDate = moment();
                     var ageInMonths = currentDate.diff(birthdate, 'months');
 
-                    var created_at = moment(child.created_at, 'YYYY-MM-DD');
+                    var created_at = moment(child.date_measured, 'YYYY-MM-DD');
                     var monthNumber = created_at.format("MM")
                     var heightStatus = calculateHeightLengthForAgeStatus(ageInMonths, child.sex, child.height,true);
                         if (heightStatus === "Severely Stunted") {
