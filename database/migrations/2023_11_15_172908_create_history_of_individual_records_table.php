@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('child_first_name');
 
             $table->enum('ip_group', ['Yes', 'No']);
-            $table->enum('micronutrient', ['Yes', 'No']);
             $table->enum('sex', ['Male', 'Female']);
 
             $table->date('birthdate');
@@ -32,6 +31,14 @@ return new class extends Migration
             $table->string('weight_for_age_status')->nullable();
             $table->string('height_length_for_age_status')->nullable();
             $table->string('weight_for_length_status')->nullable();
+
+            $table->string('phone_number')->nullable();
+            $table->enum('feeding_candidate', ['Yes', 'No'])->default('No');
+            $table->enum('micronutrient', ['Vitamin A', 'Iron', 'Iodine', 'No'])->default('No');
+            $table->enum('nutrient_given', ['Yes', 'No'])->nullable();
+            $table->date('nutrient_given_date')->nullable();
+            $table->enum('food_pack_given', ['Yes', 'No'])->nullable();
+            $table->date('food_pack_given_date')->nullable();
 
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();

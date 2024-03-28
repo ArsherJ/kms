@@ -300,10 +300,6 @@
 
                     //     $('.dataTables_info').css({ 'margin-bottom': '15px' });
                     // },
-
-                    // "info": true, // (number of entries)
-                    // "ordering": true, // (asc/desc button)
-                    // "paging": false, // (prev/next page button)
                     
 
                     // "processing": true,

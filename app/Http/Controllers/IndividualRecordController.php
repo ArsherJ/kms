@@ -74,6 +74,7 @@ class IndividualRecordController extends Controller
         $request->validate([
             'child_number' => 'required',
             'address' => 'required',
+            'phone_number' => 'required',
             'mother_last_name' => 'required',
             'mother_first_name' => 'required',
             'child_last_name' => 'required',
