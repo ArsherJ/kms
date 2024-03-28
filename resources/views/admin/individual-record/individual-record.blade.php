@@ -1539,6 +1539,7 @@
                         $('#search_bar input').on('keyup change', function()
                         {
                             var columnIndex = $(this).data('index');
+                            
                             if (columnIndex === 7) // Column for Sex
                             {
                                 dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
@@ -1548,10 +1549,17 @@
                                 var searchValue = this.value.trim() === '' ? '' : '^' + this.value + '$';
                                 dataTableApi.column(columnIndex).search(searchValue, true, false, true).draw();
                             }
-                            else if (columnIndex === 16 || columnIndex === 17 || columnIndex === 18) // Columns for All Status
+                            else if (columnIndex === 16)
                             {
-                                var searchValue = this.value.trim() === '' ? '' : '^' + this.value + '$';
-                                dataTableApi.column(columnIndex).search(searchValue, true, false, true).draw();
+                                dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
+                            }
+                            else if (columnIndex === 17)
+                            {
+                                dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
+                            }
+                            else if (columnIndex === 18)
+                            {
+                                dataTableApi.column(columnIndex).search('^' + this.value, true, false, true).draw();
                             }
                             else
                             {
