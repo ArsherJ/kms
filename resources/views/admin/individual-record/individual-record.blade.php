@@ -144,17 +144,15 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Date Measured (mm-dd-yyyy):</label>
-                                <!-- <input type="date" class="form-control" id="date_measured_hidden" name="date_measured_hidden" disabled tabindex="1" style="opacity: 1; background-color: #fff;"> -->
-                                <input type="date" class="form-control" id="date_measured_hidden" name="date_measured_hidden" tabindex="1">
-                                <input type="hidden" id="date_measured_edit" name="date_measured_edit">
+                                <input type="date" class="form-control" id="date_measured_reweigh" name="date_measured_reweigh" tabindex="1">
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Height (cm):</label>
-                                <input type="number" class="form-control" id="height_edit" name="height_edit" tabindex="1" required>
+                                <input type="number" class="form-control" id="height_reweigh" name="height_reweigh" tabindex="1" required>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="required-input" style="font-weight:bold">Weight (kg):</label>
-                                <input type="number" class="form-control" id="weight_edit" name="weight_edit" tabindex="1" required>
+                                <input type="number" class="form-control" id="weight_reweigh" name="height_reweigh" tabindex="1" required>
                             </div>
 
                             <input type="hidden" id="birthdate_reweigh" name="birthdate_reweigh">
@@ -1599,7 +1597,7 @@
                             {
                                 if (data === null)
                                 {
-                                    return "No Contact Number Provided";
+                                    return "N/A";
                                 }
                             }
                         },
@@ -2189,11 +2187,10 @@
                                 $('#child_first_name_reweigh').val(data.child_first_name);
 
                                 let today = moment().tz('Asia/Shanghai').format('YYYY-MM-DD');
-                                $('#date_measured_edit').val(today);
-                                $('#date_measured_hidden').val(today);
+                                $('#date_measured_reweigh').val(today);
                                 
-                                $('#height_edit').val(data.height);
-                                $('#weight_edit').val(data.weight);
+                                $('#height_reweigh').val(data.height);
+                                $('#weight_reweigh').val(data.weight);
                                 $('#birthdate_reweigh').val(data.birthdate);
 
                                 tempWeight = data.weight;
@@ -2240,8 +2237,10 @@
                     let field_name = this.name.slice(0, -5); // Remove the "_edit" suffix
                     let field_value = this.value;
 
-                    // Use the value of #date_measured_edit as the value for date_measured
-                    let measured_date = $('#date_measured_hidden').val();
+                    form_data.weight = $('#weight_reweigh').val();
+                    form_data.height = $('#height_reweigh').val();
+
+                    let measured_date = $('#date_measured_reweigh').val();
                     form_data.date_measured = measured_date;
 
                     let birthdate = $('#birthdate_reweigh').val();
@@ -2253,10 +2252,10 @@
 
                     console.log("age_in_months" + JSON.stringify(form_data.age_in_months))
 
-                    // Populate form_data with each form field
+                    // Populate form_data with each form field.
                     form_data[field_name] = field_value;
 
-                    // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field
+                    // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field.
                     if (field_name === 'birthdate')
                     {
                         form_data.weight_for_age_status = calculateWeightForAgeStatus(form_data.age_in_months, form_data.sex, form_data.weight, true);
