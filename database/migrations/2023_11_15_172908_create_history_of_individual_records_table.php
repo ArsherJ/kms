@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->enum('feeding_candidate', ['Yes', 'No'])->default('No');
             $table->enum('micronutrient', ['Vitamin A', 'Iron', 'Iodine', 'No'])->default('No');
-            $table->enum('nutrient_given', ['Yes', 'No'])->nullable();
+            $table->enum('nutrient_given', ['Yes', 'No'])->nullable(); // no use
             $table->date('nutrient_given_date')->nullable();
             $table->enum('food_pack_given', ['Yes', 'No'])->nullable();
             $table->date('food_pack_given_date')->nullable();

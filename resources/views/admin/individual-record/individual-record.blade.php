@@ -1595,6 +1595,13 @@
                         {
                             // Column 2
                             data: "phone_number", visible: true,
+                            render: function(data, type, row)
+                            {
+                                if (data === null)
+                                {
+                                    return "No Contact Number Provided";
+                                }
+                            }
                         },
                         {
                             // Column 3
@@ -1671,7 +1678,7 @@
                             {
                                 if (data === null)
                                 {
-                                    return " ";
+                                    return "N/A";
                                 }
 
                                 var nutrientGivenDate = moment(data, 'YYYY-MM-DD');
@@ -2228,7 +2235,8 @@
                 let form_data = {}
 
 
-                $.each(form, function() {
+                $.each(form, function()
+                {
                     let field_name = this.name.slice(0, -5); // Remove the "_edit" suffix
                     let field_value = this.value;
 
@@ -2249,7 +2257,8 @@
                     form_data[field_name] = field_value;
 
                     // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field
-                    if (field_name === 'birthdate') {
+                    if (field_name === 'birthdate')
+                    {
                         form_data.weight_for_age_status = calculateWeightForAgeStatus(form_data.age_in_months, form_data.sex, form_data.weight, true);
                         form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(form_data.age_in_months, form_data.sex, form_data.height, true);
                         form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.age_in_months, form_data.weight, form_data.sex, true);
@@ -2277,33 +2286,9 @@
 
                             $.ajax
                             ({
-                                url: API_URL + '/history_of_individual_records',
-                                method: "POST",
-                                data: JSON.stringify
-                                ({
-                                    individual_record_id: data.id,
-                                    child_number: data.child_number,
-                                    address: data.address,
-                                    phone_number: phone_number,
-                                    mother_last_name: data.mother_last_name,
-                                    mother_first_name: data.mother_first_name,
-                                    child_last_name: data.child_last_name,
-                                    child_first_name: data.child_first_name,
-                                    ip_group: data.ip_group,
-                                    micronutrient: data.micronutrient,
-                                    nutrient_given_date: data.nutrient_given_date,
-                                    feeding_candidate: data.feeding_candidate,
-                                    sex: data.sex,
-                                    birthdate: data.birthdate,
-                                    date_measured: data.date_measured,
-                                    height: data.height,
-                                    weight: data.weight,
-                                    length: data.length,
-                                    age_in_months: convert_age_in_months(data.birthdate, data.date_measured),
-                                    weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.weight, true),
-                                    height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate, data.date_measured), data.sex, data.height, true),
-                                    weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate, data.date_measured), data.weight, data.sex, true),
-                                }),
+                                url: form_url,
+                                method: "PUT",
+                                data: JSON.stringify(form_data),
                                 dataType: "JSON",
                                 headers:
                                 {
@@ -2312,22 +2297,31 @@
                                     "Authorization": API_TOKEN,
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
-                                success: function(historyData)
+                                success: function(data)
                                 {
-                                    notification('success', "{{ Str::singular($page_title) }}");
-                                    $("#createForm").trigger("reset");
-                                    $("#create_card").collapse("hide");
+                                    console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
+
+                                    storeHistoryOfIndividualRecord(data);
+                                    notification('info', "{{ Str::singular($page_title) }}");
                                     refresh();
+                                    $('#reweighModal').modal('hide');
+                                    console.log(data);
                                 },
                                 error: function(error)
                                 {
                                     console.log(error);
+                                    if (error.responseJSON.errors == null)
+                                    {
+                                        swalAlert('warning', error.responseJSON.message);
+                                    } else
+                                    {
+                                        $.each(error.responseJSON.errors, function(key, value)
+                                        {
+                                            swalAlert('warning', value);
+                                        });
+                                    }
                                 }
                             });
-                            notification('info', "{{ Str::singular($page_title) }}");
-                            refresh();
-                            $('#reweighModal').modal('hide');
-                            console.log(data);
                         },
                         error: function(error)
                         {
