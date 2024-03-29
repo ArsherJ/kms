@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use App\Imports\IndividualRecordImport;
 
-class IndividualRecordController extends Controller
+class ComplementaryFeedingController extends Controller
 {
     public function index()
     {
@@ -38,6 +38,8 @@ class IndividualRecordController extends Controller
                 $query->where('created_at', '<=', $toDate);
             }
         }
+
+        $query->where('feeding_candidate', 'YES'); 
         $data = $query->get();
     
         return DataTables::of($data)
