@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // HISTORY OF INDIVIDUAL RECORD
     Route::get('/history_of_individual_records', [HistoryOfIndividualRecordController::class, 'index']);
     Route::get('/history_of_individual_records/datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'datatableshow']);
+    Route::get('/history_of_individual_records/micronutrient_datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'micronutrientdatatableshow']);
     Route::get('/history_of_individual_records/datatable', [HistoryOfIndividualRecordController::class, 'datatable']);
     Route::post('/history_of_individual_records', [HistoryOfIndividualRecordController::class, 'store']);
     Route::get('/history_of_individual_records/{id}', [HistoryOfIndividualRecordController::class, 'show']);

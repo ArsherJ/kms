@@ -34,6 +34,35 @@ class HistoryOfIndividualRecordController extends Controller
             ->make(true);
     }
 
+    public function micronutrientdatatableshow(HistoryOfIndividualRecord $history_of_individual_records, $child_number)
+    {
+        $data = HistoryOfIndividualRecord::where('child_number', $child_number)
+                        ->where(function($query) {
+                            $query->whereNotNull('food_pack_given_date')
+                                  ->where(function($innerQuery) {
+                                      $innerQuery->whereNull('date_given_micronutrient')
+                                                 ->orWhereNull('name_of_micronutrient');
+                                  });
+                        })
+                        ->orWhere(function($query) {
+                            $query->whereNull('food_pack_given_date')
+                                  ->whereNotNull('date_given_micronutrient')
+                                  ->whereNotNull('name_of_micronutrient');
+                        })
+                        ->orWhere(function($query) {
+                            $query->whereNotNull('food_pack_given_date')
+                                  ->whereNotNull('date_given_micronutrient')
+                                  ->whereNotNull('name_of_micronutrient');
+                        })
+                        ->get();
+    
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->rawColumns(['action'])
+                ->make(true);
+    }
+    
+
     public function create()
     {
     }

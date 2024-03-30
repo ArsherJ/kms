@@ -14,9 +14,15 @@
           </a>
         </li> --}}
       </ul>
-      <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-        <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-          <li class="nav-item dropdown">
+      <div class="navbar-collapse justify-content-end px-0" id="navbarNav" style="display:flex; height:auto">
+        <ul class="align-items-center" style="margin-right: auto;">
+            <div style="display: flex; align-items: center; padding: 10px;">
+                <img src="{{ asset('landing_page_assets/images/cms-logo-header.png') }}" style="width: 50px; margin-right: 10px;">
+                <p style="margin: 0; padding: 5px; color: black; border-radius: 5px; font-size: 1em; @media (max-width: 768px) { font-size: 0.8em; }">PAMPLONA TRES, LAS PINAS CITY</p>
+            </div>
+        </ul>
+        <ul style="padding-right:10px">
+          <li class="nav-item dropdown"> 
             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
               aria-expanded="false">
               <img src="{{ asset('import/assets/images/profile/user-admin.png') }}" alt="" width="35" height="35" class="rounded-circle">
