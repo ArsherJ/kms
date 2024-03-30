@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use App\Imports\IndividualRecordImport;
 
-class IndividualRecordController extends Controller
+class ComplementaryFeedingController extends Controller
 {
     public function index()
     {
@@ -29,15 +29,17 @@ class IndividualRecordController extends Controller
         $toDate = $request->input('toDate');
     
         if ($fromDate && $toDate) {
-            $query->whereBetween('date_measured', [$fromDate, $toDate]);
+            $query->whereBetween('created_at', [$fromDate, $toDate]);
         } else {
             if ($fromDate) {
-                $query->where('date_measured', '>=', $fromDate);
+                $query->where('created_at', '>=', $fromDate);
             }
             if ($toDate) {
-                $query->where('date_measured', '<=', $toDate);
+                $query->where('created_at', '<=', $toDate);
             }
         }
+
+        $query->where('feeding_candidate', 'YES'); 
         $data = $query->get();
     
         return DataTables::of($data)
@@ -73,7 +75,6 @@ class IndividualRecordController extends Controller
         $request->validate([
             'child_number' => 'required',
             'address' => 'required',
-            'phone_number' => 'required',
             'mother_last_name' => 'required',
             'mother_first_name' => 'required',
             'child_last_name' => 'required',
