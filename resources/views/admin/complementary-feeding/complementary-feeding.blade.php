@@ -303,7 +303,7 @@
                 </div>
 
                 <div class="row">
-                    <form>
+                    <form id="addDateForm">
                     <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-12">
@@ -317,7 +317,7 @@
                         
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" onclick="closeAddDateModal()" style="border:solid 1px gray">Close</button>
-                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="submit" class="btn btn-success">Save</button> <!-- Change type to submit -->
                         </div>
 
                     </form>
@@ -366,6 +366,7 @@
                     <tr class="text-dark" id="search_bar">
                         <!-- <th style="width:10%; padding:15px 0 15px 0;">ID</th> -->
                         <!-- <th style="width:10%; padding:15px 0 15px 0;">ID Number</th> -->
+                        <th style="width:20%; padding:15px 0 15px 0">Mobile Number</th>
                         <th style="width:20%; padding:15px 0 15px 0">Address or Location of Child's Residence</th>
                         <th style="width:15%; padding:15px 0 15px 0">Last Name of Parent/Guardian</th>
                         <th style="width:15%; padding:15px 0 15px 0">First Name of Parent/Guardian</th>
@@ -381,6 +382,7 @@
                         <th style="width:15%; padding:15px 0 15px 0">Weight for Age Status</th>
                         <th style="width:15%; padding:15px 0 15px 0">Height/Length for Age Status</th>
                         <th style="width:15%; padding:15px 0 15px 0">Weight for Length Status</th>
+                        <th style="width:15%; padding:15px 0 15px 0">Given Food Pack</th>
                         <th style="width:15%; padding:15px 0 15px 0">Code Moosaic</th>
                     </tr>
 
@@ -389,6 +391,7 @@
                             <!-- <th class="not-export-column">Created At</th> -->
                         <!-- <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Data ID</th> -->
                         <!-- <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">ID Number</th> -->
+                        <th class="bg-dark" style="width:20%; text-align:center; color: white; border-right:2px solid white;">Mobile Number</th>
                         <th class="bg-dark" style="width:20%; text-align:center; color: white; border-right:2px solid white;">Address or Location of Child's Residence</th>
                         <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Last Name of Parent/Guardian</th>
                         <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">First Name of Parent/Guardian</th>
@@ -406,6 +409,7 @@
                         <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Weight for Age Status</th>
                         <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Height/Length for Age Status</th>
                         <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Weight for Length Status</th>
+                        <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Received Food Pack</th>
                         <th class="bg-dark not-export-column" style="width:15%; text-align:center; color: white">Action Buttons</th>
                     </tr>
 
@@ -1336,6 +1340,7 @@
                 const placeholderMap =
                 {
                     // 'ID Number': 'ID Number',
+                    'Mobile Number': 'Mobile Number',
                     'Address or Location of Child\'s Residence': 'Address or Location of Residence',
                     'Last Name of Parent/Guardian': 'Last Name of Parent/Guardian',
                     'First Name of Parent/Guardian': 'First Name of Parent/Guardian',
@@ -1351,6 +1356,7 @@
                     'Weight for Age Status': 'Weight for Age Status',
                     'Height/Length For Age Status': 'Height/Length for Age Status',
                     'Weight For Length Status': 'Weight for Length Status',
+                    'Given Food Pack':'Given Food Pack',
                     'Code Moosaic': 'Powered by Code Moosaic'
                 };
 
@@ -1455,6 +1461,9 @@
                         // {
                         //     data: "child_number", visible: true,
                         // },
+                        {
+                            data: "phone_number", visible: true,
+                        },
                         {
                             data: "address", visible: true,
                         },
@@ -1585,6 +1594,9 @@
                                 
                                 return calculateWeightForLengthStatus(height, ageInMonths, weight, sex, false);
                             }
+                        },
+                        {
+                            data: "food_pack_given", visible: true
                         },
                         {
                             data: "deleted_at", visible: true,
@@ -1926,6 +1938,74 @@
 
             })
             // End of Script for Update Function for edit
+            
+            // ================================================================
+$(document).on('submit', '#addDateForm', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    // Retrieve the value of the date input field
+    let foodPackDateGiven = $('#addDate').val();
+    
+    // Construct the form data object
+    let form_data = {
+        food_pack_given_date: foodPackDateGiven,
+        food_pack_given: "Yes"
+    };
+
+    $.ajax({
+        url: BASE_API , // Assuming BASE_API is defined and correct
+        method: "POST",
+        data: JSON.stringify(form_data),
+        dataType: "JSON",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": API_TOKEN,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(data) {
+            notification('success', "{{ Str::singular($page_title) }}");
+            
+            // Second AJAX request
+            $.ajax({
+                url: API_URL + '/history_of_individual_records',
+                method: "POST",
+                data: JSON.stringify({
+                    individual_record_id: data.id,
+                    food_pack_given_date: form_data.food_pack_given_date,
+                    food_pack_given: "Yes",
+                 
+                }),
+                dataType: "JSON",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": API_TOKEN,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(historyData) {
+                    notification('success', "{{ Str::singular($page_title) }}");
+                    refresh();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        },
+        error: function(error) {
+            console.log(error);
+            if (error.responseJSON.errors == null) {
+                swalAlert('warning', error.responseJSON.message);
+            } else {
+                $.each(error.responseJSON.errors, function(key, value) {
+                    swalAlert('warning', value);
+                });
+            }
+        }
+    });
+});
+
+
 
             // Script for Reweigh Function:
             $(document).on('click', '.btnReweigh', function()
