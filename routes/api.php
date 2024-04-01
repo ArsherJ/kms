@@ -18,6 +18,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryOfIndividualRecordController;
+use App\Http\Controllers\SendSMSController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +38,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/announcements/published', [AnnouncementController::class, 'published']);
 Route::get('/feeding_programs/published', [FeedingProgramController::class, 'published']);
 Route::get('/faqs', [FaqController::class, 'index']);
-
-
+Route::post('/send_sms', [SendSMSController::class, 'gw_send_sms']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
