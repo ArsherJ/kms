@@ -66,6 +66,15 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ env('APP_URL') }}/admin/complementary_feeding" aria-expanded="false">
+                        <span>
+                            <i class="ti fa-user-circle"></i>
+                        </span>
+                        <span class="hide-menu">Complementary Feeding</span>
+                    </a>
+                </li>
+
                 <!-- {{-- USER MANAGEMENT --}}
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
