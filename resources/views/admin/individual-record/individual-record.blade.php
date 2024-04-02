@@ -482,7 +482,7 @@
 
             <div class="table-responsive">
                 <table class="table table-hover table-sm table-borderless" id="dataTable"
-                    style="width: 350%; table-layout:fixed; text-align:center; border:1px solid black; border-radius:5px">
+                    style="width: 385%; table-layout:fixed; text-align:center; border:1px solid black; border-radius:5px">
                 
                     <thead>
 
@@ -498,12 +498,12 @@
                             <th style="width:5%; padding:15px 0 15px 0">Sex</th>
                             <th style="width:10%; padding:15px 0 15px 0">Age in Months</th>
                             <th style="width:10%; padding:15px 0 15px 0">Belongs to IP Group?</th>
-                            <th style="width:20%; padding:15px 0 15px 0">Taking Micronutrient Supplementation?</th>
+                            <th style="width:25%; padding:15px 0 15px 0">Taking Micronutrient Supplementation?</th>
                             <th style="width:15%; padding:15px 0 15px 0">Supplement Date Given</th>
                             <th style="width:20%; padding:15px 0 15px 0">Complementary Feeding Candidate?</th>
                             <th style="width:10%; padding:15px 0 15px 0">Weight (kg)</th>
                             <th style="width:10%; padding:15px 0 15px 0">Height (cm)</th>
-                            <th style="width:10%; padding:15px 0 15px 0">Date Measured</th>
+                            <th style="width:15%; padding:15px 0 15px 0">Date Measured</th>
                             <th style="width:15%; padding:15px 0 15px 0">Weight for Age Status</th>
                             <th style="width:15%; padding:15px 0 15px 0">Height/Length for Age Status</th>
                             <th style="width:15%; padding:15px 0 15px 0">Weight for Length Status</th>
@@ -525,13 +525,13 @@
                             <th class="bg-dark" style="width:5%; text-align:center; color: white; border-right:2px solid white;">Sex</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Age in Months</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Belongs to IP Group?</th>
-                            <th class="bg-dark" style="width:20%; text-align:center; color: white; border-right:2px solid white;">Taking Micronutrient Supplementation?</th>
+                            <th class="bg-dark" style="width:25%; text-align:center; color: white; border-right:2px solid white;">Taking Micronutrient Supplementation?</th>
                             <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Supplement Date Given</th>
                             <th class="bg-dark" style="width:20%; text-align:center; color: white; border-right:2px solid white;">Complementary Feeding Candidate?</th>
                                 <!-- <th style="text-align:center">Date of Birth</th> -->
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Weight (kg)</th>
                             <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Height (cm)</th>
-                            <th class="bg-dark" style="width:10%; text-align:center; color: white; border-right:2px solid white;">Date Measured</th>
+                            <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Date Measured</th>
                                 <!-- <th style="text-align:center">Length</th> -->
                             <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Weight for Age Status</th>
                             <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Height/Length for Age Status</th>
@@ -1474,11 +1474,11 @@
                     'Age in Months': 'Age in Months',
                     'Belongs to IP Group?': 'IP Group?',
                     'Taking Micronutrient Supplementation?': 'On Supplementation?',
-                    'Supplement Date Given': 'Supp. Date Given',
+                    'Supplement Date Given': 'Supp. Date Given (mm-dd-yyyy)',
                     'Complementary Feeding Candidate?': 'Feeding Candidate?',
                     'Weight (kg)': 'Weight (kg)',
                     'Height (cm)': 'Height (cm)',
-                    'Date Measured': 'Date Measured',
+                    'Date Measured': 'Date Measured (mm-dd-yyyy)',
                     'Weight for Age Status': 'Weight for Age Status',
                     'Height/Length For Age Status': 'Height/Length for Age Status',
                     'Weight For Length Status': 'Weight for Length Status',
@@ -1603,10 +1603,8 @@
                             data: "phone_number", visible: true,
                             render: function(data, type, row)
                             {
-                                if (data === null)
-                                {
-                                    return "N/A";
-                                }
+                                var phoneNumber = row.phone_number;
+                                return phoneNumber;
                             }
                         },
                         {

@@ -43,7 +43,9 @@ class HistoryOfIndividualRecord extends Model
             'age_in_months',
             'weight_for_age_status',
             'height_length_for_age_status',
-            'weight_for_length_status'
+            'weight_for_length_status',
+            'food_pack_given',
+            'food_pack_given_date'
     ];
 
     public function individual_records()

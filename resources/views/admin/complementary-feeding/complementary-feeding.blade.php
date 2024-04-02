@@ -523,7 +523,9 @@
                         weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
                         height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
                         weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
-                        feeding: "YES"
+                        food_pack_given: data.food_pack_given,
+                        food_pack_given_date: data.food_pack_given_date,
+                        
                     }),
                     dataType: "JSON",
                     headers:
@@ -1463,6 +1465,13 @@
                         // },
                         {
                             data: "phone_number", visible: true,
+                            render: function(data, type, row)
+                            {
+                                if (data === null)
+                                {
+                                    return "N/A";
+                                }
+                            }
                         },
                         {
                             data: "address", visible: true,
@@ -1770,7 +1779,8 @@
                                 weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
                                 height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
                                 weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
-                         
+                                food_pack_given: data.food_pack_given,
+                                food_pack_given_date: data.food_pack_given_date,
                             }),
                             dataType: "JSON",
                             headers:
@@ -2005,11 +2015,14 @@
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
 
-                let food_pack_given_date = $('#addDateFoodPack').val();
-                    form_data.food_pack_given_date = food_pack_given_date;
-                // Update feeding_candidate to 'Yes':
-                form_data['food_pack_given'] = 'Yes';
-                // form_data['age_in_month'] = 5
+                // let food_pack_given_date = $('#addDateFoodPack').val();
+                //     form_data.food_pack_given_date = food_pack_given_date;
+                // // Update feeding_candidate to 'Yes':
+                // form_data['food_pack_given'] = 'Yes';
+                // // form_data['age_in_month'] = 5
+
+                form_data.food_pack_given_date = $('#addDateFoodPack').val();
+                form_data.food_pack_given = 'Yes';
 
                 console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
@@ -2028,7 +2041,7 @@
                         },
                         success: function(data)
                         {
-                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
+                            console.log("burat" + JSON.stringify(data)); 
 
                             storeHistoryOfIndividualRecord(data);
                             notification('info', "{{ Str::singular($page_title) }}");
@@ -2198,6 +2211,8 @@
                                     weight_for_age_status: calculateWeightForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.weight, true),
                                     height_length_for_age_status: calculateHeightLengthForAgeStatus(convert_age_in_months(data.birthdate), data.sex, data.height, true),
                                     weight_for_length_status: calculateWeightForLengthStatus(data.height,convert_age_in_months(data.birthdate), data.weight, data.sex, true),
+                                    food_pack_given: data.food_pack_given,
+                                    food_pack_given_date: data.food_pack_given_date,
                                 }),
                                 dataType: "JSON",
                                 headers:
