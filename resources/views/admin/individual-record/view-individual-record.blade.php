@@ -502,10 +502,10 @@
                             data: "food_pack_given_date", visible: true,
                         },
                         {
-                            data: "date_given_micronutrient", visible: true,
+                            data: "nutrient_given_date", visible: true,
                         },
                         {
-                            data: "name_of_micronutrient", visible: true,
+                            data: "micronutrient", visible: true,
                         }
                     ],
                     "order":

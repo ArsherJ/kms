@@ -40,19 +40,19 @@ class HistoryOfIndividualRecordController extends Controller
                         ->where(function($query) {
                             $query->whereNotNull('food_pack_given_date')
                                   ->where(function($innerQuery) {
-                                      $innerQuery->whereNull('date_given_micronutrient')
-                                                 ->orWhereNull('name_of_micronutrient');
+                                      $innerQuery->whereNull('nutrient_given_date')
+                                                 ->orWhereNull('micronutrient');
                                   });
                         })
                         ->orWhere(function($query) {
                             $query->whereNull('food_pack_given_date')
-                                  ->whereNotNull('date_given_micronutrient')
-                                  ->whereNotNull('name_of_micronutrient');
+                                  ->whereNotNull('nutrient_given_date')
+                                  ->whereNotNull('micronutrient');
                         })
                         ->orWhere(function($query) {
                             $query->whereNotNull('food_pack_given_date')
-                                  ->whereNotNull('date_given_micronutrient')
-                                  ->whereNotNull('name_of_micronutrient');
+                                  ->whereNotNull('nutrient_given_date')
+                                  ->whereNotNull('micronutrient');
                         })
                         ->get();
     
