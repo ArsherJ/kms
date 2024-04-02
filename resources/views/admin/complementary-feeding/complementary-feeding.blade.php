@@ -309,7 +309,7 @@
                                 <div class="form-group col-md-12">
                                     <h5 class="text-center mt-3">Food Pack Date Given:</h5>
                                     <div class="col-md-4 mx-auto">
-                                    <input type="date" id="addDate" class="form-control mr-2">
+                                    <input type="date" id="addDateFoodPack" class="form-control mr-2">
                                     </div>
                                 </div>
                             </div>
@@ -317,7 +317,7 @@
                         
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" onclick="closeAddDateModal()" style="border:solid 1px gray">Close</button>
-                            <button type="submit" class="btn btn-success">Save</button> <!-- Change type to submit -->
+                            <button type="button" class="btn btn-success btnUpdateFoodPack">Save</button> <!-- Change type to submit -->
                         </div>
 
                     </form>
@@ -457,16 +457,16 @@
         $('#reminderModal').modal('show');
     });
 
-    $(document).on('click', '.btnAddDate', function() {
-        // Retrieve the ID of the clicked button
-        var buttonId = $(this).attr('id');
+    // $(document).on('click', '.btnAddDate', function() {
+    //     // Retrieve the ID of the clicked button
+    //     var buttonId = $(this).attr('id');
         
-        // Log the ID to the console
-        console.log("Button ID:", buttonId);
+    //     // Log the ID to the console
+    //     console.log("Button ID:", buttonId);
         
-        // Show the reminder modal
-        $('#addDateModal').modal('show');
-    });
+    //     // Show the reminder modal
+    //     $('#addDateModal').modal('show');
+    // });
 
     function closeAddDateModal() {
             // Clear input fields
@@ -1940,20 +1940,11 @@
             // End of Script for Update Function for edit
             
             // ================================================================
-// $(document).on('submit', '#addDateForm', function(event) {
-//     event.preventDefault(); // Prevent default form submission
-    
 
-    $(document).on('submit', '#addDateForm', function()
+
+ // Script for Complementary Feeding Function:
+    $(document).on('click', '.btnAddDate', function()
             {
-                    // Retrieve the value of the date input field
-                let foodPackDateGiven = $('#addDate').val();
-                
-                // Construct the form data object
-                let form_data = {
-                    food_pack_given_date: foodPackDateGiven,
-                    food_pack_given: "Yes"
-                };
                 let id = this.id;
                 let form_url = BASE_API + '/' + id;
 
@@ -1971,26 +1962,12 @@
                     success: function(data)
                     {
                         console.log("jatsen masarap at hot" + JSON.stringify(data));
+
+                        $('.btnUpdateFoodPack').attr('id', data.id)
+                        $('#addDateFoodPack').val(data.food_pack_given_date)
                         
                         
-                        $('.btnUpdate').attr('id', data.id)
-                        $('#address_edit').val(data.address)
-                        $('#mother_last_name_edit').val(data.mother_last_name)
-                        $('#mother_first_name_edit').val(data.mother_first_name)
-                        $('#child_last_name_edit').val(data.child_last_name)
-                        $('#child_first_name_edit').val(data.child_first_name)
-                        $('#ip_group_edit').val(data.ip_group)
-                        $('#micronutrient_edit').val(data.micronutrient)
-                        $('#sex_edit').val(data.sex)
-                        $('#birthdate_edit').val(data.birthdate)
-                        $('#height_edit').val(data.height)
-                        $('#weight_edit').val(data.weight)
-    
-                        tempWeight = data.weight;
-                        tempHeight = data.height;
-                        tempIndividualId = data.id;
-                        tempDateRecorded = data?.updated_at ?? data.created_at;
-                        $('#editModal').modal('show');
+                        $('#addDateModal').modal('show');
                     },
                     error: function(error)
                     {
@@ -2010,6 +1987,75 @@
                 })
 
             })
+            // End of Script for Complementary Feeding Function
+
+            // Script for Update Function for Complementary Feeding:
+            $(document).on('click', '.btnUpdateFoodPack', function()
+            {
+                let id = this.id;
+                console.log(id)
+                let form_url = BASE_API + '/' + id;
+
+                // Form Data:
+                let form = $("#addDateForm").serializeArray();
+                let form_data = {}
+
+                $.each(form, function()
+                {
+                    form_data[[this.name.slice(0, -5)]] = this.value;
+                })
+
+                let food_pack_given_date = $('#addDateFoodPack').val();
+                    form_data.food_pack_given_date = food_pack_given_date;
+                // Update feeding_candidate to 'Yes':
+                form_data['food_pack_given'] = 'Yes';
+                // form_data['age_in_month'] = 5
+
+                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
+
+                    $.ajax
+                    ({
+                        url: form_url,
+                        method: "PUT",
+                        data: JSON.stringify(form_data),
+                        dataType: "JSON",
+                        headers:
+                        {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": API_TOKEN,
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data)
+                        {
+                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
+
+                            storeHistoryOfIndividualRecord(data);
+                            notification('info', "{{ Str::singular($page_title) }}");
+                            refresh();
+                            $('#addDateModal').modal('hide');
+                            console.log(data);
+                        },
+                        error: function(error)
+                        {
+                            console.log(error);
+                            if (error.responseJSON.errors == null)
+                            {
+                                swalAlert('warning', error.responseJSON.message);
+                                console.log(error.responseJSON.message)
+                            } else
+                            {
+                                $.each(error.responseJSON.errors, function(key, value)
+                                {
+                                    swalAlert('warning', value);
+                                    console.log(error.responseJSON.message)
+                                });
+                            }
+                        }
+                    });
+
+            })
+            // End of Script for Update Function for Complementary Feeding
 
 
 

@@ -73,18 +73,20 @@ class ComplementaryFeedingController extends Controller
     public function store(StoreIndividualRecordRequest $request)
     {
         $request->validate([
-            'child_number' => 'required',
-            'address' => 'required',
-            'mother_last_name' => 'required',
-            'mother_first_name' => 'required',
-            'child_last_name' => 'required',
-            'child_first_name' => 'required',
-            'ip_group' => 'required',
-            'micronutrient' => 'required',
-            'sex' => 'required',
-            'birthdate' => 'required',
-            'height' => 'required',
-            'weight' => 'required',
+            // 'child_number' => 'required',
+            // 'address' => 'required',
+            // 'mother_last_name' => 'required',
+            // 'mother_first_name' => 'required',
+            // 'child_last_name' => 'required',
+            // 'child_first_name' => 'required',
+            // 'ip_group' => 'required',
+            // 'micronutrient' => 'required',
+            // 'sex' => 'required',
+            // 'birthdate' => 'required',
+            // 'height' => 'required',
+            // 'weight' => 'required',
+            'food_pack_given_date' => 'required',
+            'food_pack_given' => 'required'
         ]);
 
         return IndividualRecord::create($request->all());

@@ -49,6 +49,8 @@ class IndividualRecord extends Model
         'weight_for_age_status',
         'height_length_for_age_status',
         'weight_for_length_status',
+        'food_pack_given_date',
+        'food_pack_given'
 
     ];
 

@@ -50,6 +50,7 @@ class IndividualRecordImport implements ToModel, WithStartRow
                 'weight_for_age_status' => $weightForAgeStatus,
                 'height_length_for_age_status' => $heightLengthForAgeStatus,
                 'weight_for_length_status' => $weightForLengthStatus,
+                
             ]);
 
             // Save IndividualRecord to the database
