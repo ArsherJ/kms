@@ -1940,70 +1940,76 @@
             // End of Script for Update Function for edit
             
             // ================================================================
-$(document).on('submit', '#addDateForm', function(event) {
-    event.preventDefault(); // Prevent default form submission
+// $(document).on('submit', '#addDateForm', function(event) {
+//     event.preventDefault(); // Prevent default form submission
     
-    // Retrieve the value of the date input field
-    let foodPackDateGiven = $('#addDate').val();
-    
-    // Construct the form data object
-    let form_data = {
-        food_pack_given_date: foodPackDateGiven,
-        food_pack_given: "Yes"
-    };
 
-    $.ajax({
-        url: BASE_API , // Assuming BASE_API is defined and correct
-        method: "POST",
-        data: JSON.stringify(form_data),
-        dataType: "JSON",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": API_TOKEN,
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(data) {
-            notification('success', "{{ Str::singular($page_title) }}");
-            
-            // Second AJAX request
-            $.ajax({
-                url: API_URL + '/history_of_individual_records',
-                method: "POST",
-                data: JSON.stringify({
-                    individual_record_id: data.id,
-                    food_pack_given_date: form_data.food_pack_given_date,
-                    food_pack_given: "Yes",
-                 
-                }),
-                dataType: "JSON",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": API_TOKEN,
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(historyData) {
-                    notification('success', "{{ Str::singular($page_title) }}");
-                    refresh();
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        },
-        error: function(error) {
-            console.log(error);
-            if (error.responseJSON.errors == null) {
-                swalAlert('warning', error.responseJSON.message);
-            } else {
-                $.each(error.responseJSON.errors, function(key, value) {
-                    swalAlert('warning', value);
-                });
-            }
-        }
-    });
-});
+    $(document).on('submit', '#addDateForm', function()
+            {
+                    // Retrieve the value of the date input field
+                let foodPackDateGiven = $('#addDate').val();
+                
+                // Construct the form data object
+                let form_data = {
+                    food_pack_given_date: foodPackDateGiven,
+                    food_pack_given: "Yes"
+                };
+                let id = this.id;
+                let form_url = BASE_API + '/' + id;
+
+                $.ajax
+                ({
+                    url: form_url,
+                    method: "GET",
+                    headers:
+                    {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": API_TOKEN,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data)
+                    {
+                        console.log("jatsen masarap at hot" + JSON.stringify(data));
+                        
+                        
+                        $('.btnUpdate').attr('id', data.id)
+                        $('#address_edit').val(data.address)
+                        $('#mother_last_name_edit').val(data.mother_last_name)
+                        $('#mother_first_name_edit').val(data.mother_first_name)
+                        $('#child_last_name_edit').val(data.child_last_name)
+                        $('#child_first_name_edit').val(data.child_first_name)
+                        $('#ip_group_edit').val(data.ip_group)
+                        $('#micronutrient_edit').val(data.micronutrient)
+                        $('#sex_edit').val(data.sex)
+                        $('#birthdate_edit').val(data.birthdate)
+                        $('#height_edit').val(data.height)
+                        $('#weight_edit').val(data.weight)
+    
+                        tempWeight = data.weight;
+                        tempHeight = data.height;
+                        tempIndividualId = data.id;
+                        tempDateRecorded = data?.updated_at ?? data.created_at;
+                        $('#editModal').modal('show');
+                    },
+                    error: function(error)
+                    {
+                        console.log(error)
+                        if (error.responseJSON.errors == null)
+                        {
+                            swalAlert('warning', error.responseJSON.message)
+                        }
+                        else
+                        {
+                            $.each(error.responseJSON.errors, function(key, value)
+                            {
+                                swalAlert('warning', value)
+                            });
+                        }
+                    }
+                })
+
+            })
 
 
 
