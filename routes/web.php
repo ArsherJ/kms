@@ -22,7 +22,7 @@ Route::get('/logout', function () {
 })->name('logout');
 
 Route::group(['middleware' => ['web']], function () {
-
+    
     Route::get('/login', function () {
         return view('auth/login', ['page_title' => 'Login']);
     })->name('login');
@@ -79,6 +79,8 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/complementary_feeding/complementary_feeding/{id}', function ($id) {
                 return view('admin/complementary-feeding/view-complementary-feeding', ['page_title' => 'Complementary Feeding', 'complementary_feeding_id' => $id]);
             })->name('admin_complementary_feeding_details');
+
+
 
             // ------------USERS--------------- //
             Route::get('/users', function () {

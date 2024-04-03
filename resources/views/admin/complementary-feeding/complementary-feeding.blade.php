@@ -262,7 +262,7 @@
                 </div>
 
                 <div class="row">
-                    <form>
+                    <form id="reminderForm">
                     <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-12">
@@ -279,7 +279,7 @@
                         
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" onclick="reminderClearFields()" style="border:solid 1px gray">Close</button>
-                            <button type="submit" class="btn btn-success">Send Message</button>
+                            <button type="button" class="btn btn-success btnSendSMS">Send Message</button>
                         </div>
 
                     </form>
@@ -430,6 +430,220 @@
 @section('scripts')
 
     <script>
+
+            // Script for Complementary Feeding Function:
+            $(document).on('click', '.btnReminder', function()
+            {
+
+                let id = this.id;
+                let form_url = BASE_API + '/' + id;
+
+
+
+                $.ajax
+                ({
+                    url: API_URL + '/complementary_feeding/' + id,
+                    method: "GET",
+                    headers:
+                    {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": API_TOKEN,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data)
+                    {
+                        console.log("jatsen masarap at hot" + JSON.stringify(data.phone_number));
+
+                        $('.btnSendSMS').attr('id', data.id)
+                        $('#reminderDateField').val(data.reminder_date_field)
+                        $('#reminderTimeField').val(data.reminder_time_field)
+                        $('#reminderLocationField').val(data.reminder_location_field)
+                         
+                        $('#reminderModal').modal('show');
+
+                    },
+                    error: function(error)
+                    {
+                        console.log(error)
+                        if (error.responseJSON.errors == null)
+                        {
+                            swalAlert('warning', error.responseJSON.message)
+                        }
+                        else
+                        {
+                            $.each(error.responseJSON.errors, function(key, value)
+                            {
+                                swalAlert('warning', value)
+                            });
+                        }
+                    }
+                })
+
+            })
+            // End of Script for Complementary Feeding Function
+
+
+            // Script for Update Function for Complementary Feeding:
+            $(document).on('click', '.btnSendSMS', function() {
+
+                let id = this.id;
+                console.log("BTN SEND MSG ID" + id)
+           
+                let form_url = BASE_API + '/' + id;
+
+                // Form Data:
+                let form = $("#reminderForm").serializeArray();
+                let form_data = {}
+
+                $.each(form, function()
+                {
+                    form_data[[this.name.slice(0, -5)]] = this.value;
+                })
+
+                         
+                form_data.reminder_date_field = $('#reminderDateField').val();
+                form_data.reminder_time_field = $('#reminderTimeField').val();
+                form_data.reminder_location_field = $('#reminderLocationField').val();
+
+                // Constructing the message
+                let message = "Reminder: Please claim your food pack for the Complementary Feeding Program. Your pickup details are as follows:\nDate: " + form_data.reminder_date_field  + "\nTime: " + form_data.reminder_time_field  + "\nLocation: " + form_data.reminder_location_field  + "\n\nPlease ensure timely pickup. Thank you!";
+                console.log("SAVE MESSAGE: " + message)
+                // Retrieving phone number from API response
+                $.ajax({
+                    url: API_URL + '/complementary_feeding/' + id,
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": API_TOKEN,
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.phone_number) {
+                            var phoneNumber = response.phone_number;
+                            console.log("PHONE NUMBER EXIST")
+                            console.log(phoneNumber)
+                            // Make AJAX request to send SMS
+                            $.ajax({
+                                url: API_URL + '/send_sms',
+                                method: "POST",
+                                data: {
+                                    sms_to: phoneNumber,
+                                    sms_msg: message
+                                },
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(data) {
+
+                                    console.log("Success: SMS sent", data);
+                                    // notification('success', "{{ Str::singular($page_title) }}");
+                                },
+                                error: function(error) {
+                                    notification('success', "Message Sent!");
+                                }
+                            });
+                        } else {
+                            console.error("Phone number not found for ID: " + id);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX error: ", error);
+                    }
+                });
+
+                // Close the modal after sending the message
+                $(this).closest('.modal').modal('hide');
+            });
+            // End of Script for Update Function for Complementary Feeding
+
+    $(document).ready(function() {
+        // Handle form submission
+        $('#sendSMSModal form').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the message content
+            var sendDate = $('#sendDateField').val();
+            var sendTime = $('#sendTimeField').val();
+            var sendLocation = $('#sendLocationField').val();
+            
+            var message = "Magandang araw! Ito ang abiso para sa susunod na pamamahagi ng food pack para sa inyong anak: " 
+                        + "Petsa: " + sendDate + ", Oras: " + sendTime + ", Lugar: " + sendLocation + ". "
+                        + "Mangyaring siguraduhing makarating kayo para sa inyong mga food pack. Salamat!";
+
+
+            // Retrieve the IDs of checked checkboxes
+            var checkedIds = getCheckedCheckboxIds();
+            console.log(checkedIds);
+
+            // Iterate over the checked IDs and fetch the phone numbers using AJAX
+            checkedIds.forEach(function(id) {
+                // Construct the URL for AJAX request
+                var form_url = API_URL + '/complementary_feeding/' + id;
+
+                $.ajax({
+                    url: form_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.phone_number) {
+                            var phoneNumber = response.phone_number;
+                            console.log(phoneNumber);
+
+                            // Make AJAX request to send SMS
+                            $.ajax({
+                                url: API_URL + '/send_sms',
+                                method: "POST",
+                                data: {
+                                    sms_to: phoneNumber,
+                                    sms_msg: message
+                                },
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(data) {
+                                    console.log("success sms", data);
+                                },
+                                error: function(error) {
+                                    console.log("error sms", error);
+                                }
+                            });
+                        } else {
+                            console.error("Phone number not found for ID: " + id);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error("AJAX error: ", error);
+                    }
+                });
+            });
+
+            // Close the modal after sending the message
+            $(this).closest('.modal').modal('hide');
+        });
+    });
+
+        function getCheckedCheckboxIds() {
+            var checkedIds = [];
+            // Select all checkboxes with class 'sendSMS'
+            $('.sendSMS').each(function() {
+                // Check if the checkbox is checked
+                if ($(this).prop('checked')) {
+                    // Extract the data-id attribute (which contains the ID) and push it to the array
+                    checkedIds.push($(this).data('id'));
+                }
+            });
+            return checkedIds;
+        }
+
+
         function SMSNotificationClearFields() {
                 // Clear input fields
                 $('#sendDateField').val('');
@@ -446,18 +660,7 @@
             $('#reminderModal').modal('hide');
         }
 
-        $(document).on('click', '.btnReminder', function() {
-        // Retrieve the ID of the clicked button
-        var buttonId = $(this).attr('id');
-        
-        // Log the ID to the console
-        console.log("Button ID:", buttonId);
-        
-        // Show the reminder modal
-        $('#reminderModal').modal('show');
-    });
-
-    // $(document).on('click', '.btnAddDate', function() {
+    //     $(document).on('click', '.btnReminder', function() {
     //     // Retrieve the ID of the clicked button
     //     var buttonId = $(this).attr('id');
         
@@ -465,8 +668,9 @@
     //     console.log("Button ID:", buttonId);
         
     //     // Show the reminder modal
-    //     $('#addDateModal').modal('show');
+    //     $('#reminderModal').modal('show');
     // });
+
 
     function closeAddDateModal() {
             // Clear input fields
@@ -1465,13 +1669,13 @@
                         // },
                         {
                             data: "phone_number", visible: true,
-                            render: function(data, type, row)
-                            {
-                                if (data === null)
-                                {
-                                    return "N/A";
-                                }
-                            }
+                            // render: function(data, type, row)
+                            // {
+                            //     if (data === null)
+                            //     {
+                            //         return "N/A";
+                            //     }
+                            // }
                         },
                         {
                             data: "address", visible: true,
@@ -1949,12 +2153,13 @@
             })
             // End of Script for Update Function for edit
             
-            // ================================================================
+            
 
 
- // Script for Complementary Feeding Function:
-    $(document).on('click', '.btnAddDate', function()
+            // Script for Complementary Feeding Function:
+            $(document).on('click', '.btnAddDate', function()
             {
+
                 let id = this.id;
                 let form_url = BASE_API + '/' + id;
 
@@ -2015,11 +2220,6 @@
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
 
-                // let food_pack_given_date = $('#addDateFoodPack').val();
-                //     form_data.food_pack_given_date = food_pack_given_date;
-                // // Update feeding_candidate to 'Yes':
-                // form_data['food_pack_given'] = 'Yes';
-                // // form_data['age_in_month'] = 5
 
                 form_data.food_pack_given_date = $('#addDateFoodPack').val();
                 form_data.food_pack_given = 'Yes';
@@ -2066,7 +2266,6 @@
                             }
                         }
                     });
-
             })
             // End of Script for Update Function for Complementary Feeding
 

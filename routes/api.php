@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/complementary_feeding/restore/{id}', [ComplementaryFeedingController::class, 'restore']); 
 
 
+
     // HISTORY OF INDIVIDUAL RECORD
     Route::get('/history_of_individual_records', [HistoryOfIndividualRecordController::class, 'index']);
     Route::get('/history_of_individual_records/datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'datatableshow']);

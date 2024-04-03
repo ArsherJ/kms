@@ -1,18 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
 class SendSMSController extends Controller
 {
-    public function gw_send_sms($sms_from, $sms_to, $sms_msg)
+    public function gw_send_sms(Request $request)
     {
+        $sms_to = $request->input('sms_to');
+        $sms_msg = $request->input('sms_msg');
 
         $ch = curl_init();
         $parameters = array(
             'apikey' => 'af1f70d45233cbaef2ff17a6e018b60c', //Your API KEY
             'number' => $sms_to,
             'message' => $sms_msg,
-            'sendername' => $sms_from
+            // 'sendername' => $sms_from
         );
         curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -27,5 +30,7 @@ class SendSMSController extends Controller
 
         //Show the server response
         echo $output;
+        return response()->json(['status' => 'success', 'message' => 'SMS sent successfully']);
+
     }
 }
