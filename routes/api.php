@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\ComplementaryFeedingController;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryOfIndividualRecordController;
+use App\Http\Controllers\SendSMSController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +38,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/announcements/published', [AnnouncementController::class, 'published']);
 Route::get('/feeding_programs/published', [FeedingProgramController::class, 'published']);
 Route::get('/faqs', [FaqController::class, 'index']);
-
-
+Route::post('/send_sms', [SendSMSController::class, 'gw_send_sms']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -84,9 +85,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/individual_records/destroy/{id}', [IndividualRecordController::class, 'destroy']);
     Route::put('/individual_records/restore/{id}', [IndividualRecordController::class, 'restore']);
 
+    // COMPLEMENTARY FEEDING
+    Route::get('/complementary_feeding', [ComplementaryFeedingController::class, 'index']);
+    Route::get('/complementary_feeding/datatable', [ComplementaryFeedingController::class, 'datatable']);
+    Route::post('/complementary_feeding', [ComplementaryFeedingController::class, 'store']);
+    Route::get('/complementary_feeding/{id}', [ComplementaryFeedingController::class, 'show']);
+    Route::put('/complementary_feeding/{id}', [ComplementaryFeedingController::class, 'update']);
+    Route::delete('/complementary_feeding/destroy/{id}', [ComplementaryFeedingController::class, 'destroy']);
+    Route::put('/complementary_feeding/restore/{id}', [ComplementaryFeedingController::class, 'restore']); 
+
+
     // HISTORY OF INDIVIDUAL RECORD
     Route::get('/history_of_individual_records', [HistoryOfIndividualRecordController::class, 'index']);
     Route::get('/history_of_individual_records/datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'datatableshow']);
+    Route::get('/history_of_individual_records/micronutrient_datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'micronutrientdatatableshow']);
     Route::get('/history_of_individual_records/datatable', [HistoryOfIndividualRecordController::class, 'datatable']);
     Route::post('/history_of_individual_records', [HistoryOfIndividualRecordController::class, 'store']);
     Route::get('/history_of_individual_records/{id}', [HistoryOfIndividualRecordController::class, 'show']);

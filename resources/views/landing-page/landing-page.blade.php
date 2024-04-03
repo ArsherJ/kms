@@ -37,6 +37,26 @@
     <!--====== Style CSS ======-->
     <link rel="stylesheet" href="{{ asset('landing_page_assets/css/style.css') }}">
 
+    <style>
+        @media screen and (max-width: 768px) {
+            .responsive-div {
+                top: 0px; /* Adjust this value for smaller screens */
+            }
+        }
+
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .responsive-div {
+                top: -50px; /* Adjust this value for medium-sized screens */
+            }
+        }
+
+        @media screen and (min-width: 1025px) {
+            .responsive-div {
+                top: -100px; /* Default value for larger screens */
+            }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -121,6 +141,10 @@
                 </div>
             </div> <!-- header hero image -->
         </div> <!-- header hero -->
+        <div style="display: flex; align-items: center; padding: 10px; background-color: #f0f0f0; border-radius: 5px;" class="responsive-div">
+            <img src="{{ asset('landing_page_assets/images/cms-logo-header.png') }}" style="width: 100px; height: auto; margin-left: 5%; margin-right: 20px;">
+            <p style="margin: 0; padding: 5px; color: black; border-radius: 5px; font-size: 1em; @media (max-width: 768px) { font-size: 0.8em; }">PAMPLONA TRES, LAS PINAS CITY</p>
+        </div>
     </header>
 
     <!--====== HEADER PART ENDS ======-->

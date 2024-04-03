@@ -34,6 +34,35 @@ class HistoryOfIndividualRecordController extends Controller
             ->make(true);
     }
 
+    public function micronutrientdatatableshow(HistoryOfIndividualRecord $history_of_individual_records, $child_number)
+    {
+        $data = HistoryOfIndividualRecord::where('child_number', $child_number)
+                        ->where(function($query) {
+                            $query->whereNotNull('food_pack_given_date')
+                                  ->where(function($innerQuery) {
+                                      $innerQuery->whereNull('nutrient_given_date')
+                                                 ->orWhereNull('micronutrient');
+                                  });
+                        })
+                        ->orWhere(function($query) {
+                            $query->whereNull('food_pack_given_date')
+                                  ->whereNotNull('nutrient_given_date')
+                                  ->whereNotNull('micronutrient');
+                        })
+                        ->orWhere(function($query) {
+                            $query->whereNotNull('food_pack_given_date')
+                                  ->whereNotNull('nutrient_given_date')
+                                  ->whereNotNull('micronutrient');
+                        })
+                        ->get();
+    
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->rawColumns(['action'])
+                ->make(true);
+    }
+    
+
     public function create()
     {
     }
@@ -50,7 +79,7 @@ class HistoryOfIndividualRecordController extends Controller
             'child_last_name' => 'required',
             'child_first_name' => 'required',
             'ip_group' => 'required',
-            'micronutrient' => 'required',
+            // 'micronutrient' => 'required',
             'sex' => 'required',
             'birthdate' => 'required',
             'height' => 'required',
@@ -97,10 +126,10 @@ class HistoryOfIndividualRecordController extends Controller
 
     public function data_chart($month)
     {
-        $latestRecords = HistoryOfIndividualRecord::whereIn('created_at', function($query) use ($month) {
-            $query->selectRaw('MAX(created_at)')
+        $latestRecords = HistoryOfIndividualRecord::whereIn('date_measured', function($query) use ($month) {
+            $query->selectRaw('MAX(date_measured)')
                   ->from('history_of_individual_records')
-                  ->whereMonth('created_at', $month)
+                  ->whereMonth('date_measured', $month)
                   ->groupBy('child_number');
         })->get();
 
@@ -109,11 +138,11 @@ class HistoryOfIndividualRecordController extends Controller
 
     public function data_chart_year($year)
     {
-        $latestRecords = HistoryOfIndividualRecord::whereIn('created_at', function($query) use ($year) {
-            $query->selectRaw('MAX(created_at)')
+        $latestRecords = HistoryOfIndividualRecord::whereIn('date_measured', function($query) use ($year) {
+            $query->selectRaw('MAX(date_measured)')
                 ->from('history_of_individual_records')
-                ->whereYear('created_at', $year)
-                ->groupBy(DB::raw('MONTH(created_at)'), 'child_number');
+                ->whereYear('date_measured', $year)
+                ->groupBy(DB::raw('MONTH(date_measured)'), 'child_number');
         })->get();
     
         return response()->json($latestRecords);
@@ -123,13 +152,15 @@ class HistoryOfIndividualRecordController extends Controller
         $latestRecords = DB::select("
             SELECT *
             FROM history_of_individual_records h1
-            WHERE h1.created_at IN (
-                SELECT MAX(created_at)
+            WHERE (h1.date_measured, h1.child_number) IN (
+                SELECT MAX(date_measured), child_number
                 FROM history_of_individual_records h2
-                WHERE YEAR(h2.created_at) = ?
-                GROUP BY MONTH(h2.created_at), child_number
+                WHERE YEAR(h2.date_measured) = YEAR(h1.date_measured)
+                AND MONTH(h2.date_measured) = MONTH(h1.date_measured)
+                GROUP BY YEAR(h2.date_measured), MONTH(h2.date_measured), child_number
             )
-            AND h1.id = ?
+            AND YEAR(h1.date_measured) = ?
+            AND h1.child_number = ?;
         ", [$year, $id]);
     
         return response()->json($latestRecords);

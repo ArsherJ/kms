@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\FeedingProgramIRLogs;
 
-class IndividualRecord extends Model
+class ComplementaryFeeding extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -31,15 +31,12 @@ class IndividualRecord extends Model
 
         'child_number',
         'address',
-        'phone_number',
         'mother_last_name',
         'mother_first_name',
         'child_last_name',
         'child_first_name',
         'ip_group',
         'micronutrient',
-        'nutrient_given_date',
-        'feeding_candidate',
         'sex',
         'birthdate',
         'date_measured',
@@ -51,7 +48,6 @@ class IndividualRecord extends Model
         'weight_for_length_status',
         'food_pack_given_date',
         'food_pack_given'
-
     ];
 
     // Dates (?)

@@ -71,6 +71,15 @@ Route::group(['middleware' => ['web']], function () {
                 return view('admin/individual-record/view-individual-record', ['page_title' => 'Individual Records', 'individual_record_id' => $id]);
             })->name('admin_individual_record_details');
 
+            // ------------COMPLEMENTARY FEEDING--------------- //
+            Route::get('/complementary_feeding', function () {
+                return view('admin/complementary-feeding/complementary-feeding', ['page_title' => 'Complementary Feeding']);
+            })->name('admin_complementary_feeding');
+
+            Route::get('/complementary_feeding/complementary_feeding/{id}', function ($id) {
+                return view('admin/complementary-feeding/view-complementary-feeding', ['page_title' => 'Complementary Feeding', 'complementary_feeding_id' => $id]);
+            })->name('admin_complementary_feeding_details');
+
             // ------------USERS--------------- //
             Route::get('/users', function () {
                 return view('admin/user/user', ['page_title' => 'User Accounts']);
