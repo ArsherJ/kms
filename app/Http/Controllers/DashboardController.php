@@ -7,6 +7,7 @@ use App\Models\IndividualRecord;
 use App\Models\FeedingProgram;
 use App\Models\User;
 use App\Models\Announcement;
+use App\Models\HistoryOfIndividualRecord;
 
 class DashboardController extends Controller
 {
@@ -17,6 +18,7 @@ class DashboardController extends Controller
             'userCount' => User::count(),
             'feedingProgramCount' => FeedingProgram::count(),
             'announcementCount' => Announcement::count(),
+            "foodPacksCount" => HistoryOfIndividualRecord::where('food_pack_given', '=', 'Yes')->count()
         ];
 
         return $counts;

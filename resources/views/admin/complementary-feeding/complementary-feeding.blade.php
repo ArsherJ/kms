@@ -1865,7 +1865,7 @@
                             extend: 'pdfHtml5',
                             text: 'Export as PDF',
                             orientation: 'landscape',
-                            pageSize: 'A2',
+                            pageSize: 'A1',
                             exportOptions:
                             {
                                 // columns: ':visible',

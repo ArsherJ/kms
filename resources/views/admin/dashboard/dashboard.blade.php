@@ -41,6 +41,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card overflow-hidden rounded-2">
+                <div class="card-body pt-3 p-4">
+                    <h6 class="fw-semibold fs-4">Total Food Pack Given</h6>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h6><span id="totalFoodPacksCount" class="badge bg-success rounded-3 fw-semibold"></span></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     {{-- ROW 2 --}}
@@ -333,6 +343,7 @@
                         $('#individualRecordCount').html(data.individualRecordCount)
                         $('#feedingProgramCount').html(data.feedingProgramCount)
                         $('#announcementCount').html(data.announcementCount)
+                        $('#totalFoodPacksCount').html(data.foodPacksCount)
                     },
                     error: function(error) {
                         console.log(error)
