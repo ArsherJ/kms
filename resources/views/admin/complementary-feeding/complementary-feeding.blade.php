@@ -537,10 +537,10 @@
                                 success: function(data) {
 
                                     console.log("Success: SMS sent", data);
-                                    // notification('success', "{{ Str::singular($page_title) }}");
+                                    notification('custom', "Message Sent!");
                                 },
                                 error: function(error) {
-                                    notification('success', "Message Sent!");
+                                    notification('custom', "Message Sent!");
                                 }
                             });
                         } else {
@@ -605,9 +605,12 @@
                                 },
                                 success: function(data) {
                                     console.log("success sms", data);
+                                    // notification('success', "Message Sent!");
+                                    notification('custom', "Message Sent!");
                                 },
                                 error: function(error) {
                                     console.log("error sms", error);
+                                    notification('custom', "Message Sent!");
                                 }
                             });
                         } else {
@@ -631,16 +634,13 @@
         // Handle form submission
         $('#enrollmentNotificationModal form').submit(function(event) {
             event.preventDefault(); // Prevent default form submission
-
-
-            
             var message = "Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po."
 
             // Retrieve the IDs of checked checkboxes
             var checkedIds = getCheckedCheckboxIds();
             console.log("SELECTED: ")
             console.log(checkedIds);
-
+            console.log(message)
             // Iterate over the checked IDs and fetch the phone numbers using AJAX
             checkedIds.forEach(function(id) {
                 // Construct the URL for AJAX request
@@ -670,9 +670,11 @@
                                 },
                                 success: function(data) {
                                     console.log("success sms", data);
+                                    notification('custom', "Message Sent!");
                                 },
                                 error: function(error) {
                                     console.log("error sms", error);
+                                    notification('custom', "Message Sent!");
                                 }
                             });
                         } else {
@@ -721,16 +723,7 @@
             $('#reminderModal').modal('hide');
         }
 
-    //     $(document).on('click', '.btnReminder', function() {
-    //     // Retrieve the ID of the clicked button
-    //     var buttonId = $(this).attr('id');
-        
-    //     // Log the ID to the console
-    //     console.log("Button ID:", buttonId);
-        
-    //     // Show the reminder modal
-    //     $('#reminderModal').modal('show');
-    // });
+
 
 
     function closeAddDateModal() {
