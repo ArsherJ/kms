@@ -434,11 +434,8 @@
             // Script for Complementary Feeding Function:
             $(document).on('click', '.btnReminder', function()
             {
-
                 let id = this.id;
                 let form_url = BASE_API + '/' + id;
-
-
 
                 $.ajax
                 ({
@@ -577,6 +574,71 @@
 
             // Retrieve the IDs of checked checkboxes
             var checkedIds = getCheckedCheckboxIds();
+            console.log(checkedIds);
+
+            // Iterate over the checked IDs and fetch the phone numbers using AJAX
+            checkedIds.forEach(function(id) {
+                // Construct the URL for AJAX request
+                var form_url = API_URL + '/complementary_feeding/' + id;
+
+                $.ajax({
+                    url: form_url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.phone_number) {
+                            var phoneNumber = response.phone_number;
+                            console.log(phoneNumber);
+
+                            // Make AJAX request to send SMS
+                            $.ajax({
+                                url: API_URL + '/send_sms',
+                                method: "POST",
+                                data: {
+                                    sms_to: phoneNumber,
+                                    sms_msg: message
+                                },
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(data) {
+                                    console.log("success sms", data);
+                                },
+                                error: function(error) {
+                                    console.log("error sms", error);
+                                }
+                            });
+                        } else {
+                            console.error("Phone number not found for ID: " + id);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error("AJAX error: ", error);
+                    }
+                });
+            });
+
+            // Close the modal after sending the message
+            $(this).closest('.modal').modal('hide');
+        });
+    });
+
+
+    $(document).ready(function() {
+        // Handle form submission
+        $('#enrollmentNotificationModal form').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+
+            
+            var message = "Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po."
+
+            // Retrieve the IDs of checked checkboxes
+            var checkedIds = getCheckedCheckboxIds();
+            console.log("SELECTED: ")
             console.log(checkedIds);
 
             // Iterate over the checked IDs and fetch the phone numbers using AJAX
@@ -2261,6 +2323,7 @@
                             refresh();
                             $('#addDateModal').modal('hide');
                             console.log(data);
+    
                         },
                         error: function(error)
                         {
