@@ -133,12 +133,12 @@
                     <h4 class="text-light"> <span id="create_card_title">New</span> Activity</h4>
                 </div>
 
-                <form id="createForm" data-parsley-validate>
+                <form id="createForm">
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="required-input">Activity Name</label>
-                                <input type="text" class="form-control" id="title" name="title" tabindex="1"
+                                <input type="text" class="form-control required-field" id="title" name="title" tabindex="1"
                                     required>
                             </div>
                             <div class="form-group col-md-6">
@@ -173,7 +173,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light" data-toggle="collapse" data-parent="#create_card"
-                            id="create_cancel_btn">Cancel <i class="fas fa-times"></i></button>
+                            id="create_cancel_btn" onclick="resetForm()">Cancel <i class="fas fa-times"></i></button>
                         <button type="submit" class="btn btn-success ml-1" id="create_btn">Create <i
                                 class="fas fa-check"></i></button>
                     </div>
@@ -262,6 +262,21 @@
 @section('scripts')
     <script>
 
+function resetForm() {
+    // Reset form fields
+    document.getElementById("createFormNewActivity").reset();
+    
+    // Clear error messages
+    var elements = document.querySelectorAll('.is-invalid');
+    elements.forEach(function(element) {
+        element.classList.remove('is-invalid');
+    });
+    
+    // Hide error messages
+    var errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach(function(errorMessage) {
+        errorMessage.style.display = 'none';
+    });}
         // START SCRIPT TAG
         $(document).ready(function() {
 
