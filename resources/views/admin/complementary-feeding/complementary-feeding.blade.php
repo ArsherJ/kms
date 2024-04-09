@@ -269,7 +269,7 @@
                                     <h5 class="text-center mt-3"><strong>Paalala:</strong> Hindi pa na-claim ang inyong food pack para sa Complementary Feeding Program. May isa pang pagkakataon para makuha ito:</h5>
                                     <div class="col-md-4 mx-auto">
                                         <input type="text" id="reminderDateField" class="form-control mb-3" placeholder="Petsa">
-                                        <input type="text" id="reminderTimeField" class="form-control mb-3" placeholder="Oras">
+                                        <input type="time" id="reminderTimeField" class="form-control mb-3" placeholder="Oras">
                                         <input type="text" id="reminderLocationField" class="form-control" placeholder="Lugar">
                                     </div>
                                     <h5 class="text-center mt-3">Mangyaring siguraduhing makarating kayo para sa inyong mga food pack. Salamat!</h5>
@@ -489,6 +489,19 @@
            
                 let form_url = BASE_API + '/' + id;
 
+                // Get the values of the input fields
+                var reminderDate = $('#reminderDateField').val().trim();
+                var reminderTime = $('#reminderTimeField').val().trim();
+                var reminderLocation = $('#reminderLocationField').val().trim();
+
+                // Check if any required field is empty
+                if (!reminderDate || !reminderTime || !reminderLocation) {
+                    // Show error message
+                    swalAlert('warning', 'Please Fill Up All Required Fields.');
+                    return; // Exit the function early if any required field is empty
+                }
+
+    
                 // Form Data:
                 let form = $("#reminderForm").serializeArray();
                 let form_data = {}
