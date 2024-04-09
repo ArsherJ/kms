@@ -1617,7 +1617,7 @@
                     'Height/Length For Age Status': 'Height/Length for Age Status',
                     'Weight For Length Status': 'Weight for Length Status',
                     'Given Food Pack':'Given Food Pack',
-                    'Code Moosaic': 'Powered by Code Moosaic'
+                    'Code Moosaic': 'Action Button'
                 };
 
                 $('#search_bar th').each(function (i)
@@ -1628,7 +1628,7 @@
                     {
                         $(this).html
                         (`
-                            <input size="15" class="form-control" type="text" disabled placeholder='&#128046; ${placeholderMap[title] || title} &#128046' data-index="${i}" 
+                            <input size="15" class="form-control" type="text" disabled placeholder='&#128269; ${placeholderMap[title] || title}' data-index="${i}" 
                                 style="text-align:center; background-color:tranparent; color:black; border:solid 1px 0 1px 0; border-radius:0; opacity: 1; background-color: #fff;" />
                         `);
                     }
