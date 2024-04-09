@@ -584,52 +584,89 @@ function resetForm() {
             $(document).on("click", "#btnEditCloseModal", async function() {
                         $('#editModal').modal('hide');
                 });
+// UPDATE FUNCTION
+$(document).on('click', '.btnUpdate', function() {
+    var id = this.id;
+    var form_url = BASE_API + '/' + id;
 
-            // UPDATE FUNCTION
-            $(document).on('click', '.btnUpdate', function() {
-                var id = this.id;
-                console.log(id)
-                var form_url = BASE_API + '/' + id;
+    // Mapping between field names and human-readable names
+    var fieldNameMapping = {
+        'title_edit': 'Activity Name',
+        'type_edit': 'Activity Type',
+        'location_edit': 'Where',
+        'date_of_program_edit': 'Date',
+        'time_of_program_edit': 'Time',
+        'description_edit': 'Details',
+        'progress_edit': 'Progress',
+        'status_edit': 'Status'
+    };
 
-                // FORM DATA
-                var form = $("#editForm").serializeArray();
-                let form_data = {}
+    // FORM DATA
+    var form = $("#editForm").serializeArray();
+    let form_data = {}
 
-                $.each(form, function() {
-                    form_data[[this.name.slice(0, -5)]] = this.value;
-                })
+    var emptyFields = [];
+// Update the code inside the .each() loop to push human-readable names to the emptyFields array
+$("#editForm").find('input:required, select:required, textarea:required').each(function() {
+    var label = $("label[for='" + $(this).attr('id') + "']").text().trim();
+    console.log("Input ID:", $(this).attr('id'));
+    console.log("Label:", label);
+    if ($(this).val().trim() === "") {
+        var fieldName = $(this).attr('name');
+        emptyFields.push(fieldNameMapping[fieldName]);
+    }
+    form_data[$(this).attr('name').slice(0, -5)] = $(this).val();
+});
+    console.log("Empty Fields:", emptyFields);
 
-                // ajax opening tag
-                $.ajax({
-                    url: form_url,
-                    method: "PUT",
-                    data: JSON.stringify(form_data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        notification('info', "{{ Str::singular($page_title) }}")
-                        refresh();
-                        $('#editModal').modal('hide');
-                        console.log(data)
-                    },
-                    error: function(error) {
-                        console.log(error)
-                        if (error.responseJSON.errors == null) {
-                            swalAlert('warning', error.responseJSON.message)
-                        } else {
-                            $.each(error.responseJSON.errors, function(key, value) {
-                                swalAlert('warning', value)
-                            });
-                        }
-                    }
-                    // ajax closing tag
-                })
-            })
+    if (emptyFields.length > 0) {
+    // Show error message specifying which fields are empty
+    var errorMessage = "Please complete the following fields: ";
+
+    if (emptyFields.length === 1) {
+        errorMessage += emptyFields[0];
+    } else if (emptyFields.length === 2) {
+        errorMessage += emptyFields.join(" and ");
+    } else {
+        errorMessage += emptyFields.slice(0, -1).join(", ") + ", and " + emptyFields.slice(-1);
+    }
+
+    swalAlert('warning', errorMessage);
+    return; // exit the function early
+}
+
+
+    // ajax opening tag
+    $.ajax({
+        url: form_url,
+        method: "PUT",
+        data: JSON.stringify(form_data),
+        dataType: "JSON",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": API_TOKEN,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(data) {
+            notification('info', "{{ Str::singular($page_title) }}")
+            refresh();
+            $('#editModal').modal('hide');
+            console.log(data)
+        },
+        error: function(error) {
+            console.log(error)
+            if (error.responseJSON.errors == null) {
+                swalAlert('warning', error.responseJSON.message)
+            } else {
+                $.each(error.responseJSON.errors, function(key, value) {
+                    swalAlert('warning', value)
+                });
+            }
+        }
+        // ajax closing tag
+    });
+});
             // END OF UPDATE FUNCTION
 
             // DEACTIVATE FUNCTION
