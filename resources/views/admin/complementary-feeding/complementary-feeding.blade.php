@@ -2272,70 +2272,69 @@
             })
             // End of Script for Complementary Feeding Function
 
-            // Script for Update Function for Complementary Feeding:
-            $(document).on('click', '.btnUpdateFoodPack', function()
-            {
-                let id = this.id;
-                console.log(id)
-                let form_url = BASE_API + '/' + id;
+$(document).on('click', '.btnUpdateFoodPack', function() {
+    let id = this.id;
+    console.log(id);
+    let form_url = BASE_API + '/' + id;
 
-                // Form Data:
-                let form = $("#addDateForm").serializeArray();
-                let form_data = {}
+    // Get the value of the input field
+    var foodPackDate = $('#addDateFoodPack').val().trim();
 
-                $.each(form, function()
-                {
-                    form_data[[this.name.slice(0, -5)]] = this.value;
-                })
+    // Check if the input is empty
+    if (!foodPackDate) {
+        // Show error message
+        swalAlert('warning', 'Please fill up the Food Pack Date Given.');
+        return; // Exit the function early if input is empty
+    }
+
+    // Form Data:
+    let form = $("#addDateForm").serializeArray();
+    let form_data = {}
+
+    $.each(form, function() {
+        form_data[[this.name.slice(0, -5)]] = this.value;
+    })
+
+    form_data.food_pack_given_date = foodPackDate;
+    form_data.food_pack_given = 'Yes';
+
+    console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
+
+    $.ajax({
+        url: form_url,
+        method: "PUT",
+        data: JSON.stringify(form_data),
+        dataType: "JSON",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": API_TOKEN,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(data) {
+            console.log(JSON.stringify(data));
+
+            storeHistoryOfIndividualRecord(data);
+       
+            refresh();
+            $('#addDateModal').modal('hide');
 
 
-                form_data.food_pack_given_date = $('#addDateFoodPack').val();
-                form_data.food_pack_given = 'Yes';
-
-                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
-
-                    $.ajax
-                    ({
-                        url: form_url,
-                        method: "PUT",
-                        data: JSON.stringify(form_data),
-                        dataType: "JSON",
-                        headers:
-                        {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            "Authorization": API_TOKEN,
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data)
-                        {
-                            console.log("burat" + JSON.stringify(data)); 
-
-                            storeHistoryOfIndividualRecord(data);
-                            notification('info', "{{ Str::singular($page_title) }}");
-                            refresh();
-                            $('#addDateModal').modal('hide');
-                            console.log(data);
-    
-                        },
-                        error: function(error)
-                        {
-                            console.log(error);
-                            if (error.responseJSON.errors == null)
-                            {
-                                swalAlert('warning', error.responseJSON.message);
-                                console.log(error.responseJSON.message)
-                            } else
-                            {
-                                $.each(error.responseJSON.errors, function(key, value)
-                                {
-                                    swalAlert('warning', value);
-                                    console.log(error.responseJSON.message)
-                                });
-                            }
-                        }
-                    });
-            })
+        },
+        error: function(error) {
+            console.log(error);
+            if (error.responseJSON.errors == null) {
+                swalAlert('warning', error.responseJSON.message);
+                console.log(error.responseJSON.message)
+            } else {
+                $.each(error.responseJSON.errors, function(key, value) {
+                    swalAlert('warning', value);
+                    console.log(error.responseJSON.message)
+                });
+            }
+        }
+    });
+});
             // End of Script for Update Function for Complementary Feeding
 
 
