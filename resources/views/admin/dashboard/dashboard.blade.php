@@ -486,8 +486,8 @@ jq(document).ready(function() {
                     }
                 });
             }
-
-            updateChartData(2024);
+            const currentYear = new Date().getFullYear();
+            updateChartData(currentYear);
 
      
         let setWeightForAgeStatusTable = [0, 0, 0];
