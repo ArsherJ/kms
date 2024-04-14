@@ -105,7 +105,8 @@
     <script src="{{ asset('import/assets/js/dashboard.js') }}"></script>
     <script>
         $(document).ready(function() {
-
+            Chart.register(ChartDataLabels);
+            Chart.defaults.font.size = 12;
             // GLOBAL VARIABLE
             const APP_URL = "{{ env('APP_URL') }}"
             const API_URL = "{{ env('API_URL') }}"
@@ -571,7 +572,8 @@ jq(document).ready(function() {
             pieChart3Instance.destroy();
         }
 
-               
+
+
         // Chart 2
         var ctx2 = document.getElementById("pieChart3").getContext('2d');
             var data2 = {
@@ -585,17 +587,21 @@ jq(document).ready(function() {
                 type: 'pie',
                 data: data2,
                 options: {
-                    aspectRatio: 1.2,
+                    aspectRatio: 1.4,
                     plugins: {
                         datalabels: {
-                            anchor: 'end',
-                            align: 'end',
+                            anchor: 'center',
+                            align: 'center',
                             color: '#000',
                             formatter: (value, ctx) => {
                                 let label = ctx.chart.data.labels[ctx.dataIndex];
                                 let total = ctx.chart.data.datasets[0].data.reduce((acc, cur) => acc + cur, 0);
                                 let percentage = Math.round((value / total) * 100) + '%';
-                                return percentage;
+                                if (isNaN(parseFloat(percentage))) {
+                                    return "No Data Available";
+                                } else {
+                                    return "";
+                                }
                             }
                         }
                     },
@@ -608,10 +614,6 @@ jq(document).ready(function() {
                     }
                 }
             });
-
-
-            
-            
         }
 
 
