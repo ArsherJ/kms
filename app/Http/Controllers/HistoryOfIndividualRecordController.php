@@ -27,7 +27,10 @@ class HistoryOfIndividualRecordController extends Controller
 
     public function datatableshow(HistoryOfIndividualRecord $history_of_individual_records, $child_number)
     {
-        $data = HistoryOfIndividualRecord::where('child_number', $child_number)->get();
+        $data = HistoryOfIndividualRecord::where('child_number', $child_number)
+                    ->whereNotNull('date_measured') // Exclude records where date_measured is null
+                    ->get();
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->rawColumns(['action'])
@@ -37,30 +40,29 @@ class HistoryOfIndividualRecordController extends Controller
     public function micronutrientdatatableshow(HistoryOfIndividualRecord $history_of_individual_records, $child_number)
     {
         $data = HistoryOfIndividualRecord::where('child_number', $child_number)
-                        ->where(function($query) {
-                            $query->whereNotNull('food_pack_given_date')
-                                  ->where(function($innerQuery) {
-                                      $innerQuery->whereNull('nutrient_given_date')
-                                                 ->orWhereNull('micronutrient');
-                                  });
-                        })
-                        ->orWhere(function($query) {
-                            $query->whereNull('food_pack_given_date')
-                                  ->whereNotNull('nutrient_given_date')
-                                  ->whereNotNull('micronutrient');
-                        })
-                        ->orWhere(function($query) {
-                            $query->whereNotNull('food_pack_given_date')
-                                  ->whereNotNull('nutrient_given_date')
-                                  ->whereNotNull('micronutrient');
-                        })
-                        ->get();
-    
+                    ->whereNotNull('nutrient_given_date')
+                    ->whereNotNull('micronutrient')
+                    ->where('micronutrient', '!=', 'No')
+                    ->get();
+
         return DataTables::of($data)
-                ->addIndexColumn()
-                ->rawColumns(['action'])
-                ->make(true);
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
+
+    public function foodpackgivendatatableshow(HistoryOfIndividualRecord $history_of_individual_records, $child_number)
+    {
+        $data = HistoryOfIndividualRecord::where('child_number', $child_number)
+                    ->whereNotNull('food_pack_given_date')
+                    ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+    
     
 
     public function create()

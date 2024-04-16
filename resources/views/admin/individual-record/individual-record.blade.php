@@ -307,46 +307,46 @@
     {{-- END OF MICRONUTRIENT MODAL --}}
 
     {{-- UPLOAD FORM --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script>
+        function closeModalAndClearFile() {
+            // Clear the file input value
+            $('#excelFile').val('');
+           // Hide the modal
+            $('#uploadModal').modal('hide');
+        }
+    </script>
+    
     <div id="uploadModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content" id="uploadCollapseModal">
-
                 <div class="modal-body">
-
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title fw-semibold mb-4 text-black">► Upload Multiple Record</h5>
-                        <a href="{{ asset('download/MultiIndividualFormat.xlsx') }}"><button
-                                class="btn btn-sm btn-dark float-end">Download Excel Format</button></a>
+                        <a href="{{ asset('download/MultiIndividualFormat.xlsx') }}">
+                            <button class="btn btn-sm btn-dark float-end">Download Excel Format</button>
+                        </a>
                     </div>
-
                     <div class="row">
                         <form id="uploadForm" action="" method="post" name="uploadForm" data-parsley-validate>
-
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        
                                         <div class="d-flex justify-content-between">
                                             <label class="required-input" style="font-weight:bold; margin-bottom:10px">Import File:</label>
                                             <span class="text-info" style="font-weight:bold"> Note: Please upload at least 3 individual records.</span>
                                         </div>
-
-                                        <input type="file" class="form-control" id="excelFile" name="file"
-                                            tabindex="1"
-                                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                        <input type="file" class="form-control" id="excelFile" name="file" tabindex="1" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                     </div>
                                 </div>
                             </div>
-                    </div>
-
-                </div>
                             <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
+                                <button type="button" class="btn btn-default" onclick="closeModalAndClearFile()" style="border:solid 1px gray">Close</button>
                                 <button type="submit" class="btn btn-success">Upload</button>
                             </div>
-
                         </form>
-
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -555,7 +555,7 @@
 
 {{-- SCRIPTS --}}
 @section('scripts')
-
+    
     <script>
         $(document).ready(function()
         {
@@ -624,7 +624,7 @@
                     },
                     success: function(historyData)
                     {
-                        notification('success', "{{ Str::singular($page_title) }}");
+                        // notification('success', "{{ Str::singular($page_title) }}");
                         $("#createForm").trigger("reset");
                         $("#create_card").collapse("hide");
                         refresh();
@@ -637,54 +637,89 @@
             }
 
             // Script for Upload Excel File:
-            $('#uploadForm').on('submit', function (e)
-            {
+            $('#uploadForm').on('submit', function (e) {
                 e.preventDefault();
 
                 let excelFile = $('#excelFile')[0].files[0];
-                let formData = new FormData();
-                formData.append('file', excelFile);
 
-                $.ajax
-                ({
-                    url: BASE_API + '/import',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    headers:
-                    {
-                        'Authorization': API_TOKEN,
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function (data)
-                    {
-                        console.log(data.message);
-                        toastr.success('Multiple individuals added successfully.');
-                        $('#uploadModal').modal('hide');
-                        $('#uploadForm').trigger('reset');
-                        refresh();
-                    },
-                    error: function (error)
-                    {
-                        console.log(error);
-                        if (error.responseJSON.message)
-                        {
-                            swalAlert('warning', error.responseJSON.message);
-                        }
-                        else
-                        {
-                            swalAlert('error', 'An error occurred while processing the file.');
+                // Check if the file is empty
+                if (!excelFile) {
+                    swalAlert('warning', 'Please select a file to upload.');
+                    return; // Exit function early if file is empty
+                }
+
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Parse the data from the file
+                    let workbook = XLSX.read(e.target.result, {type: 'binary'});
+
+                    // Get the first sheet
+                    let firstSheetName = workbook.SheetNames[0];
+                    let firstSheet = workbook.Sheets[firstSheetName];
+
+                    // Check if any cells in the sheet have non-empty values
+                    let isEmpty = true;
+                    for (let cellAddress in firstSheet) {
+                        if (firstSheet.hasOwnProperty(cellAddress)) {
+                            let cellValue = firstSheet[cellAddress].v;
+                            if (cellValue !== undefined && cellValue !== null && cellValue !== '') {
+                                isEmpty = false;
+                                break;
+                            }
                         }
                     }
-                });
+
+                    // Check if the sheet is empty
+                    if (isEmpty) {
+                        swalAlert('warning', 'The selected file is empty.');
+                        return; // Exit function if sheet is empty
+                    }
+
+                    // Proceed with file upload since it's not empty
+                    let formData = new FormData();
+                    formData.append('file', excelFile);
+
+                    $.ajax({
+                        url: BASE_API + '/import',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            'Authorization': API_TOKEN,
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            console.log(data.message);
+                            toastr.success('Multiple individuals added successfully.');
+                            $('#uploadModal').modal('hide');
+                            $('#uploadForm')[0].reset(); // Use form's reset() method instead
+                            refresh();
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            if (error.responseJSON.message) {
+                                swalAlert('warning', error.responseJSON.message);
+                            } else {
+                                swalAlert('error', 'An error occurred while processing the file.');
+                            }
+                        }
+                    });
+                };
+
+                // Read the file as binary data
+                reader.readAsBinaryString(excelFile);
             });
 
-            $('.btnUpload').on('click', function()
-            {
+            $('.btnUpload').on('click', function () {
                 $('#uploadModal').modal('show');
             });
             // End of Script for Upload Excel File
+
+
+
+
 
             // Script for Weight for Age Status:
             function calculateWeightForAgeStatus(ageInMonths, sex, weight, database)
@@ -2003,7 +2038,7 @@
                                     },
                                     success: function(historyData)
                                     {
-                                        notification('success', "{{ Str::singular($page_title) }}");
+                                        // notification('success', "{{ Str::singular($page_title) }}");
                                         $("#createForm").trigger("reset");
                                         $("#create_card").collapse("hide");
                                         refresh();
@@ -2053,7 +2088,6 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data));
 
                         $('.btnUpdate').attr('id', data.id)
                         $('#address_edit').val(data.address)
@@ -2118,7 +2152,6 @@
                 form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.sex, form_data.height, true);
                 form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate, form_data.date_measured), form_data.weight, form_data.sex, true);
 
-                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
                     $.ajax
                     ({
@@ -2135,7 +2168,6 @@
                         },
                         success: function(data)
                         {
-                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
 
                             storeHistoryOfIndividualRecord(data);
                             notification('info', "{{ Str::singular($page_title) }}");
@@ -2186,7 +2218,6 @@
                             },
                             success: function(data)
                             {
-                                console.log("jatsen lang masarap" + JSON.stringify(data));
 
                                 $('.btnUpdateReweigh').attr('id', data.id);
                                 $('#child_last_name_reweigh').val(data.child_last_name);
@@ -2287,7 +2318,6 @@
                         },
                         success: function(data)
                         {
-                            console.log("jatsen masarap na, hot pa, kaya kagat na!" + JSON.stringify(data));
 
                             $.ajax
                             ({
@@ -2304,7 +2334,6 @@
                                 },
                                 success: function(data)
                                 {
-                                    console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
 
                                     storeHistoryOfIndividualRecord(data);
                                     notification('info', "{{ Str::singular($page_title) }}");
@@ -2367,7 +2396,6 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data));
 
                         $('.btnUpdateFeeding').attr('id', data.id)
                         $('#child_last_name_feeding').val(data.child_last_name)
@@ -2419,8 +2447,6 @@
                 // Update feeding_candidate to 'Yes':
                 form_data['feeding_candidate'] = 'Yes';
 
-                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
-
                     $.ajax
                     ({
                         url: form_url,
@@ -2436,9 +2462,9 @@
                         },
                         success: function(data)
                         {
-                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
-
-                            storeHistoryOfIndividualRecord(data);
+                            // comment this becuase no need to add to history of individual records table 
+                            // when adding records on complementary feeding
+                            // storeHistoryOfIndividualRecord(data);
                             notification('info', "{{ Str::singular($page_title) }}");
                             refresh();
                             $('#feedingModal').modal('hide');
@@ -2482,7 +2508,6 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data));
 
                         $('.btnUpdateNutrient').attr('id', data.id)
                         $('#child_last_name_nutrient').val(data.child_last_name)
@@ -2537,7 +2562,6 @@
                 form_data.micronutrient = $('#micronutrient_nutrient').val();
                 form_data.nutrient_given_date = $('#nutrient_given_date_nutrient').val();
 
-                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
                     $.ajax
                     ({
@@ -2554,7 +2578,6 @@
                         },
                         success: function(data)
                         {
-                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
 
                             storeHistoryOfIndividualRecord(data);
                             notification('info', "{{ Str::singular($page_title) }}");

@@ -14,9 +14,14 @@ class IndividualRecordImport implements ToModel, WithStartRow
 {
     public function model(array $row)
     {
+        // Validate if the row array is empty
+        if (empty($row)) {
+            Log::error('Excel file is empty');
+            return null;
+        }
+
         // Validate the array structure and data here if needed
         if (count($row) >= 12) {
-
             // Calculate age in months
             $ageInMonths = $this->calculateAgeInMonths($row[7]);
 
@@ -31,7 +36,7 @@ class IndividualRecordImport implements ToModel, WithStartRow
             // Get today's date
             $dateToday = $this->date_today();
 
-
+            // Create IndividualRecord
             $individualRecord = new IndividualRecord([
                 'child_number' => $row[0],
                 'address' => $row[1],
@@ -51,7 +56,6 @@ class IndividualRecordImport implements ToModel, WithStartRow
                 'weight_for_age_status' => $weightForAgeStatus,
                 'height_length_for_age_status' => $heightLengthForAgeStatus,
                 'weight_for_length_status' => $weightForLengthStatus,
-                
             ]);
 
             // Save IndividualRecord to the database

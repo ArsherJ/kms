@@ -312,7 +312,12 @@ doc.content.splice(3, 15, {
                     // ajax closing tag
                 })
 
-            })
+            });
+
+            // Close modal when close button is clicked
+            $('#editModal').on('click', '[data-bs-dismiss="modal"]', function() {
+                $('#editModal').modal('hide');
+            });
             // END OF EDIT FUNCTION
 
             // UPDATE FUNCTION
