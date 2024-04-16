@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // INDIVIDUAL RECORD
     Route::get('/individual_records', [IndividualRecordController::class, 'index']);
     Route::get('/individual_records/datatable', [IndividualRecordController::class, 'datatable']);
+    Route::get('/individual_records/micronutrient_datatable/{child_number}', [IndividualRecordController::class, 'micronutrientdatatableshow']);
     Route::post('/individual_records', [IndividualRecordController::class, 'store']);
     Route::get('/individual_records/{id}', [IndividualRecordController::class, 'show']);
     Route::put('/individual_records/{id}', [IndividualRecordController::class, 'update']);
@@ -100,6 +101,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/history_of_individual_records', [HistoryOfIndividualRecordController::class, 'index']);
     Route::get('/history_of_individual_records/datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'datatableshow']);
     Route::get('/history_of_individual_records/micronutrient_datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'micronutrientdatatableshow']);
+    Route::get('/history_of_individual_records/foodpackgiven_datatable/{child_number}', [HistoryOfIndividualRecordController::class, 'foodpackgivendatatableshow']);
     Route::get('/history_of_individual_records/datatable', [HistoryOfIndividualRecordController::class, 'datatable']);
     Route::post('/history_of_individual_records', [HistoryOfIndividualRecordController::class, 'store']);
     Route::get('/history_of_individual_records/{id}', [HistoryOfIndividualRecordController::class, 'show']);

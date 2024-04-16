@@ -450,7 +450,6 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data.phone_number));
 
                         $('.btnSendSMS').attr('id', data.id)
                         $('#reminderDateField').val(data.reminder_date_field)
@@ -808,7 +807,7 @@
                     },
                     success: function(historyData)
                     {
-                        notification('success', "{{ Str::singular($page_title) }}");
+                        // notification('success', "{{ Str::singular($page_title) }}");
                         $("#createForm").trigger("reset");
                         $("#create_card").collapse("hide");
                         refresh();
@@ -2038,7 +2037,7 @@
                         $("#createForm").trigger("reset");
                         $("#create_card").collapse("hide");
                         refresh();
-                        console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
+                        // console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
                         // Second AJAX request
                         $.ajax
                         ({
@@ -2077,7 +2076,7 @@
                             },
                             success: function(historyData)
                             {
-                                notification('success', "{{ Str::singular($page_title) }}");
+                                // notification('success', "{{ Str::singular($page_title) }}");
                                 $("#createForm").trigger("reset");
                                 $("#create_card").collapse("hide");
                                 refresh();
@@ -2128,7 +2127,6 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data));
 
                         $('.btnUpdate').attr('id', data.id)
                         $('#address_edit').val(data.address)
@@ -2190,8 +2188,6 @@
                 form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
                 form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
 
-                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
-
                     $.ajax
                     ({
                         url: form_url,
@@ -2207,8 +2203,6 @@
                         },
                         success: function(data)
                         {
-                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
-
                             storeHistoryOfIndividualRecord(data);
                             notification('info', "{{ Str::singular($page_title) }}");
                             refresh();
@@ -2257,7 +2251,6 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data));
 
                         $('.btnUpdateFoodPack').attr('id', data.id)
                         $('#addDateFoodPack').val(data.food_pack_given_date)
@@ -2310,8 +2303,6 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
 
     form_data.food_pack_given_date = foodPackDate;
     form_data.food_pack_given = 'Yes';
-
-    console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
     $.ajax({
         url: form_url,
@@ -2376,7 +2367,6 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
                             },
                             success: function(data)
                             {
-                                console.log("jatsen lang masarap" + JSON.stringify(data));
 
                                 $('.btnUpdateReweigh').attr('id', data.id);
                                 $('#child_last_name_reweigh').val(data.child_last_name);
@@ -2464,7 +2454,6 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
                         },
                         success: function(data)
                         {
-                            console.log("jatsen masarap na, hot pa, kaya kagat na!" + JSON.stringify(data));
 
                             $.ajax
                             ({

@@ -214,7 +214,6 @@
                         
                             <thead>
                                 <tr class="text-dark">
-                                    <th class="bg-dark" style="width:1%; text-align:center; color: white; border-right:2px solid white;">Food Pack Given Date</th>
                                     <th class="bg-dark" style="width:1%; text-align:center; color: white; border-right:2px solid white;">Date Given Micronutrients</th>
                                     <th class="bg-dark" style="width:1%; text-align:center; color: white; border-right:2px solid white;">Name of Given Micronutrients</th>
                                 </tr>
@@ -229,6 +228,29 @@
                 </div>
             </div>
             {{-- END OF MICRONUTRIENT DATA TABLE --}}
+
+            {{-- FOOD PACK DATA TABLE --}}
+            <div class="card">
+                <div class="card-body">                    
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm table-borderless" id="foodpackgivenDataTable"
+                            style="width: 100%; table-layout:fixed; text-align:center; border:1px solid black; border-radius:5px">
+                        
+                            <thead>
+                                <tr class="text-dark">
+                                    <th class="bg-dark" style="width:1%; text-align:center; color: white; border-right:2px solid white;">Food Pack Given Date</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody></tbody>
+                            
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            {{-- END OF FOOD PACK DATA TABLE --}}
         </div>
     </div>
 @endsection
@@ -513,9 +535,6 @@
                     "columns":
                     [   
                         {
-                            data: "food_pack_given_date", visible: true,
-                        },
-                        {
                             data: "nutrient_given_date", visible: true,
                         },
                         {
@@ -530,7 +549,45 @@
             }
             // End of Script for Micronutrient Data Table Function
 
+            // Script for Food Pack Given Data Table Function:
+            async function foodpackgivenDataTable()
+            {
+                let url_form = API_URL  + '/history_of_individual_records'
+                let id = INDIVIDUAL_RECORD_ID;
+                // Get the child number
+                let childNumber = await getChildNumberByRecordId(id);
 
+                console.log("This is the child numbers" + getChildNumberByRecordId(id))
+
+
+                dataTable = $('#foodpackgivenDataTable').DataTable
+                ({
+                    "ajax":
+                    {
+                        url: url_form + '/foodpackgiven_datatable'+ '/' + childNumber,
+
+                        method: 'GET'
+                    },
+
+                    "headers":
+                    {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    "columns":
+                    [   
+                        {
+                            data: "food_pack_given_date", visible: true,
+                        }
+                    ],
+                    "order":
+                    [
+                        [0, "asc"]
+                    ]
+                })
+            }
+            // End of Script for Food Pack Given Data Table Function
 
             // Script for Refresh Data Table Function:
             function refresh()
@@ -1484,10 +1541,24 @@
             });
         });
 
+        jq(document).ready(function()
+        {
+            jq('#foodpackgivenDataTable').DataTable({ });
+
+            jq('#reloadButton').on('click', function()
+            {
+                jq('#dataTable').DataTable().ajax.reload();
+            });
+        });
+
         // Function Calling:
         dataTable();
         // Function Calling:
-        micronutrientDataTable  ();
+        micronutrientDataTable();
+        // Function Calling:
+        foodpackgivenDataTable();
+
+        
         
     })
     </script>
