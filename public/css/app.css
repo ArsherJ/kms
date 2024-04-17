@@ -10,3 +10,8 @@
     padding: 35px 0;
     text-align: center;
 }
+
+.fc-time, .fc-title {
+    white-space: normal;
+    word-wrap: break-word;
+}
