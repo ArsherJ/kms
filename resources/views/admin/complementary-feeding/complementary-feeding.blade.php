@@ -329,7 +329,42 @@
 {{-- END OF ADD DATE FORM --}} 
 
 
+{{-- CANDIDATE FORM --}}
+<div id="deleteModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" id="uploadCollapseModal">
 
+            <div class="modal-body">
+
+                <div class="d-flex justify-content-between">
+                    <h5>► Set Date</h5>
+                </div>
+
+                <div class="row">
+                    <form id="addDateForm">
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <h5 class="text-center mt-3">Food Pack Date Given:</h5>
+                                    <div class="col-md-4 mx-auto">
+                                    <input type="date" id="addDateFoodPack" class="form-control mr-2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" onclick="closeAddDateModal()" style="border:solid 1px gray">Close</button>
+                            <button type="button" class="btn btn-success btnUpdateFoodPack">Save</button> <!-- Change type to submit -->
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- END OF DELETE CANDIDATE FORM --}} 
 
 {{-- DATA TABLE --}}
 <div class="card">
@@ -430,6 +465,52 @@
 @section('scripts')
 
     <script>
+$(document).on('click', '.btnRemoveCandidate', function() {
+    let id = this.id;
+    let form_url = BASE_API + '/' + id;
+
+    // Show confirmation dialog box
+    swal.fire({
+        title: 'Are you sure?',
+        text: 'This action will remove the feeding candidate. Are you sure you want to proceed?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If user confirms, proceed with removal
+            $.ajax({
+                url: API_URL + '/complementary_feeding/' + id,
+                method: "PUT",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": API_TOKEN,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: JSON.stringify({ feeding_candidate: "NO" }), // Update feeding_candidate to NO
+                success: function(data) {
+                    console.log("SUCCESS REMOVING");
+                    $('#dataTable').DataTable().ajax.reload();
+                    notification('custom', "Feeding Candidate Remove");
+                },
+                error: function(error) {
+                    console.log(error);
+                    if (error.responseJSON.errors == null) {
+                        swalAlert('warning', error.responseJSON.message);
+                    } else {
+                        $.each(error.responseJSON.errors, function(key, value) {
+                            swalAlert('warning', value);
+                        });
+                    }
+                }
+            });
+        }
+    });
+});
+
 
             // Script for Complementary Feeding Function:
             $(document).on('click', '.btnReminder', function()
@@ -450,7 +531,6 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data.phone_number));
 
                         $('.btnSendSMS').attr('id', data.id)
                         $('#reminderDateField').val(data.reminder_date_field)
@@ -1888,6 +1968,7 @@
                                             <input id="${row.id}_checkbox" type="checkbox" class="form-check-input sendSMS" data-id="${row.id}">
                                             <button id="${row.id}" type="button" class="btn btn-sm btn-info btnAddDate">Add Date</button>
                                             <button id="${row.id}" type="button" class="btn btn-sm btn-warning btnReminder">Reminder</button>
+                                            <button id="${row.id}" type="button" class="btn btn-sm btn-danger btnRemoveCandidate">Delete</button>
 
                                         </div>`;
                                     
@@ -2107,8 +2188,6 @@
             // End of Script for Create Function
 
 
-
-
             // Script for Edit Function:
             $(document).on('click', '.btnEdit', function()
             {
@@ -2190,7 +2269,7 @@
                 form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
                 form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
 
-                console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
+      
 
                     $.ajax
                     ({
@@ -2257,7 +2336,7 @@
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data));
+                       
 
                         $('.btnUpdateFoodPack').attr('id', data.id)
                         $('#addDateFoodPack').val(data.food_pack_given_date)
@@ -2311,7 +2390,6 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
     form_data.food_pack_given_date = foodPackDate;
     form_data.food_pack_given = 'Yes';
 
-    console.log("ugh jatsen why so sarap" + JSON.stringify(form_data));
 
     $.ajax({
         url: form_url,
