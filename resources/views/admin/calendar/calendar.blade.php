@@ -62,6 +62,7 @@
                                 right:'month,agendaWeek,agendaDay'
                             },
                             events: activities,
+                            timeFormat: 'hh:mm a'
                         })
                     },
                     error: function(error) {

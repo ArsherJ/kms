@@ -27,8 +27,6 @@
             </div>
             <div class="btn-group mb-3">
                     <select id="monthDropdown" class="form-control btn btn-secondary">
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
                     </select>
                 </div>
             <canvas id="myChart" width="400" height="150px"></canvas>
@@ -50,6 +48,34 @@
 
         let currentYear = new Date().getFullYear();
         $('#monthDropdown').val(currentYear);
+
+        var years = [2023, 2024];
+        var dropdown = document.getElementById("monthDropdown");
+        function generateOptions() {
+        // Clear existing options
+        dropdown.innerHTML = "";
+
+        // Generate options for each year in the array
+        years.forEach(function(year) {
+            var option = document.createElement("option");
+            option.value = year;
+            option.text = year;
+            dropdown.appendChild(option);
+        });
+
+        // Add 2025 if it's not already in the array
+        var currentYear = new Date().getFullYear();
+        if (!years.includes(currentYear + 1)) {
+            var option2025 = document.createElement("option");
+            option2025.value = currentYear + 1;
+            option2025.text = currentYear + 1;
+            dropdown.appendChild(option2025);
+        }
+        $('#monthDropdown').val(currentYear);
+    }
+
+    // Call the function to generate options
+    generateOptions();
 
         function updateChartData(selectedYear) {
             let form_url = BASE_API + "/data_chart_year/"+ selectedYear 

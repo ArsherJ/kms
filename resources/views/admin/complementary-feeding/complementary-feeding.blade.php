@@ -888,7 +888,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     },
                     success: function(historyData)
                     {
-                        notification('success', "{{ Str::singular($page_title) }}");
+                        // notification('success', "{{ Str::singular($page_title) }}");
                         $("#createForm").trigger("reset");
                         $("#create_card").collapse("hide");
                         refresh();
@@ -2119,7 +2119,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                         $("#createForm").trigger("reset");
                         $("#create_card").collapse("hide");
                         refresh();
-                        console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
+                        // console.log("BIRHLAJSD: " + convert_age_in_months(data.birthdate));
                         // Second AJAX request
                         $.ajax
                         ({
@@ -2158,7 +2158,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                             },
                             success: function(historyData)
                             {
-                                notification('success', "{{ Str::singular($page_title) }}");
+                                // notification('success', "{{ Str::singular($page_title) }}");
                                 $("#createForm").trigger("reset");
                                 $("#create_card").collapse("hide");
                                 refresh();
@@ -2207,7 +2207,6 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     },
                     success: function(data)
                     {
-                        console.log("jatsen masarap at hot" + JSON.stringify(data));
 
                         $('.btnUpdate').attr('id', data.id)
                         $('#address_edit').val(data.address)
@@ -2286,8 +2285,6 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                         },
                         success: function(data)
                         {
-                            console.log("pogi si jatsen, sobrang sarap niya" + JSON.stringify(data)); 
-
                             storeHistoryOfIndividualRecord(data);
                             notification('info', "{{ Str::singular($page_title) }}");
                             refresh();
@@ -2454,7 +2451,6 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
                             },
                             success: function(data)
                             {
-                                console.log("jatsen lang masarap" + JSON.stringify(data));
 
                                 $('.btnUpdateReweigh').attr('id', data.id);
                                 $('#child_last_name_reweigh').val(data.child_last_name);
@@ -2542,7 +2538,6 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
                         },
                         success: function(data)
                         {
-                            console.log("jatsen masarap na, hot pa, kaya kagat na!" + JSON.stringify(data));
 
                             $.ajax
                             ({

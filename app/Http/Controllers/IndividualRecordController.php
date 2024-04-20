@@ -46,6 +46,17 @@ class IndividualRecordController extends Controller
             ->make(true);
     }
 
+    public function micronutrientdatatableshow(IndividualRecord $individual_records, $child_number)
+    {
+        $data = IndividualRecord::where('child_number', $child_number)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+
+    }
+
     public function create()
     {
         // Your create logic here if needed

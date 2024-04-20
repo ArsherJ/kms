@@ -66,7 +66,7 @@
                         background: linear-gradient(to right, #cdffd8, #94b9ff); 
                         text-align: center; 
                         padding: 3%">HEIGHT/LENGTH FOR AGE </h5>
-                            <canvas id="pieChart3" class="chart-canvas"></canvas>
+                            <canvas id="pieChart3" class="chart-canvas" width="200" height="200"   ></canvas>
                         </div>
                     </div>
                 </div>
@@ -237,14 +237,19 @@ $(document).ready(function() {
                     plugins: {
                         datalabels: {
                             anchor: 'end',
-                            align: 'end',
+                            align: 'center',
                             color: '#000',
                             formatter: (value, ctx) => {
                                 let label = ctx.chart.data.labels[ctx.dataIndex];
                                 let total = ctx.chart.data.datasets[0].data.reduce((acc, cur) => acc + cur, 0);
                                 let percentage = Math.round((value / total) * 100) + '%';
-                                return percentage;
+                                if (isNaN(parseFloat(percentage))) {
+                                    return "No Data Available";
+                                } else {
+                                    return percentage;
+                                }
                             }
+
                         }
                     },
                     legend: {
@@ -275,13 +280,17 @@ $(document).ready(function() {
                     plugins: {
                         datalabels: {
                             anchor: 'end',
-                            align: 'end',
+                            align: 'center',
                             color: '#000',
                             formatter: (value, ctx) => {
                                 let label = ctx.chart.data.labels[ctx.dataIndex];
                                 let total = ctx.chart.data.datasets[0].data.reduce((acc, cur) => acc + cur, 0);
                                 let percentage = Math.round((value / total) * 100) + '%';
-                                return percentage;
+                                if (isNaN(parseFloat(percentage))) {
+                                    return "No Data Available";
+                                } else {
+                                    return percentage;
+                                }
                             }
                         }
                     },
@@ -312,13 +321,17 @@ $(document).ready(function() {
                     plugins: {
                         datalabels: {
                             anchor: 'end',
-                            align: 'end',
+                            align: 'center',
                             color: '#000',
                             formatter: (value, ctx) => {
                                 let label = ctx.chart.data.labels[ctx.dataIndex];
                                 let total = ctx.chart.data.datasets[0].data.reduce((acc, cur) => acc + cur, 0);
                                 let percentage = Math.round((value / total) * 100) + '%';
-                                return percentage;
+                                if (isNaN(parseFloat(percentage))) {
+                                    return "No Data Available";
+                                } else {
+                                    return percentage;
+                                }
                             }
                         }
                     },
@@ -392,9 +405,9 @@ $(document).ready(function() {
 
 
         doc.addImage(base64Image, 'JPEG', 50, 2, 200, 30);
-        doc.addImage(imgData1, 'PNG', 10, 65, 85, 95);
-        doc.addImage(imgData2, 'PNG', 105, 65, 85, 95); 
-        doc.addImage(imgData3, 'PNG', 200, 65, 85, 95); 
+        doc.addImage(imgData1, 'PNG', 10, 70, 85, 95);
+        doc.addImage(imgData2, 'PNG', 105, 70, 85, 95); 
+        doc.addImage(imgData3, 'PNG', 200, 70, 85, 95); 
 
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
