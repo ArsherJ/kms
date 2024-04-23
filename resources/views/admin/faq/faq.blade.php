@@ -330,6 +330,15 @@ doc.content.splice(3, 15, {
                 let form = $("#editForm").serializeArray();
                 let form_data = {}
 
+                let question_edit = $('#question_edit').val();
+                let answer_edit = $('#answer_edit').val();
+
+                if (question_edit !== '' || answer_edit === '')
+                {
+                    swalAlert('warning', 'Fields cannot be empty.');
+                    return false;
+                }
+
                 $.each(form, function() {
                     form_data[[this.name.slice(0, -5)]] = this.value;
                 })
