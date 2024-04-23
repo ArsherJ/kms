@@ -659,7 +659,12 @@ $(document).on('click', '.btnRemoveCandidate', function() {
             var sendDate = $('#sendDateField').val();
             var sendTime = $('#sendTimeField').val();
             var sendLocation = $('#sendLocationField').val();
-            
+            // Check if any required field is empty
+            if (!sendDate || !sendTime || !sendLocation) {
+                // Show error message
+                swalAlert('warning', 'Please Fill Up All Required Fields.');
+                return; // Exit the function early if any required field is empty
+            }
             var message = "Magandang araw! Ito ang abiso para sa susunod na pamamahagi ng food pack para sa inyong anak: " 
                         + "Petsa: " + sendDate + ", Oras: " + sendTime + ", Lugar: " + sendLocation + ". "
                         + "Mangyaring siguraduhing makarating kayo para sa inyong mga food pack. Salamat!";
