@@ -334,7 +334,6 @@
                                     <div class="form-group col-md-12">
                                         <div class="d-flex justify-content-between">
                                             <label class="required-input" style="font-weight:bold; margin-bottom:10px">Import File:</label>
-                                            <span class="text-info" style="font-weight:bold"> Note: Please upload at least 3 individual records.</span>
                                         </div>
                                         <input type="file" class="form-control" id="excelFile" name="file" tabindex="1" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                     </div>
