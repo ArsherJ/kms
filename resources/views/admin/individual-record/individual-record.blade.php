@@ -559,8 +559,7 @@
     <style>
         .highlighted-row
         {
-            /* background-color: #023e8a !important; */
-            background-color: #39ff14 !important;
+            background-color: #023e8a !important;
             color: white !important;
         }
     </style>
