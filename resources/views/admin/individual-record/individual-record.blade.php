@@ -2311,9 +2311,9 @@
                 let weight_reweigh = $('#weight_reweigh').val();
                 let height_reweigh = $('#height_reweigh').val();
 
-                if (weight_reweigh <= 0 || weight_reweigh <= 0)
+                if (weight_reweigh <= 0 || height_reweigh <= 0)
                 {
-                    swalAlert('warning', 'Weight and height must be greater than zero.');
+                    swalAlert('warning', 'Weight and Height must be greater than zero.');
                     return false;
                 }
 
