@@ -2358,96 +2358,103 @@
                     let birthdate = $('#birthdate_reweigh').val();
                     form_data.birthdate = birthdate;
 
-                    console.log("form_data.birthdate" + JSON.stringify(form_data.birthdate))
-
-                    form_data.age_in_months = convert_age_in_months(form_data.birthdate, form_data.date_measured);
-
-                    console.log("age_in_months" + JSON.stringify(form_data.age_in_months))
-
-                    // Populate form_data with each form field.
-                    form_data[field_name] = field_value;
-
-                    // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field.
-                    if (field_name === 'birthdate')
+                    if (measured_date === '')
                     {
-                        form_data.weight_for_age_status = calculateWeightForAgeStatus(form_data.age_in_months, form_data.sex, form_data.weight, true);
-                        form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(form_data.age_in_months, form_data.sex, form_data.height, true);
-                        form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.age_in_months, form_data.weight, form_data.sex, true);
+                        swalAlert('warning', 'Date Measured cannot be empty.');
+                    }
+                    else
+                    {
+                        console.log("form_data.birthdate" + JSON.stringify(form_data.birthdate))
+
+                        form_data.age_in_months = convert_age_in_months(form_data.birthdate, form_data.date_measured);
+
+                        console.log("age_in_months" + JSON.stringify(form_data.age_in_months))
+
+                        // Populate form_data with each form field.
+                        form_data[field_name] = field_value;
+
+                        // Calculate age_in_months, weight_for_age_status, and height_length_for_age_status for each form field.
+                        if (field_name === 'birthdate')
+                        {
+                            form_data.weight_for_age_status = calculateWeightForAgeStatus(form_data.age_in_months, form_data.sex, form_data.weight, true);
+                            form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(form_data.age_in_months, form_data.sex, form_data.height, true);
+                            form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.age_in_months, form_data.weight, form_data.sex, true);
+                        }
+
+                        console.log("form data: " + JSON.stringify(form_data));
+
+                        $.ajax
+                        ({
+                            url: form_url,
+                            method: "PUT",
+                            data: JSON.stringify(form_data),
+                            dataType: "JSON",
+                            headers:
+                            {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": API_TOKEN,
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data)
+                            {
+
+                                $.ajax
+                                ({
+                                    url: form_url,
+                                    method: "PUT",
+                                    data: JSON.stringify(form_data),
+                                    dataType: "JSON",
+                                    headers:
+                                    {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function(data)
+                                    {
+
+                                        storeHistoryOfIndividualRecord(data);
+                                        notification('info', "{{ Str::singular($page_title) }}");
+                                        refresh();
+                                        $('#reweighModal').modal('hide');
+                                        console.log(data);
+                                    },
+                                    error: function(error)
+                                    {
+                                        console.log(error);
+                                        if (error.responseJSON.errors == null)
+                                        {
+                                            swalAlert('warning', error.responseJSON.message);
+                                        } else
+                                        {
+                                            $.each(error.responseJSON.errors, function(key, value)
+                                            {
+                                                swalAlert('warning', value);
+                                            });
+                                        }
+                                    }
+                                });
+                            },
+                            error: function(error)
+                            {
+                                console.log(error);
+                                if (error.responseJSON.errors == null)
+                                {
+                                    swalAlert('warning', error.responseJSON.message);
+                                }
+                                else
+                                {
+                                    $.each(error.responseJSON.errors, function(key, value)
+                                    {
+                                        swalAlert('warning', value);
+                                    });
+                                }
+                            }
+                        });
                     }
                 });
-
-                console.log("form data: " + JSON.stringify(form_data));
-
-                    $.ajax
-                    ({
-                        url: form_url,
-                        method: "PUT",
-                        data: JSON.stringify(form_data),
-                        dataType: "JSON",
-                        headers:
-                        {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                            "Authorization": API_TOKEN,
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data)
-                        {
-
-                            $.ajax
-                            ({
-                                url: form_url,
-                                method: "PUT",
-                                data: JSON.stringify(form_data),
-                                dataType: "JSON",
-                                headers:
-                                {
-                                    "Accept": "application/json",
-                                    "Content-Type": "application/json",
-                                    "Authorization": API_TOKEN,
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                success: function(data)
-                                {
-
-                                    storeHistoryOfIndividualRecord(data);
-                                    notification('info', "{{ Str::singular($page_title) }}");
-                                    refresh();
-                                    $('#reweighModal').modal('hide');
-                                    console.log(data);
-                                },
-                                error: function(error)
-                                {
-                                    console.log(error);
-                                    if (error.responseJSON.errors == null)
-                                    {
-                                        swalAlert('warning', error.responseJSON.message);
-                                    } else
-                                    {
-                                        $.each(error.responseJSON.errors, function(key, value)
-                                        {
-                                            swalAlert('warning', value);
-                                        });
-                                    }
-                                }
-                            });
-                        },
-                        error: function(error)
-                        {
-                            console.log(error);
-                            if (error.responseJSON.errors == null)
-                            {
-                                swalAlert('warning', error.responseJSON.message);
-                            }
-                            else
-                            {
-                                $.each(error.responseJSON.errors, function(key, value)
-                                {
-                                    swalAlert('warning', value);
-                                });
-                            }
-                        }
-                    });
 
             })
             // End of Script for Update Function for Reweigh
