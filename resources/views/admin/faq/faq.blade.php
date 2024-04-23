@@ -333,7 +333,7 @@ doc.content.splice(3, 15, {
                 let question_edit = $('#question_edit').val();
                 let answer_edit = $('#answer_edit').val();
 
-                if (question_edit !== '' || answer_edit === '')
+                if (question_edit === '' || answer_edit === '')
                 {
                     swalAlert('warning', 'Fields cannot be empty.');
                     return false;
