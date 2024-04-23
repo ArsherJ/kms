@@ -31,8 +31,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="required-input" style="font-weight:bold">Contact Number:</label>
-                                <input type="tel" class="form-control" id="phone_number_edit" name="phone_number_edit"
-                                pattern="((^(\+)(\d){12}$)|(^\d{11}$))" placeholder="Format: 09876543210" minlength="11" maxlength="11" tabindex="1" required>
+                                <input type="tel" class="form-control" id="phone_number_edit" name="phone_number_edit" pattern="09[0-9]{9}"
+                                placeholder="Format: 09XXXXXXXXX" minlength="11" maxlength="11" tabindex="1" required>
                             </div>
                         </div>
                         
@@ -162,8 +162,8 @@
                 </div>
 
                 <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
-                    <button type="button" class="btn btn-success btnUpdateReweigh">Save</button>
+                    <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
+                    <button type="submit" class="btn btn-success btnUpdateReweigh">Save</button>
                 </div>
 
             </div>
@@ -372,8 +372,8 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="required-input" style="font-weight:bold">Contact Number:</label>
-                                <input type="tel" class="form-control" id="phone_number" name="phone_number"
-                                pattern="((^(\+)(\d){12}$)|(^\d{11}$))" placeholder="Format: 09876543210" minlength="11" maxlength="11" tabindex="1" required>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" pattern="09[0-9]{9}"
+                                placeholder="Format: 09XXXXXXXXX" minlength="11" maxlength="11" tabindex="1" required>
                             </div>
                         </div>
 
@@ -507,8 +507,8 @@
                             <th style="width:15%; padding:15px 0 15px 0">Weight for Age Status</th>
                             <th style="width:15%; padding:15px 0 15px 0">Height/Length for Age Status</th>
                             <th style="width:15%; padding:15px 0 15px 0">Weight for Length Status</th>
-                            <th style="width:20%; padding:15px 0 15px 0">Action Buttons</th>
-                            <th style="width:20%; padding:15px 0 15px 0">Code Moosaic</th>
+                            <th style="width:20%; padding:15px 0 15px 0"></th>
+                            <th style="width:20%; padding:15px 0 15px 0"></th>
                         </tr>
 
                         <tr class="text-dark">
@@ -536,7 +536,7 @@
                             <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Weight for Age Status</th>
                             <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Height/Length for Age Status</th>
                             <th class="bg-dark" style="width:15%; text-align:center; color: white; border-right:2px solid white;">Weight for Length Status</th>
-                            <th class="bg-dark not-export-column" style="width:20%; text-align:center; color: white">Action Buttons</th>
+                            <th class="bg-dark not-export-column" style="width:20%; text-align:center; color: white"></th>
                             <th class="bg-dark not-export-column" style="width:20%; text-align:center; color: white"></th>
                         </tr>
 
@@ -1517,8 +1517,8 @@
                     'Weight for Age Status': 'Weight for Age Status',
                     'Height/Length For Age Status': 'Height/Length for Age Status',
                     'Weight For Length Status': 'Weight for Length Status',
-                    'Action Buttons': 'Action Buttons',
-                    'Code Moosaic': 'Powered by Code Moosaic',
+                    'Action Buttons': '',
+                    'Code Moosaic': '',
                 };
 
                 $('#search_bar th').each(function (i)
@@ -1539,6 +1539,14 @@
                         (`
                             <input size="15" class="form-control" type="text" disabled placeholder='&#128218; ${placeholderMap[title] || title} &#128218' data-index="${i}" 
                                 style="text-align:center; background-color:tranparent; color:black; border:solid 1px 0 1px 0; border-radius:0; opacity: 1; background-color: #fff;" />
+                        `);
+                    }
+                    else if (title == '')
+                    {
+                        $(this).html
+                        (`
+                            <type="text" disabled data-index="${i}" style="text-align:center; background-color:tranparent; color:black;
+                            border:solid 1px 0 1px 0; border-radius:0; opacity: 1; background-color: #fff;" />
                         `);
                     }
                     else
@@ -1627,7 +1635,7 @@
                     [   
                         {
                             // Column 0
-                            data: "child_number", visible: true,
+                            data: "id", visible: true,
                         },
                         {
                             // Column 1
@@ -1954,6 +1962,24 @@
                 let form = $("#createForm").serializeArray();
                 let form_data = {}
 
+                let weight = $('#weight').val();
+                let height = $('#height').val();
+
+                if (weight <= 0 || height <= 0)
+                {
+                    swalAlert('warning', 'Weight and height must be greater than zero.');
+                    return false;
+                }
+
+                let phone_number = $('#phone_number').val();
+                let phone_number_regex = /^(09)\d{9}$/;
+
+                if (!phone_number_regex.test(phone_number))
+                {
+                    swalAlert('warning', 'Contact number must start with "09" followed by 9 digits.');
+                    return false;
+                }
+
                 $.each(form, function()
                 {
                     form_data[[this.name]] = this.value;
@@ -2141,6 +2167,51 @@
                 let form = $("#editForm").serializeArray();
                 let form_data = {}
 
+                let address_edit = $('#address_edit').val();
+                let mother_last_name_edit = $('#mother_last_name_edit').val();
+                let mother_first_name_edit = $('#mother_first_name_edit').val();
+                let child_last_name_edit = $('#child_last_name_edit').val();
+                let child_first_name_edit = $('#child_first_name_edit').val();
+                let birthdate_edit = $('#birthdate_edit').val();
+
+                let weight_edit = $('#weight_edit').val();
+                let height_edit = $('#height_edit').val();
+
+                if (weight_edit <= 0 || height_edit <= 0)
+                {
+                    swalAlert('warning', 'Weight and height must be greater than zero.');
+                    return false;
+                }
+
+                let phone_number_edit = $('#phone_number_edit').val();
+                let phone_number_regex = /^(09)\d{9}$/;
+
+                if (!phone_number_regex.test(phone_number_edit))
+                {
+                    swalAlert('warning', 'Contact number must start with "09" followed by 9 digits.');
+                    return false;
+                }
+
+                const fieldsToValidate =
+                [
+                    { value: address_edit, message: 'Address is required.' },
+                    { value: mother_last_name_edit, message: 'Last Name of Parent/Guardian is required.' },
+                    { value: mother_first_name_edit, message: 'First Name of Parent/Guardian is required.' },
+                    { value: child_last_name_edit, message: 'Last Name of the Child is required.' },
+                    { value: child_first_name_edit, message: 'First Name of the Child is required.' },
+                    { value: birthdate_edit, message: 'Birth Date of the Child is required.' },
+                    { value: phone_number_edit, message: 'Contact Number is required.' }
+                ];
+
+                for (let field of fieldsToValidate)
+                {
+                    if (field.value.trim() === '')
+                    {
+                        swalAlert('warning', field.message);
+                        return false;
+                    }
+                }
+
                 $.each(form, function()
                 {
                     form_data[[this.name.slice(0, -5)]] = this.value;
@@ -2268,14 +2339,19 @@
                 let form = $("#reweighForm").serializeArray();
                 let form_data = {}
 
+                let weight_reweigh = $('#weight_reweigh').val();
+                let height_reweigh = $('#height_reweigh').val();
+
+                if (weight_reweigh <= 0 || height_reweigh <= 0)
+                {
+                    swalAlert('warning', 'Weight and Height must be greater than zero.');
+                    return false;
+                }
 
                 $.each(form, function()
                 {
                     let field_name = this.name.slice(0, -5); // Remove the "_edit" suffix
                     let field_value = this.value;
-
-                    form_data.weight = $('#weight_reweigh').val();
-                    form_data.height = $('#height_reweigh').val();
 
                     let measured_date = $('#date_measured_reweigh').val();
                     form_data.date_measured = measured_date;
@@ -2553,6 +2629,15 @@
                 // Form Data:
                 let form = $("#nutrientForm").serializeArray();
                 let form_data = {}
+
+                let micronutrient_nutrient = $('#micronutrient_nutrient').val();
+                let nutrient_given_date_nutrient = $('#nutrient_given_date_nutrient').val();
+
+                if (micronutrient_nutrient !== 'No' && nutrient_given_date_nutrient === '')
+                {
+                    swalAlert('warning', 'Please provide a date when the Micronutrient was given.');
+                    return false;
+                }
 
                 $.each(form, function()
                 {
