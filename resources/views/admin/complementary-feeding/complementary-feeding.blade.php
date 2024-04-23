@@ -2406,7 +2406,7 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
         },
         success: function(data) {
             console.log(JSON.stringify(data));
-
+            notification('custom', "Food pack given date is saved!");
             storeHistoryOfIndividualRecord(data);
        
             refresh();
@@ -2419,6 +2419,7 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
             if (error.responseJSON.errors == null) {
                 swalAlert('warning', error.responseJSON.message);
                 console.log(error.responseJSON.message)
+               
             } else {
                 $.each(error.responseJSON.errors, function(key, value) {
                     swalAlert('warning', value);
