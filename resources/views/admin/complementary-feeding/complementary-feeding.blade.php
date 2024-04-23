@@ -188,16 +188,15 @@
                     <form >
 
                         <div class="card-body">
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <h5 class="text-center mt-3">"Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. 
-                                        Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po."</h5>
-                                </div>
-                            </div>
+                        <div class="row">
+    <div class="form-group col-md-12">
+    <textarea id="custom-textarea" class="form-control text-center mt-3" style="color: black; height: 100px; resize: vertical; overflow-y: auto; overflow-wrap: break-word;" rows="4">{{ "Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po." }}</textarea>
+    </div>
+</div>
                         </div>
 
                         <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" onclick="$(this).closest('.modal').modal('hide')" style="border:solid 1px gray">Close</button>
+                            <button type="button" class="btn btn-default" onclick="closeEnrollmentNotificationModal()" style="border:solid 1px gray">Close</button>
                             <button type="submit" class="btn btn-success">Send Message</button>
                         </div>
 
@@ -265,7 +264,7 @@
                     <form id="reminderForm">
                     <div class="card-body">
                             <div class="row">
-                                <div class="form-group col-md-12">
+                            <div class="form-group" style="max-width: ; margin: 0 auto;">
                                     <h5 class="text-center mt-3"><strong>Paalala:</strong> Hindi pa na-claim ang inyong food pack para sa Complementary Feeding Program. May isa pang pagkakataon para makuha ito:</h5>
                                     <div class="col-md-4 mx-auto">
                                         <input type="text" id="reminderDateField" class="form-control mb-3" placeholder="Petsa">
@@ -463,8 +462,17 @@
 
 {{-- SCRIPTS --}}
 @section('scripts')
-
     <script>
+
+function closeEnrollmentNotificationModal() {
+    var inputElement = document.getElementById("custom-textarea");
+    // Set the label text as the value of the input element
+    inputElement.value = "Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po.";
+    $('#enrollmentNotificationModal').modal('hide');
+}
+
+
+    // Get the input element
 $(document).on('click', '.btnRemoveCandidate', function() {
     let id = this.id;
     let form_url = BASE_API + '/' + id;
@@ -659,7 +667,12 @@ $(document).on('click', '.btnRemoveCandidate', function() {
             var sendDate = $('#sendDateField').val();
             var sendTime = $('#sendTimeField').val();
             var sendLocation = $('#sendLocationField').val();
-            
+            // Check if any required field is empty
+            if (!sendDate || !sendTime || !sendLocation) {
+                // Show error message
+                swalAlert('warning', 'Please Fill Up All Required Fields.');
+                return; // Exit the function early if any required field is empty
+            }
             var message = "Magandang araw! Ito ang abiso para sa susunod na pamamahagi ng food pack para sa inyong anak: " 
                         + "Petsa: " + sendDate + ", Oras: " + sendTime + ", Lugar: " + sendLocation + ". "
                         + "Mangyaring siguraduhing makarating kayo para sa inyong mga food pack. Salamat!";
@@ -727,7 +740,8 @@ $(document).on('click', '.btnRemoveCandidate', function() {
         // Handle form submission
         $('#enrollmentNotificationModal form').submit(function(event) {
             event.preventDefault(); // Prevent default form submission
-            var message = "Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po."
+            // Retrieve the message from the textarea
+            var message = $('#custom-textarea').val();
 
             // Retrieve the IDs of checked checkboxes
             var checkedIds = getCheckedCheckboxIds();
@@ -764,10 +778,20 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                                 success: function(data) {
                                     console.log("success sms", data);
                                     notification('custom', "Message Sent!");
+                                    var inputElement = document.getElementById("custom-textarea");
+    // Set the label text as the value of the input element
+    inputElement.value = "Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po.";
+
+
                                 },
                                 error: function(error) {
                                     console.log("error sms", error);
                                     notification('custom', "Message Sent!");
+                                    var inputElement = document.getElementById("custom-textarea");
+    // Set the label text as the value of the input element
+    inputElement.value = "Magandang araw! Ang inyong anak ay na-enroll sa Complementary Feeding Program dahil sa kanilang pangangailangan sa nutrisyon. Sila ay makatanggap ng mga food pack buwan-buwan. Asahan ang mga abiso kada buwan na may detalye sa petsa, lokasyon, at oras. Salamat po.";
+
+
                                 }
                             });
                         } else {
@@ -2401,7 +2425,7 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
         },
         success: function(data) {
             console.log(JSON.stringify(data));
-
+            notification('custom', "Food pack given date is saved!");
             storeHistoryOfIndividualRecord(data);
        
             refresh();
@@ -2414,6 +2438,7 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
             if (error.responseJSON.errors == null) {
                 swalAlert('warning', error.responseJSON.message);
                 console.log(error.responseJSON.message)
+               
             } else {
                 $.each(error.responseJSON.errors, function(key, value) {
                     swalAlert('warning', value);
