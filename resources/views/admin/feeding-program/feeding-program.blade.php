@@ -867,13 +867,12 @@ $(document).on("click", "#btnCloseModal", async function() {
         })
         .then(response => response.text())
         .then(data => {
-            console.log("SUCCESS AS HECK");
             console.log(data); 
             resolve(); 
-            notification("custom", "Image saved!")
+            notification("custom", "Image Successfully Uploaded!")
         })
         .catch(error => {
-            console.log("ERROR AS HECK");
+       
             console.error('Error:', error);
             reject(error); // Reject the Promise upon error
         });
