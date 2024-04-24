@@ -500,12 +500,12 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                 },
                 data: JSON.stringify({ feeding_candidate: "NO" }), // Update feeding_candidate to NO
                 success: function(data) {
-                    console.log("SUCCESS REMOVING");
+              
                     $('#dataTable').DataTable().ajax.reload();
                     notification('custom', "Feeding Candidate Remove");
                 },
                 error: function(error) {
-                    console.log(error);
+                
                     if (error.responseJSON.errors == null) {
                         swalAlert('warning', error.responseJSON.message);
                     } else {
@@ -550,7 +550,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     },
                     error: function(error)
                     {
-                        console.log(error)
+                   
                         if (error.responseJSON.errors == null)
                         {
                             swalAlert('warning', error.responseJSON.message)
@@ -573,7 +573,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
             $(document).on('click', '.btnSendSMS', function() {
 
                 let id = this.id;
-                console.log("BTN SEND MSG ID" + id)
+         
            
                 let form_url = BASE_API + '/' + id;
 
@@ -605,7 +605,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
 
                 // Constructing the message
                 let message = "Paalala Hindi pa na-claim ang inyong food pack para sa Complementary Feeding Program. May isa pang pagkakataon para makuha ito::\nDate: " + form_data.reminder_date_field  + "\nTime: " + form_data.reminder_time_field  + "\nLocation: " + form_data.reminder_location_field  + "\n\nMangyaring siguraduhing makarating kayo para sa inyong mga food pack. Salamat!";
-                console.log("SAVE MESSAGE: " + message)
+         
                 // Retrieving phone number from API response
                 $.ajax({
                     url: API_URL + '/complementary_feeding/' + id,
@@ -620,8 +620,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     success: function(response) {
                         if (response.phone_number) {
                             var phoneNumber = response.phone_number;
-                            console.log("PHONE NUMBER EXIST")
-                            console.log(phoneNumber)
+
                             // Make AJAX request to send SMS
                             $.ajax({
                                 url: API_URL + '/send_sms',
@@ -637,7 +636,6 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                                 },
                                 success: function(data) {
 
-                                    console.log("Success: SMS sent", data);
                                     notification('custom', "Message Sent!");
                                 },
                                 error: function(error) {
@@ -680,7 +678,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
 
             // Retrieve the IDs of checked checkboxes
             var checkedIds = getCheckedCheckboxIds();
-            console.log(checkedIds);
+       
 
             // Iterate over the checked IDs and fetch the phone numbers using AJAX
             checkedIds.forEach(function(id) {
@@ -694,7 +692,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     success: function(response) {
                         if (response.phone_number) {
                             var phoneNumber = response.phone_number;
-                            console.log(phoneNumber);
+                        
 
                             // Make AJAX request to send SMS
                             $.ajax({
@@ -710,12 +708,12 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: function(data) {
-                                    console.log("success sms", data);
+                              
                                     // notification('success', "Message Sent!");
                                     notification('custom', "Message Sent!");
                                 },
                                 error: function(error) {
-                                    console.log("error sms", error);
+                                  
                                     notification('custom', "Message Sent!");
                                 }
                             });
@@ -745,9 +743,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
 
             // Retrieve the IDs of checked checkboxes
             var checkedIds = getCheckedCheckboxIds();
-            console.log("SELECTED: ")
-            console.log(checkedIds);
-            console.log(message)
+
             // Iterate over the checked IDs and fetch the phone numbers using AJAX
             checkedIds.forEach(function(id) {
                 // Construct the URL for AJAX request
@@ -760,8 +756,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     success: function(response) {
                         if (response.phone_number) {
                             var phoneNumber = response.phone_number;
-                            console.log(phoneNumber);
-
+                  
                             // Make AJAX request to send SMS
                             $.ajax({
                                 url: API_URL + '/send_sms',
@@ -776,7 +771,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 success: function(data) {
-                                    console.log("success sms", data);
+                                
                                     notification('custom', "Message Sent!");
                                     var inputElement = document.getElementById("custom-textarea");
     // Set the label text as the value of the input element
@@ -785,7 +780,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
 
                                 },
                                 error: function(error) {
-                                    console.log("error sms", error);
+                               
                                     notification('custom', "Message Sent!");
                                     var inputElement = document.getElementById("custom-textarea");
     // Set the label text as the value of the input element
@@ -865,7 +860,6 @@ $(document).on('click', '.btnRemoveCandidate', function() {
 
                 return ageInMonths
             }
-            console.log("BIRHLAJSD: " + convert_age_in_months("2023-02-07"));
             
             
 
@@ -1766,8 +1760,7 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     {
                         url: BASE_API + '/datatable',
                         data: function (d) {
-                            console.log("DATA VALUE")
-                            console.log(d)
+   
                             var fromDate = $('#fromDate').val();
                             var toDate = $('#toDate').val();
                             d.fromDate = fromDate;
@@ -2122,7 +2115,6 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                 form_data.height_length_for_age_status = calculateHeightLengthForAgeStatus(convert_age_in_months(form_data.birthdate), form_data.sex, form_data.height, true);
                 form_data.weight_for_length_status = calculateWeightForLengthStatus(form_data.height,convert_age_in_months(form_data.birthdate), form_data.weight, form_data.sex, true);
 
-                console.log("form data: " + JSON.stringify(form_data))
 
                 $.ajax
                 ({
@@ -2195,7 +2187,6 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                     },
                     error: function(error)
                     {
-                        console.log(error);
                         if (error.responseJSON.errors == null)
                         {
                             swalAlert('warning', error.responseJSON.message);
@@ -2313,7 +2304,6 @@ $(document).on('click', '.btnRemoveCandidate', function() {
                             notification('info', "{{ Str::singular($page_title) }}");
                             refresh();
                             $('#editModal').modal('hide');
-                            console.log(data);
                         },
                         error: function(error)
                         {
@@ -2694,9 +2684,7 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
                                             {
                                                 swalAlert('warning', value)
                                             });
-                                        console.log(error)
-                                        console.log(`message: ${error.responseJSON.message}`)
-                                        console.log(`status: ${error.status}`)
+
                                     }
                                 })
                             }
@@ -2710,8 +2698,7 @@ $(document).on('click', '.btnUpdateFoodPack', function() {
                             swalAlert('warning', value)
                         });
                         console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
+
                     }
                 })
             });

@@ -868,8 +868,9 @@ $(document).on("click", "#btnCloseModal", async function() {
         .then(response => response.text())
         .then(data => {
             console.log("SUCCESS AS HECK");
-            console.log(data); // Output from the server
-            resolve(); // Resolve the Promise upon success
+            console.log(data); 
+            resolve(); 
+            notification("custom", "Image saved!")
         })
         .catch(error => {
             console.log("ERROR AS HECK");
