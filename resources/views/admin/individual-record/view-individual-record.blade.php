@@ -16,9 +16,21 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
+    <style>
+        .logo-img img {
+            width: 60px;
+        }
+        .logo-img {
+            float: left;
+            /* margin-right: 20px; Adjust spacing between the back button and other elements if needed */
+        }
+    </style>
+
     <div class="card">
         <div class="card-body">
-            
+            <a href="/admin/individual_records" class="text-nowrap logo-img text-center d-block py-3">
+                <img src={{ asset('import/assets/images/buttons/back_button.png') }} width="120" alt="">
+            </a>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card-body">
