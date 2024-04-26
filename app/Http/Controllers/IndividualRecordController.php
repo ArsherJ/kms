@@ -29,15 +29,14 @@ class IndividualRecordController extends Controller
         $fromDate = $request->input('fromDate');
         $toDate = $request->input('toDate');
     
-        if ($fromDate && $toDate) {
+        if ($fromDate && $toDate)
+        {
             $query->whereBetween('date_measured', [$fromDate, $toDate]);
-        } else {
-            if ($fromDate) {
-                $query->where('date_measured', '>=', $fromDate);
-            }
-            if ($toDate) {
-                $query->where('date_measured', '<=', $toDate);
-            }
+        }
+        else
+        {
+            if ($fromDate) { $query->where('date_measured', '>=', $fromDate); }
+            if ($toDate) { $query->where('date_measured', '<=', $toDate); }
         }
         $data = $query->get();
     
@@ -55,12 +54,10 @@ class IndividualRecordController extends Controller
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
-
     }
 
     public function create()
     {
-        // Your create logic here if needed
     }
 
     public function import(StoreIndividualRecordRequest $request)
@@ -71,10 +68,12 @@ class IndividualRecordController extends Controller
 
         $file = $request->file('file');
 
-        try {
+        try
+        {
             Excel::import(new IndividualRecordImport, $file);
             return response()->json(['message' => 'File imported successfully'], 200);
-        } catch (\Exception $e) {
+        } catch (\Exception $e)
+        {
             Log::error('Error importing file: ' . $e->getMessage());
             return response()->json(['message' => 'Error importing file. Please check the file format.'], 500);
         }
@@ -91,27 +90,24 @@ class IndividualRecordController extends Controller
             'child_last_name' => 'required',
             'child_first_name' => 'required',
             'ip_group' => 'required',
-            // 'micronutrient' => 'required',
             'sex' => 'required',
             'birthdate' => 'required',
             'height' => 'required',
             'weight' => 'required',
         ]);
-    
-        // Check if the combination of phone_number and child_first_name already exists
-        $existingRecord = IndividualRecord::where('phone_number', $request->phone_number)
-            ->where('child_first_name', $request->child_first_name)
-            ->exists();
-    
-        if ($existingRecord) {
-            throw ValidationException::withMessages(['error' => 'Duplicate combination of phone number and child first name.']);
+
+        $existingRecord = IndividualRecord::where('child_last_name', $request->child_last_name)
+        ->where('child_first_name', $request->child_first_name)
+        ->exists();
+
+        if ($existingRecord)
+        {
+            throw ValidationException::withMessages(['error' => 'This child already has an existing record.']);
         }
-    
+
         return IndividualRecord::create($request->all());
     }
     
-
-
     public function show(IndividualRecord $individual_record, $id)
     {
         return IndividualRecord::find($id);
@@ -119,7 +115,6 @@ class IndividualRecordController extends Controller
 
     public function edit(IndividualRecord $individual_record)
     {
-        // Your edit logic here if needed
     }
 
     public function update(UpdateIndividualRecordRequest $request, IndividualRecord $individual_record, $id)
@@ -137,6 +132,4 @@ class IndividualRecordController extends Controller
         $individual_record->delete();
         return $individual_record;
     }
-
-
 }
