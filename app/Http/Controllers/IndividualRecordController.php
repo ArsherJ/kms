@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Validation\ValidationException;
 
 use App\Imports\IndividualRecordImport;
 
@@ -96,9 +97,20 @@ class IndividualRecordController extends Controller
             'height' => 'required',
             'weight' => 'required',
         ]);
-
+    
+        // Check if the combination of phone_number and child_first_name already exists
+        $existingRecord = IndividualRecord::where('phone_number', $request->phone_number)
+            ->where('child_first_name', $request->child_first_name)
+            ->exists();
+    
+        if ($existingRecord) {
+            throw ValidationException::withMessages(['error' => 'Duplicate combination of phone number and child first name.']);
+        }
+    
         return IndividualRecord::create($request->all());
     }
+    
+
 
     public function show(IndividualRecord $individual_record, $id)
     {
