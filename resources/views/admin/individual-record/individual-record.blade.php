@@ -444,7 +444,7 @@
                         </div>
 
                         <div class="card-footer d-flex justify-content-between">
-                            <button type="button" class="btn btn-light" data-toggle="collapse"  data-target="#create_card" style="border:solid 1px gray; margin-left:-30px"> Cancel </button>
+                            <button type="reset" class="btn btn-light" data-toggle="collapse"  data-target="#create_card" style="border:solid 1px gray; margin-left:-30px"> Cancel </button>
                             <button type="submit" class="btn btn-success ml-1" id="create_btn" style="margin-right:-30px"> Create New Record </button>
                         </div>
 
