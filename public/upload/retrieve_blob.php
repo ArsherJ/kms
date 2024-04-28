@@ -1,12 +1,13 @@
 <?php
 // MySQL database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "kms";
+$servername = "127.0.0.1";
+$username = "u566515254_kms_username";
+$password = "LittleLife12345";
+$dbname = "u566515254_kms";
+$dbPort = 3306;
 
 // Make connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname, $dbPort);
 
 // Check connection and throw an error if not available
 if ($conn->connect_error) {
