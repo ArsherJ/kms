@@ -509,7 +509,7 @@
                     case 'Success':
                         return 'green';
                     case 'Postponed':
-                        return 'lightcoral';
+                        return 'Orange';
                     case 'Ongoing':
                         return 'blue';
                     case 'Cancelled':
