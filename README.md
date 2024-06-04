@@ -1,3 +1,5 @@
+## A Child Nutrition Moniting System that allows users to monitor the nutritional status of a child. 
+
 # KMS (LittleLife: Children Nutrition Monitoring System) Installation Guide
 
 ## Prerequisites
